@@ -1,4 +1,4 @@
-package com.mbw.office.common.zookeeper;
+package com.mbw.office.sso.zookeeper;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

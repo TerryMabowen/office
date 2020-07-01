@@ -32,6 +32,7 @@
         <modelmapper.version>2.3.0</modelmapper.version>
         <ehcache.version>3.8.1</ehcache.version>
         <redis.version>3.2.0</redis.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <dependencies>
@@ -306,6 +307,12 @@
                         <artifactId>slf4j-api</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!--junit-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

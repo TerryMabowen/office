@@ -12,7 +12,7 @@ import java.util.*;
  * @author Mabowen
  * @date 2020-04-08 21:31
  */
-public class GenerationKit {
+public class GenerationCodeUtil {
     private final static String DATE_FORMAT = "yyyyMMddHHmmssSSS";
     private static int sed  = 0;
     private static String[] beforeShuffle = new String[]
@@ -32,7 +32,7 @@ public class GenerationKit {
     public synchronized static String generateClientId() {
         String prefix = DateUtil.format(new Date(), DATE_FORMAT);
 
-        synchronized (GenerationKit.class) {
+        synchronized (GenerationCodeUtil.class) {
             sed++;
             if (sed > 999) {
                 sed = 1;
@@ -57,6 +57,13 @@ public class GenerationKit {
             sb.append(s);
         }
         String afterShuffle = sb.toString();
-        return afterShuffle.substring(5, 9);
+
+        Random random = new Random();
+        int index = random.nextInt(beforeShuffle.length);
+        if (index <= beforeShuffle.length - 4) {
+            return afterShuffle.substring(index, index + 4);
+        } else {
+            return afterShuffle.substring(5, 9);
+        }
     }
 }
