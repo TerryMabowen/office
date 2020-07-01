@@ -19,6 +19,10 @@ import java.util.List;
 public class JacksonUtil {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
+    public static ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
     public static String beanToJson(Object obj) {
         try {
             return objectMapper.writeValueAsString(obj);

@@ -91,6 +91,7 @@
         <logger name="reactor.util" level="WARN" />
         <logger name="com.alibaba" level="WARN" />
         <logger name="org.hibernate" level="WARN" />
+        <logger name="org.thymeleaf" level="WARN" />
         <logger name="com.mbw.office" level="DEBUG" />
         <root level="all">
             <appender-ref ref="Console"/>

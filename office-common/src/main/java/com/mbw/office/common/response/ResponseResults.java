@@ -26,6 +26,7 @@ public class ResponseResults implements Serializable {
     private Object data;
     private String message;
     private Integer code;
+    private Integer status;
 
     public ResponseResults() {
     }
@@ -108,6 +109,15 @@ public class ResponseResults implements Serializable {
         return this;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public ResponseResults setStatus(Integer status) {
+        this.status = status;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -128,6 +138,9 @@ public class ResponseResults implements Serializable {
         if (!message.equals(that.message)) {
             return false;
         }
+        if (!status.equals(that.status)) {
+            return false;
+        }
         return code.equals(that.code);
     }
 
@@ -137,6 +150,7 @@ public class ResponseResults implements Serializable {
         result = 31 * result + data.hashCode();
         result = 31 * result + message.hashCode();
         result = 31 * result + code.hashCode();
+        result = 31 * result + status.hashCode();
         return result;
     }
 
@@ -145,6 +159,7 @@ public class ResponseResults implements Serializable {
         return "ResponseResults{" +
                 "success=" + success +
                 ", code=" + code +
+                ", status=" + status +
                 ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';
