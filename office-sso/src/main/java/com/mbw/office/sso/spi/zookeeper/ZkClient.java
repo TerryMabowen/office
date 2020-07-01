@@ -13,6 +13,7 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +26,7 @@ import java.util.List;
  * @date 2020-05-06 11:56
  */
 @Slf4j
-//@Component
+@Component
 public class ZkClient {
     @Getter
     @Autowired

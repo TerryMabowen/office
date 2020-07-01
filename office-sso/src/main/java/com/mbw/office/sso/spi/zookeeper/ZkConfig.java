@@ -2,6 +2,7 @@ package com.mbw.office.sso.spi.zookeeper;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * zookeeper
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
  * @date 2020-05-06 11:24
  */
 @Data
-//@Component
+@Component
 public class ZkConfig {
     @Value("${office.sso.zookeeper.address}")
     private String address;
