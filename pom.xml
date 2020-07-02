@@ -9,6 +9,8 @@
     <modules>
         <module>office-common</module>
         <module>office-sso</module>
+        <module>office-data-jpa-demo</module>
+        <module>office-mybatis-plus-demo</module>
     </modules>
     <name>office-parent</name>
 
@@ -33,6 +35,8 @@
         <ehcache.version>3.8.1</ehcache.version>
         <redis.version>3.2.0</redis.version>
         <junit.version>4.12</junit.version>
+        <junit.version>4.12</junit.version>
+        <mybatis.plus.version>3.2.0</mybatis.plus.version>
     </properties>
 
     <dependencies>
@@ -313,6 +317,22 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+            </dependency>
+            <!--mybatis-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-jdbc</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-autoconfigure</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
