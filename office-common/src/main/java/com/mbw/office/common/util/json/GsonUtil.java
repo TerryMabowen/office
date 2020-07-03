@@ -11,6 +11,7 @@ import java.util.Map;
  * @author Mabowen
  * @date 2020-07-03 16:17
  */
+@Deprecated
 public class GsonUtil {
     //不用创建对象,直接使用Gson.就可以调用方法
     private static Gson gson = null;
