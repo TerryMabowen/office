@@ -49,7 +49,7 @@ public class DataSourceConfig {
         ServletRegistrationBean bean = new ServletRegistrationBean();
         Map<String, String> initParams = new HashMap<>();
         initParams.put("loginUsername", "root");
-        initParams.put("loginPassword", "Bell.Ai504");
+        initParams.put("loginPassword", "123456");
         //默认就是允许所有访问
         initParams.put("allow", "");
         // 禁用HTML页面上的“Reset All”功能
