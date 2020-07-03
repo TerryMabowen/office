@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mbw.office.common.util.json.JacksonUtil;
+import com.mbw.office.common.util.json.JacksonFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -67,7 +67,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public HttpMessageConverter<Object> responseJacksonConverter() {
         MappingJackson2HttpMessageConverter convert = new MappingJackson2HttpMessageConverter();
 
-        ObjectMapper mapper = JacksonUtil.getObjectMapper();
+        ObjectMapper mapper = JacksonFactory.getInstance().getObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));

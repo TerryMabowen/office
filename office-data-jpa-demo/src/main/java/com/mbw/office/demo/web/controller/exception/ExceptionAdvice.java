@@ -2,13 +2,13 @@ package com.mbw.office.demo.web.controller.exception;
 
 import com.mbw.office.common.exception.ServiceException;
 import com.mbw.office.common.response.ResponseResults;
-import com.mbw.office.common.util.json.JacksonUtil;
+import com.mbw.office.common.util.json.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class ExceptionAdvice {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         PrintWriter printWriter = response.getWriter();
-        printWriter.write(JacksonUtil.beanToJson(ResponseResults.newFailed(exception.getMessage())));
+        printWriter.write(JacksonFactory.getInstance().beanToJson(ResponseResults.newFailed(exception.getMessage())));
         printWriter.flush();
         printWriter.close();
     }
