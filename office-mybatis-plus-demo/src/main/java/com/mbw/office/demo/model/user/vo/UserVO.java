@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.demo.model.role.vo.RoleVO;
 import lombok.Data;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +18,7 @@ import java.util.Set;
  * @date 2020-07-01 16:26
  */
 @Data
+@ToString
 public class UserVO {
     private Long id;
 
@@ -38,7 +41,9 @@ public class UserVO {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = DateUtil.DEFAULT_PATTERN)
+//    @JsonFormat(pattern = DateUtil.DEFAULT_PATTERN)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
 
     /**

@@ -1,18 +1,31 @@
 package com.mbw.office.demo.entity.permission;
 
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.mbw.office.demo.entity.base.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 权限表
  * @author Mabowen
  * @date 2020-07-01 15:52
  */
-public class PermissionPO implements Serializable {
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@TableName("oc_sso_permissions")
+public class PermissionPO extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -7372985955141388266L;
 
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -39,10 +52,4 @@ public class PermissionPO implements Serializable {
      * 父路径
      */
     private String parentPath;
-
-    private Integer status = EnumLogicStatus.NORMAL.getValue();
-
-    private Date createdTime;
-
-    private Date updatedTime;
 }

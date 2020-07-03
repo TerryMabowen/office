@@ -1,18 +1,34 @@
 package com.mbw.office.demo.entity.user;
 
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.mbw.office.demo.entity.base.BaseEntity;
+import com.mbw.office.demo.entity.role.RolePO;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 用户表
  * @author Mabowen
  * @date 2020-07-01 15:32
  */
-public class UserPO implements Serializable {
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@TableName("oc_sso_users")
+public class UserPO extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -5535772926419600611L;
 
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -23,11 +39,12 @@ public class UserPO implements Serializable {
     /**
      * 加密密码
      */
+    @TableField(value = "password_hash")
     private String passwordHash;
 
-    private Integer status = EnumLogicStatus.NORMAL.getValue();
-
-    private Date createdTime;
-
-    private Date updatedTime;
+    /**
+     * 角色集合
+     */
+    @TableField(select = false)
+    private Set<RolePO> roles = new HashSet<>(0);
 }

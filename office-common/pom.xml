@@ -67,11 +67,6 @@
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
-        <!--curator 连接zookeeper，操作zookeeper client -->
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-recipes</artifactId>
-        </dependency>
         <!-- modelmapper -->
         <dependency>
             <groupId>org.modelmapper</groupId>

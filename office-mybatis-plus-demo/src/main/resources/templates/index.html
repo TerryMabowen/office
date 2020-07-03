@@ -9,14 +9,17 @@
     </style>
 </head>
 <body>
-<h1>INDEX</h1>
-<br/>你好：<a th:text="${username}"></a>
+<div class="inline">
+    <h1><a th:href="@{/index}">INDEX</a></h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" class="btn btn-primary" value="注销"/>
+    </form>
+</div>
+
+
+<br/>你好：<a th:text="${user?.username} + '，加入时间: ' + ${#dates.format(user?.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></a>
 <p>
-    <a th:href="@{/index}"> INDEX</a>
     <br/><hr/>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" class="btn btn-primary" value="注销"/>
-</form>
 </p>
 </body>
 </html>

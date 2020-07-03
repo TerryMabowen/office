@@ -1,18 +1,17 @@
-package com.mbw.office.demo.model.user.dto;
+package com.mbw.office.demo.web.controller.fb;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.Set;
 
 /**
+ * TODO
  *
  * @author Mabowen
- * @date 2020-07-01 16:26
+ * @date 2020-07-03 10:08
  */
 @Data
-@Builder
-public class UserDTO {
+public class UserFB {
     private Long id;
 
     /**

@@ -39,6 +39,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!--curator 连接zookeeper，操作zookeeper client -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+        </dependency>
         <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
