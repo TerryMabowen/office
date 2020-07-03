@@ -16,6 +16,7 @@ import java.util.List;
  * @date 2020-05-20 17:08
  */
 @Slf4j
+@Deprecated
 public class JacksonUtil {
     private static ObjectMapper objectMapper = new ObjectMapper();
 

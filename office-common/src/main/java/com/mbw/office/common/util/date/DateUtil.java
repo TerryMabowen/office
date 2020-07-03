@@ -31,10 +31,6 @@ public class DateUtil {
     public static final String BEGIN_DAY_SUFFIX = " 00:00:00";
     public static final String END_DAY_SUFFIX = " 23:59:59";
 
-    /**
-     * 获取当前时间
-     * @return
-     */
     public static Date now() {
         return Calendar.getInstance().getTime();
     }
@@ -69,7 +65,7 @@ public class DateUtil {
         return sdf.format(date);
     }
 
-    public static String defaultFormat(Date date) {
+    public static String formatDefault(Date date) {
         return format(date, DEFAULT_PATTERN);
     }
 
@@ -100,7 +96,7 @@ public class DateUtil {
         }
     }
 
-    public static Date defaultParse(String str) {
+    public static Date parseDefault(String str) {
         return parse(str, DEFAULT_PATTERN);
     }
 
@@ -116,7 +112,7 @@ public class DateUtil {
      * @param days
      * @return
      */
-    public static Date getBeforeDate(Date current, int days) {
+    public static Date getBeforeDay(Date current, int days) {
         if (current == null) {
             throw new ServiceException("传入的日期不能为null");
         }
@@ -139,7 +135,7 @@ public class DateUtil {
      * @param days
      * @return
      */
-    public static Date getAfterDate(Date current, int days) {
+    public static Date getAfterDay(Date current, int days) {
         if (current == null) {
             throw new ServiceException("传入的日期不能为null");
         }
@@ -187,7 +183,7 @@ public class DateUtil {
      * @date 16:44 2020-06-24
      * @param date1
      * @param date2
-     * @return
+     * @return true: 同一天；false：不是同一天
      */
     public static boolean isSameDay(Date date1, Date date2) {
         if (date1 != null && date2 != null) {
@@ -207,14 +203,14 @@ public class DateUtil {
     }
 
     /**
-     * 计算两个字符串日期的时间范围，返回Period
+     * 计算日期相差多少天
      * @author Mabowen
      * @date 10:02 2020-04-10
      * @param startTime
      * @param endTime
      * @return Period.getYears(), getMonths(), getDays()
      */
-    public static Period computeTimeRange(Date startTime, Date endTime) {
+    public static Period calculateTowTimesRange(Date startTime, Date endTime) {
         if (startTime != null && endTime != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(startTime);
@@ -257,5 +253,35 @@ public class DateUtil {
         }
 
         throw new ServiceException("beginTime or endTime can not is null");
+    }
+
+    /**
+     *
+     * @param date1
+     * @param date2
+     * @return true: date1在date2之前；false：不在前，有可能在同一天或者之后
+     */
+    public static boolean date1BeforeDate2(Date date1, Date date2) {
+        return judgeTwoTimesBeforeAndAfter(date1, date2) == -1;
+    }
+
+    /**
+     * 判断两个时间的前后
+     * @author Mabowen
+     * @date 16:02 2020-07-03
+     * @param date1
+     * @param date2
+     * @return -1: date1 < date2; 0: date1 == date2; 1: date1 > date2
+     */
+    public static int judgeTwoTimesBeforeAndAfter(Date date1, Date date2) {
+        if (date1 == null || date2 == null) {
+            throw new ServiceException("date1 and date2 can not be null");
+        }
+
+        if (isSameDay(date1, date2)) {
+            return 0;
+        } else {
+            return date1.compareTo(date2);
+        }
     }
 }
