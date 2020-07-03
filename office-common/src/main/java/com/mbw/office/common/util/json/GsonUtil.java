@@ -14,7 +14,7 @@ import java.util.Map;
 @Deprecated
 public class GsonUtil {
     //不用创建对象,直接使用Gson.就可以调用方法
-    private static Gson gson = null;
+    private static Gson gson;
 
     //判断gson对象是否存在了,不存在则创建对象
     static {
