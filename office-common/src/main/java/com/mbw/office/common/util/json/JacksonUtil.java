@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Jackson 工具类
@@ -46,7 +47,25 @@ public class JacksonUtil {
         try {
             return objectMapper.readValue(jsonStr, new TypeReference<List<T>>(){});
         } catch (IOException e) {
-            log.error("json string to Object error: {}", e.getMessage(), e);
+            log.error("json string to List error: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    public static <T> Map<String, T> jsonToMap(String jsonStr, Class<T> clz) {
+        try {
+            return objectMapper.readValue(jsonStr, new TypeReference<Map<String, T>>(){});
+        } catch (IOException e) {
+            log.error("json string to Map error: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    public static <T> List<Map<String, T>> jsonToListMap(String jsonStr, Class<T> clz) {
+        try {
+            return objectMapper.readValue(jsonStr, new TypeReference<List<Map<String, T>>>(){});
+        } catch (IOException e) {
+            log.error("json string to List<Map> error: {}", e.getMessage(), e);
             return null;
         }
     }
