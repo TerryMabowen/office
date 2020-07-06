@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mabowen
@@ -21,5 +22,7 @@ public interface UserMapper extends CommonMapper<UserPO> {
 
     List<UserPO> listUsers(@Param("status") Integer status);
 
-    Page<UserPO> pageUsers();
+    Page<UserPO> pageUsers(@Param("pageNo") int pageNo, @Param("pageSize") int pageSize, @Param("params") Map<String, Object> params);
+
+    long getTotalCount(@Param("params") Map<String, Object> params);
 }

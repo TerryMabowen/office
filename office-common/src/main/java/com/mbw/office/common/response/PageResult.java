@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Mabowen
  * @date 2020-05-19 17:17
  */
-public class ResponsePage implements Serializable {
+public class PageResult implements Serializable {
     private static final long serialVersionUID = -8322865242392387264L;
 
     /**
@@ -28,15 +28,15 @@ public class ResponsePage implements Serializable {
     private long count;
     private Object data;
 
-    public ResponsePage() {
+    public PageResult() {
     }
 
-    public static ResponsePage newFailed() {
+    public static PageResult newFailed() {
         return newFailed("Failed");
     }
 
-    public static ResponsePage newFailed(String errorMsg) {
-        ResponsePage responsePage = new ResponsePage();
+    public static PageResult newFailed(String errorMsg) {
+        PageResult responsePage = new PageResult();
         responsePage.setSuccess(false);
         responsePage.setCode(DEFAULT_ERROR);
         responsePage.setMessage(errorMsg);
@@ -45,20 +45,20 @@ public class ResponsePage implements Serializable {
         return responsePage;
     }
 
-    public static ResponsePage newSuccess() {
+    public static PageResult newSuccess() {
         return newSuccess("Success", null, 0);
     }
 
-    public static ResponsePage newSuccess(String msg) {
+    public static PageResult newSuccess(String msg) {
         return newSuccess(msg, null, 0);
     }
 
-    public static ResponsePage newSuccess(Object data, long count) {
+    public static PageResult newSuccess(Object data, long count) {
         return newSuccess("Success", data, count);
     }
 
-    public static ResponsePage newSuccess(String msg, Object data, long count) {
-        ResponsePage responsePage = new ResponsePage();
+    public static PageResult newSuccess(String msg, Object data, long count) {
+        PageResult responsePage = new PageResult();
         responsePage.setSuccess(true);
         responsePage.setCode(OK);
         responsePage.setMessage(msg);
@@ -71,7 +71,7 @@ public class ResponsePage implements Serializable {
         return success;
     }
 
-    public ResponsePage setSuccess(boolean success) {
+    public PageResult setSuccess(boolean success) {
         this.success = success;
         return this;
     }
@@ -80,7 +80,7 @@ public class ResponsePage implements Serializable {
         return code;
     }
 
-    public ResponsePage setCode(int code) {
+    public PageResult setCode(int code) {
         this.code = code;
         return this;
     }
@@ -89,7 +89,7 @@ public class ResponsePage implements Serializable {
         return message;
     }
 
-    public ResponsePage setMessage(String message) {
+    public PageResult setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -98,7 +98,7 @@ public class ResponsePage implements Serializable {
         return count;
     }
 
-    public ResponsePage setCount(long count) {
+    public PageResult setCount(long count) {
         this.count = count;
         return this;
     }
@@ -107,7 +107,7 @@ public class ResponsePage implements Serializable {
         return data;
     }
 
-    public ResponsePage setData(Object data) {
+    public PageResult setData(Object data) {
         this.data = data;
         return this;
     }
@@ -117,11 +117,11 @@ public class ResponsePage implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ResponsePage)) {
+        if (!(o instanceof PageResult)) {
             return false;
         }
 
-        ResponsePage that = (ResponsePage) o;
+        PageResult that = (PageResult) o;
 
         if (success != that.success) {
             return false;

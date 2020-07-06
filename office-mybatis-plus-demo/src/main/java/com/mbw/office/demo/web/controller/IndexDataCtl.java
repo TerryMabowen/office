@@ -2,7 +2,7 @@ package com.mbw.office.demo.web.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mbw.office.common.response.ResponsePage;
+import com.mbw.office.common.response.PageResult;
 import com.mbw.office.common.response.ResponseResults;
 import com.mbw.office.demo.model.user.dto.UserDTO;
 import com.mbw.office.demo.model.user.vo.UserVO;
@@ -51,18 +51,18 @@ public class IndexDataCtl extends BaseDataCtl {
     }
 
     @PostMapping("page")
-    public ResponsePage pageUsers(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-                                  @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
-                                  UserFB fb) {
+    public PageResult pageUsers(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                                @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+                                UserFB fb) {
         try {
             UserDTO dto = BeanUtil.toBean(fb, UserDTO.class);
 
             Page<UserVO> voPage = userService.pageUsers(pageNo, pageSize, dto);
-            return ResponsePage.newSuccess()
+            return PageResult.newSuccess()
                     .setData(voPage.getRecords())
                     .setCount(voPage.getTotal());
         } catch (Exception e) {
-            return ResponsePage.newFailed()
+            return PageResult.newFailed()
                     .setMessage(e.getMessage());
         }
     }
