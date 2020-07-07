@@ -10,9 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.apache.ibatis.annotations.Many;
 
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,4 +46,9 @@ public class UserPO extends BaseEntity implements Serializable {
      */
     @TableField(exist = false)
     private Set<RolePO> roles = new HashSet<>(0);
+
+    @Override
+    protected Serializable pkVal() {
+        return super.pkVal();
+    }
 }
