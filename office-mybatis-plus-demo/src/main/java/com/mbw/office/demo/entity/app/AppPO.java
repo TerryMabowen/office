@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("oc_sso_apps")
+@TableName(value = "oc_sso_apps", autoResultMap = true)
 public class AppPO extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -8618613332166867290L;
 
@@ -50,7 +50,6 @@ public class AppPO extends BaseEntity implements Serializable {
     /**
      * 应用秘钥
      */
-//    @TableField(value = "app_secret")
     private String appSecret;
 
     /**

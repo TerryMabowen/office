@@ -1,7 +1,6 @@
 package com.mbw.office.demo.entity.permission;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mbw.office.demo.entity.base.BaseEntity;
@@ -21,7 +20,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("oc_sso_permissions")
+@TableName(value = "oc_sso_permissions", autoResultMap = true)
 public class PermissionPO extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -7372985955141388266L;
 

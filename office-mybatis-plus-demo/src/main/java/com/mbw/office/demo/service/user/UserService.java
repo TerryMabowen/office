@@ -13,7 +13,6 @@ import com.mbw.office.demo.model.user.dto.UserDTO;
 import com.mbw.office.demo.model.user.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +23,8 @@ import java.util.List;
  * @date 2020-07-02 15:54
  */
 @Slf4j
-@Service
+//@Service
+@Deprecated
 public class UserService {
     @Autowired
     private UserMapper userMapper;
@@ -33,7 +33,9 @@ public class UserService {
         //方式一
         UserPO po = userMapper.getUserWithRolesById(1L, EnumLogicStatus.NORMAL.getValue());
         //方式二,不用mapper.xml
-//        UserPO po = userMapper.selectById(id);
+//        UserPO po = userMapper.selectOne(new LambdaQueryWrapper<UserPO>()
+//                    .eq(BaseEntity::getStatus, EnumLogicStatus.NORMAL.getValue())
+//                    .eq(UserPO::getId, 1L));
         log.info("userPO: {}", po.toString());
         UserVO vo = BeanUtil.toBean(po, UserVO.class);
         log.info("userVO: {}", vo.toString());
@@ -42,10 +44,10 @@ public class UserService {
 
     public List<UserVO> listUsers() {
         //方式一
-        List<UserPO> pos = userMapper.listUsers(EnumLogicStatus.NORMAL.getValue());
+//        List<UserPO> pos = userMapper.listUsers(EnumLogicStatus.NORMAL.getValue());
         //方式二,不用mapper.xml
-//        List<UserPO> pos = userMapper.selectList(new LambdaQueryWrapper<UserPO>()
-//            .eq(BaseEntity::getStatus, EnumLogicStatus.NORMAL.getValue()));
+        List<UserPO> pos = userMapper.selectList(new LambdaQueryWrapper<UserPO>()
+            .eq(BaseEntity::getStatus, EnumLogicStatus.NORMAL.getValue()));
         return convert(pos);
     }
 

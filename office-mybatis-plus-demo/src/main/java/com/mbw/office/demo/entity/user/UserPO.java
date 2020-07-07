@@ -10,7 +10,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.annotations.Many;
 
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +26,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("oc_sso_users")
+@TableName(value = "oc_sso_users", autoResultMap = true)
 public class UserPO extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -5535772926419600611L;
 
@@ -39,12 +41,11 @@ public class UserPO extends BaseEntity implements Serializable {
     /**
      * 加密密码
      */
-    @TableField(value = "password_hash")
     private String passwordHash;
 
     /**
      * 角色集合
      */
-    @TableField(select = false)
+    @TableField(exist = false)
     private Set<RolePO> roles = new HashSet<>(0);
 }

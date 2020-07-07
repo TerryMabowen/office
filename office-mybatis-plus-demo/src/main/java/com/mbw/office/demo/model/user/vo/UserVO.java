@@ -41,9 +41,8 @@ public class UserVO {
     /**
      * 创建时间
      */
-//    @JsonFormat(pattern = DateUtil.DEFAULT_PATTERN)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtil.DEFAULT_PATTERN)
+    @JsonFormat(pattern = DateUtil.DEFAULT_PATTERN)
     private Date createdTime;
 
     /**

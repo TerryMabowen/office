@@ -1,7 +1,6 @@
 package com.mbw.office.demo.entity.role;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mbw.office.demo.entity.base.BaseEntity;
@@ -21,7 +20,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("oc_sso_roles")
+@TableName(value = "oc_sso_roles", autoResultMap = true)
 public class RolePO extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -1515580025645265875L;
 
@@ -31,7 +30,6 @@ public class RolePO extends BaseEntity implements Serializable {
     /**
      * 应用ID
      */
-    @TableField(value = "app_id")
     private Long appId;
 
     /**
