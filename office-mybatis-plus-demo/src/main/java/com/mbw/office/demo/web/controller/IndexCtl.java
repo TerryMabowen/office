@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
-
 /**
  * @author Mabowen
  * @date 2020-07-01 20:09
@@ -25,7 +23,6 @@ public class IndexCtl extends BaseCtl {
     public String index(Model model) {
         UserVO user = userService.getUserWithRolesById(1L);
         model.addAttribute("user", user);
-        List<UserVO> users = userService.listUserWithRoles();
         return "index.html";
     }
 

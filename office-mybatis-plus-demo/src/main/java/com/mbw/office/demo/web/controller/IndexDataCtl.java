@@ -45,21 +45,4 @@ public class IndexDataCtl extends BaseDataCtl {
                     .setMessage(e.getMessage());
         }
     }
-
-//    @PostMapping("page")
-//    public PageResult pageUsers(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-//                                @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
-//                                UserFB fb) {
-//        try {
-//            UserDTO dto = BeanUtil.toBean(fb, UserDTO.class);
-//
-//            Page<UserVO> voPage = userService.pageUsers(pageNo, pageSize, dto);
-//            return PageResult.newSuccess()
-//                    .setData(voPage.getRecords())
-//                    .setCount(voPage.getTotal());
-//        } catch (Exception e) {
-//            return PageResult.newFailed()
-//                    .setMessage(e.getMessage());
-//        }
-//    }
 }
