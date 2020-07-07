@@ -4,19 +4,49 @@
 <head>
     <title>主页</title>
     <link rel="stylesheet" th:href="@{/static/bootstrap/css/bootstrap.min.css}"/>
+    <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/static/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/modules/httpKit.js}"></script>
     <style type="text/css">
         body { padding: 40px; }
     </style>
 </head>
 <body>
-<h1>INDEX</h1>
-<br/>你好：<a th:text="${username}"></a>
+<div class="inline">
+    <h1><a th:href="@{/index}">INDEX</a></h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" class="btn btn-primary" value="注销"/>
+    </form>
+</div>
+
+
+<br/>你好：<a th:text="${user?.username} + '，加入时间: ' + ${#dates.format(user?.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></a>
 <p>
-    <a th:href="@{/index}"> INDEX</a>
-    <br/><hr/>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" class="btn btn-primary" value="注销"/>
-</form>
+    <br/> 点击获取ID=1的用户信息: <button id="button1" class="button">click</button>
+    <hr/>
+    <br/> 点击获取用户集合信息: <button id="button2" class="button">click</button>
+    <hr/>
 </p>
 </body>
+<script type="text/javascript">
+    var btn1 = $('#button1').click(function () {
+        http.getData('/index/user/1'
+
+        ).then(function (res) {
+            console.log(res.data);
+        }).catch(function (res) {
+            alert(res.message);
+        })
+    });
+
+    var btn2 = $('#button2').click(function () {
+        http.getData('/index/users'
+
+        ).then(function (res) {
+            console.log(res.data);
+        }).catch(function (res) {
+            alert(res.message);
+        })
+    });
+</script>
 </html>

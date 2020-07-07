@@ -1,9 +1,6 @@
 package com.mbw.office.demo.entity.permission;
 
-import com.mbw.office.common.enums.EnumLogicStatus;
-
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 权限表
@@ -39,10 +36,4 @@ public class PermissionPO implements Serializable {
      * 父路径
      */
     private String parentPath;
-
-    private Integer status = EnumLogicStatus.NORMAL.getValue();
-
-    private Date createdTime;
-
-    private Date updatedTime;
 }

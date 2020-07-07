@@ -1,18 +1,23 @@
 package com.mbw.office.demo.entity.role;
 
-import com.mbw.office.common.enums.EnumLogicStatus;
+import lombok.Data;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 角色表
  * @author Mabowen
  * @date 2020-07-01 15:51
  */
+@Data
+@Entity
+@Table(name = "oc_sso_roles")
 public class RolePO implements Serializable {
     private static final long serialVersionUID = -1515580025645265875L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     /**
@@ -29,10 +34,4 @@ public class RolePO implements Serializable {
      * 角色名称
      */
     private String name;
-
-    private Integer status = EnumLogicStatus.NORMAL.getValue();
-
-    private Date createdTime;
-
-    private Date updatedTime;
 }

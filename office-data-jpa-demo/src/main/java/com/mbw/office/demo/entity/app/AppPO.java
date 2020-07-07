@@ -1,9 +1,6 @@
 package com.mbw.office.demo.entity.app;
 
-import com.mbw.office.common.enums.EnumLogicStatus;
-
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 应用表
@@ -45,10 +42,4 @@ public class AppPO implements Serializable {
      * 启用状态
      */
     private Integer enableState;
-
-    private Integer status = EnumLogicStatus.NORMAL.getValue();
-
-    private Date createdTime;
-
-    private Date updatedTime;
 }
