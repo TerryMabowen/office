@@ -19,7 +19,7 @@ import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toSimple;
 public class ValidatorUtil {
     private static ValidatorUtil single;
 
-    private Validator validator;
+    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     public static ValidatorUtil getInstance() {
         if (single != null) {
@@ -30,14 +30,12 @@ public class ValidatorUtil {
             if (single == null) {
                 single = new ValidatorUtil();
             }
-
-            single.init();
         }
 
         return single;
     }
 
-    public <T> Result validate(T t) {
+    public <T> Result validateObject(T t) {
         return FluentValidator
                 .checkAll()
                 .on(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
@@ -45,16 +43,19 @@ public class ValidatorUtil {
                 .result(toSimple());
     }
 
-    public <T> Result validateList(Collection<T> t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
+    public <T> Result validateCollection(Collection<T> t) {
+        return FluentValidator
+                .checkAll()
+                .onEach(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
+                .doValidate()
+                .result(toSimple());
+    }
+
+    public <T> Result validateCollection(Collection<T> t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
         return FluentValidator
                 .checkAll()
                 .onEach(t, v)
                 .doValidate()
                 .result(toSimple());
-    }
-
-    private void init() {
-        validator = Validation.buildDefaultValidatorFactory()
-                .getValidator();
     }
 }
