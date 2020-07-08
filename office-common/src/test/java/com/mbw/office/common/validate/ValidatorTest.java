@@ -36,7 +36,7 @@ public class ValidatorTest {
     public void f2() {
         List<TestPojo> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            TestPojo pojo = null;
+            TestPojo pojo;
             if (i % 2 == 0) {
                 pojo = new TestPojo()
                         .setBank("s" + i)

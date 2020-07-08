@@ -1,7 +1,6 @@
 package com.mbw.office.demo.model.user.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.demo.model.role.vo.RoleVO;
 import lombok.Data;
 
@@ -37,13 +36,13 @@ public class UserVO {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = DateUtil.DEFAULT_PATTERN)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
 
     /**
      * 更新时间
      */
-    @JsonFormat(pattern = DateUtil.DEFAULT_PATTERN)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedTime;
 
     /**
