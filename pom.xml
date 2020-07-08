@@ -8,9 +8,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>office-common</module>
-        <module>office-sso</module>
         <module>office-data-jpa-demo</module>
         <module>office-mybatis-plus-demo</module>
+        <module>office-sso</module>
     </modules>
     <name>office-parent</name>
 
