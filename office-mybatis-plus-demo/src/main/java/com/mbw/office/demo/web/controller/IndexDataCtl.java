@@ -1,14 +1,12 @@
 package com.mbw.office.demo.web.controller;
 
+import com.mbw.office.common.response.PageResult;
 import com.mbw.office.common.response.ResponseResults;
 import com.mbw.office.demo.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
 import com.mbw.office.demo.web.controller.base.BaseDataCtl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class IndexDataCtl extends BaseDataCtl {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseResults getUserById(@PathVariable("userId") Long userId) {
         try {
             UserVO user = userService.getUserWithRolesById(userId);
@@ -34,7 +32,7 @@ public class IndexDataCtl extends BaseDataCtl {
         }
     }
 
-    @GetMapping("users")
+    @GetMapping("/users")
     public ResponseResults listUsers() {
         try {
             List<UserVO> users = userService.listUserWithRoles();
@@ -42,6 +40,19 @@ public class IndexDataCtl extends BaseDataCtl {
                     .setData(users);
         } catch (Exception e) {
             return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @PostMapping("page/users")
+    public PageResult pageUsers() {
+        try {
+            List<UserVO> users = userService.listUserWithRoles();
+            return PageResult.newSuccess()
+                    .setData(users)
+                    .setCount(users.size());
+        } catch (Exception e) {
+            return PageResult.newFailed()
                     .setMessage(e.getMessage());
         }
     }

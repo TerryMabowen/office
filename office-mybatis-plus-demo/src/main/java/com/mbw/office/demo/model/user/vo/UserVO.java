@@ -1,7 +1,6 @@
 package com.mbw.office.demo.model.user.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.demo.model.role.vo.RoleVO;
 import lombok.Data;
@@ -30,7 +29,7 @@ public class UserVO {
     /**
      * 加密密码
      */
-    @JsonIgnore
+//    @JsonIgnore
     private String passwordHash;
 
     /**
