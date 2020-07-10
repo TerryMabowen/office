@@ -3,6 +3,7 @@ package com.mbw.office.common.util.validate;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.jsr303.HibernateSupportedValidator;
+import lombok.Getter;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -19,7 +20,8 @@ import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toSimple;
 public class ValidatorUtil {
     private static ValidatorUtil single;
 
-    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    @Getter
+    private Validator validator;
 
     public static ValidatorUtil getInstance() {
         if (single != null) {
@@ -29,6 +31,8 @@ public class ValidatorUtil {
         synchronized (ValidatorUtil.class) {
             if (single == null) {
                 single = new ValidatorUtil();
+
+                single.init();
             }
         }
 
@@ -57,5 +61,9 @@ public class ValidatorUtil {
                 .onEach(t, v)
                 .doValidate()
                 .result(toSimple());
+    }
+
+    private void init() {
+        validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 }

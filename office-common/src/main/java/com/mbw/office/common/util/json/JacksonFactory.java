@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,9 +31,9 @@ public class JacksonFactory {
         synchronized (JacksonFactory.class) {
             if (factory == null) {
                 factory = new JacksonFactory();
-            }
 
-            factory.init();
+                factory.init();
+            }
         }
 
         return factory;
@@ -52,7 +53,7 @@ public class JacksonFactory {
             return objectMapper.readValue(jsonStr, clz);
         } catch (IOException e) {
             log.error("json string to Object error: {}", e.getMessage(), e);
-            return null;
+            return clz.cast(new Object());
         }
     }
 
@@ -61,7 +62,7 @@ public class JacksonFactory {
             return objectMapper.readValue(jsonStr, new TypeReference<List<T>>(){});
         } catch (IOException e) {
             log.error("json string to List error: {}", e.getMessage(), e);
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -70,7 +71,7 @@ public class JacksonFactory {
             return objectMapper.readValue(jsonStr, new TypeReference<Map<String, T>>(){});
         } catch (IOException e) {
             log.error("json string to Map error: {}", e.getMessage(), e);
-            return null;
+            return Collections.emptyMap();
         }
     }
 
@@ -79,7 +80,7 @@ public class JacksonFactory {
             return objectMapper.readValue(jsonStr, new TypeReference<List<Map<String, T>>>(){});
         } catch (IOException e) {
             log.error("json string to List<Map> error: {}", e.getMessage(), e);
-            return null;
+            return Collections.emptyList();
         }
     }
 
