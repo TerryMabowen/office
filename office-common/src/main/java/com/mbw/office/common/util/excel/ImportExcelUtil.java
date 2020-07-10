@@ -1,5 +1,7 @@
 package com.mbw.office.common.util.excel;
 
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +10,11 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +25,35 @@ import java.util.List;
  */
 @Slf4j
 public class ImportExcelUtil {
+    /**
+     * 导入excel文件
+     * @author Mabowen
+     * @date 19:27 2020-03-30
+     * @param filePath
+     * @param titleRows
+     * @param headerRows
+     * @param pojoClass
+     * @return
+     */
+    public  <T> List<T> importExcel(String filePath, Integer titleRows, Integer headerRows, Class<T> pojoClass){
+        if (StrUtil.isBlank(filePath)){
+            return Collections.emptyList();
+        }
+
+        ImportParams params = new ImportParams();
+        params.setTitleRows(titleRows);
+        params.setHeadRows(headerRows);
+
+        List<T> list = null;
+        try {
+            list = ExcelImportUtil.importExcel(new File(filePath), pojoClass, params);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+
+        return list;
+    }
+
     /**
      * 解析excel
      *

@@ -6,7 +6,6 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
 
 /**
  * OkHttpClient
@@ -74,15 +73,5 @@ public class OkHttpClientFactory {
 
     private void init() {
         defaultClient = new OkHttpClient.Builder().build();
-
-        // TODO 改成可配置的
-        OkHttpClient customClient = new OkHttpClient.Builder()
-                .addInterceptor(new OkHttpInterceptor())
-                .callTimeout(5, TimeUnit.SECONDS)
-                .connectionPool(new ConnectionPool())
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .build();
     }
 }

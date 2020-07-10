@@ -44,6 +44,7 @@
         <xpath.jaxen.version>1.2.0</xpath.jaxen.version>
         <easypoi.version>4.0.0</easypoi.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
+        <retrofit2.version>2.5.0</retrofit2.version>
         <okhttp.version>3.13.1</okhttp.version>
         <apache.httpclient.version>4.5.8</apache.httpclient.version>
         <commons.lang3.version>3.9</commons.lang3.version>
@@ -300,6 +301,17 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <!--retrofit2-->
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${retrofit2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-gson</artifactId>
+                <version>${retrofit2.version}</version>
             </dependency>
             <!--okhttp-->
             <dependency>

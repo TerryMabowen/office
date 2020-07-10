@@ -1,9 +1,8 @@
-package com.mbw.office.common.http.event;
+package com.mbw.office.common.api;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.mbw.office.common.exception.ServiceException;
-import lombok.Getter;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import java.text.MessageFormat;
@@ -11,23 +10,19 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
- * OkHttp事件工厂
+ * OkHttp 事件工厂
  *
  * @author Mabowen
- * @date 2020-07-10 14:39
+ * @date 2020-06-02 09:09
  */
 public class OkHttpEventBusFactory {
     private static OkHttpEventBusFactory factory;
-
-    private final String OKHTTP_DEFAULT_BUS = "OKHTTP_DEFAULT_BUS";
-
-    private final String OKHTTP_DEFAULT_ASYNC_BUS = "OKHTTP_DEFAULT_ASYNC_BUS";
+    private final String OK_HTTP_DEFAULT_BUS =  "OK-HTTP-DEFAULT-BUS";
+    private final String OK_HTTP_DEFAULT_ASYNC_BUS =  "OK-HTTP-DEFAULT-ASYNC-BUS";
 
     private EventBus defaultEventBus;
-
     private EventBus defaultAsyncEventBus;
 
-    @Getter
     private ExecutorService asyncThreadPoolExecutor;
 
     public static OkHttpEventBusFactory getInstance() {
@@ -46,20 +41,20 @@ public class OkHttpEventBusFactory {
     }
 
     private void init() {
-        asyncThreadPoolExecutor = new ScheduledThreadPoolExecutor(12,
+        asyncThreadPoolExecutor = new ScheduledThreadPoolExecutor(2,
                 new BasicThreadFactory
                         .Builder()
-                        .namingPattern("ok-event-pool-%d")
+                        .namingPattern("ok-http-event-pool-%d")
                         .daemon(true)
-                        .build());
+                        .build()
+        );
 
-        defaultEventBus = new EventBus(OKHTTP_DEFAULT_BUS);
-        defaultAsyncEventBus = new AsyncEventBus(OKHTTP_DEFAULT_ASYNC_BUS, asyncThreadPoolExecutor);
+        defaultEventBus = new EventBus(OK_HTTP_DEFAULT_BUS);
+        defaultAsyncEventBus = new AsyncEventBus(OK_HTTP_DEFAULT_ASYNC_BUS, asyncThreadPoolExecutor);
     }
 
     /**
      * 注册消息总线
-     *
      * @param listener
      */
     public void registerDefaultEventBus(Object listener) {
@@ -72,17 +67,16 @@ public class OkHttpEventBusFactory {
 
     /**
      * 注册指定的消息总线
-     *
      * @param eventBusName
      * @param listener
      */
     public void registerEventBus(String eventBusName, Object listener) {
-        if (OKHTTP_DEFAULT_BUS.equalsIgnoreCase(eventBusName)) {
+        if(OK_HTTP_DEFAULT_BUS.equalsIgnoreCase(eventBusName)) {
             defaultEventBus.register(listener);
             return;
         }
 
-        if (OKHTTP_DEFAULT_ASYNC_BUS.equalsIgnoreCase(eventBusName)) {
+        if(OK_HTTP_DEFAULT_ASYNC_BUS.equalsIgnoreCase(eventBusName)) {
             defaultAsyncEventBus.register(this);
             return;
         }
@@ -92,7 +86,6 @@ public class OkHttpEventBusFactory {
 
     /**
      * 从默认总线上下线
-     *
      * @param listener
      */
     public void unregisterDefaultEventBus(Object listener) {
@@ -101,7 +94,6 @@ public class OkHttpEventBusFactory {
 
     /**
      * 从默认总线上下线
-     *
      * @param listener
      */
     public void unregisterDefaultAsyncEventBus(Object listener) {
@@ -110,17 +102,16 @@ public class OkHttpEventBusFactory {
 
     /**
      * 从指定的总线上下线
-     *
      * @param eventBusName
      * @param listener
      */
     public void unregisterEventBus(String eventBusName, Object listener) {
-        if (OKHTTP_DEFAULT_BUS.equalsIgnoreCase(eventBusName)) {
+        if(OK_HTTP_DEFAULT_BUS.equalsIgnoreCase(eventBusName)) {
             defaultEventBus.unregister(listener);
             return;
         }
 
-        if (OKHTTP_DEFAULT_ASYNC_BUS.equalsIgnoreCase(eventBusName)) {
+        if(OK_HTTP_DEFAULT_ASYNC_BUS.equalsIgnoreCase(eventBusName)) {
             defaultAsyncEventBus.unregister(listener);
             return;
         }
@@ -130,7 +121,6 @@ public class OkHttpEventBusFactory {
 
     /**
      * 获取默认总线
-     *
      * @return
      */
     public EventBus getDefaultEventBus() {
@@ -139,7 +129,6 @@ public class OkHttpEventBusFactory {
 
     /**
      * 获取默认的异步消息总线
-     *
      * @return
      */
     public EventBus getDefaultAsyncEventBus() {
@@ -148,16 +137,15 @@ public class OkHttpEventBusFactory {
 
     /**
      * 获取指定的总线
-     *
      * @param eventBusName
      * @return
      */
     public EventBus getEventBus(String eventBusName) {
-        if (OKHTTP_DEFAULT_BUS.equalsIgnoreCase(eventBusName)) {
+        if(OK_HTTP_DEFAULT_BUS.equalsIgnoreCase(eventBusName)) {
             return defaultEventBus;
         }
 
-        if (OKHTTP_DEFAULT_ASYNC_BUS.equalsIgnoreCase(eventBusName)) {
+        if(OK_HTTP_DEFAULT_ASYNC_BUS.equalsIgnoreCase(eventBusName)) {
             return defaultAsyncEventBus;
         }
 
