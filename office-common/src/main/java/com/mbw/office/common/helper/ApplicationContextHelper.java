@@ -54,7 +54,7 @@ public class ApplicationContextHelper implements ApplicationContextAware {
      * @param <T>
      * @return
      */
-    public static <T> T getBean(String name,Class<T> clazz){
+    public static <T> T getBean(String name, Class<T> clazz){
         return getApplicationContext().getBean(name, clazz);
     }
 }

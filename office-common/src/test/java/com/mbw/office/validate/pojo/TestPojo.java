@@ -1,4 +1,4 @@
-package com.mbw.office.common.validate.pojo;
+package com.mbw.office.validate.pojo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

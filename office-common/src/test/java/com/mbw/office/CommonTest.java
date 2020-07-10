@@ -1,4 +1,4 @@
-package com.mbw.office.common;
+package com.mbw.office;
 
 import cn.hutool.core.io.file.FileReader;
 import org.junit.Test;

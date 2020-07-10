@@ -1,8 +1,8 @@
-package com.mbw.office.common.validate;
+package com.mbw.office.validate;
 
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.mbw.office.common.util.validate.ValidatorUtil;
-import com.mbw.office.common.validate.pojo.TestPojo;
+import com.mbw.office.validate.pojo.TestPojo;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -53,12 +53,12 @@ public class DateUtil {
      * @return
      */
     public static String format(Date date, String pattern) {
-        if (StrUtil.isEmpty(pattern)) {
+        if (StrUtil.isBlank(pattern)) {
             pattern = DEFAULT_PATTERN;
         }
 
         if (null == date) {
-            throw new ServiceException("date can not is null");
+            throw new ServiceException("date cannot be null");
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
@@ -79,19 +79,18 @@ public class DateUtil {
      * @date 09:50 2020-04-09
      */
     public static Date parse(String str, String pattern) {
-        if (StrUtil.isEmpty(pattern)) {
+        if (StrUtil.isBlank(pattern)) {
             pattern = DEFAULT_PATTERN;
         }
 
-        if (StrUtil.isEmpty(str)) {
-            throw new ServiceException("date str can not is empty");
+        if (StrUtil.isBlank(str)) {
+            throw new ServiceException("date str cannot be empty");
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         try {
             return sdf.parse(str);
         } catch (ParseException e) {
-            logger.error("parse date str exception：" + e.getMessage(), e);
             throw new ServiceException("parse date str exception：" + e.getMessage(), e);
         }
     }
@@ -159,7 +158,7 @@ public class DateUtil {
             return format(date, SHORT_DATE_PATTERN) + BEGIN_DAY_SUFFIX;
         }
 
-        throw new ServiceException("date can not is null");
+        throw new ServiceException("date cannot be null");
     }
 
     /**
@@ -174,7 +173,7 @@ public class DateUtil {
             return format(date, SHORT_DATE_PATTERN) + END_DAY_SUFFIX;
         }
 
-        throw new ServiceException("date can not is null");
+        throw new ServiceException("date cannot be null");
     }
 
     /**
@@ -222,7 +221,7 @@ public class DateUtil {
             return Period.between(start, end);
         }
 
-        throw new ServiceException("startTime or endTime can not is null");
+        throw new ServiceException("startTime or endTime cannot be null");
     }
 
     /**
@@ -252,7 +251,7 @@ public class DateUtil {
             return rangeDate;
         }
 
-        throw new ServiceException("beginTime or endTime can not is null");
+        throw new ServiceException("beginTime or endTime cannot be null");
     }
 
     /**
@@ -275,7 +274,7 @@ public class DateUtil {
      */
     public static int judgeTwoTimesBeforeAndAfter(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
-            throw new ServiceException("date1 and date2 can not be null");
+            throw new ServiceException("date1 and date2 cannot be null");
         }
 
         if (isSameDay(date1, date2)) {

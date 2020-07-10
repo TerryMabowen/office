@@ -156,7 +156,7 @@ public class RegexUtil {
     }
 
     public static boolean isContainsSpecialChar(String text) {
-        if (StrUtil.isEmpty(text)) {
+        if (StrUtil.isBlank(text)) {
             return false;
         } else {
             String[] chars = new String[]{"[", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "|", "{", "}", "'", ":", ";", "'", ",", "[", "]", ".", "<", ">", "/", "?", "~", "！", "@", "#", "￥", "%", "…", "&", "*", "（", "）", "—", "+", "|", "{", "}", "【", "】", "‘", "；", "：", "”", "“", "’", "。", "，", "、", "？", "]"};
@@ -211,7 +211,7 @@ public class RegexUtil {
     }
 
     private static boolean match(String text, String reg) {
-        return !StrUtil.isEmpty(text) && !StrUtil.isEmpty(reg) ? Pattern.compile(reg).matcher(text).matches() : false;
+        return (!StrUtil.isBlank(text) && !StrUtil.isBlank(reg)) && Pattern.compile(reg).matcher(text).matches();
     }
 
 }

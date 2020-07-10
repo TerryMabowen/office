@@ -56,10 +56,10 @@ public class UserService {
         //方式二,不用mapper.xml
         LambdaQueryWrapper<UserPO> lambdaQueryWrapper = new LambdaQueryWrapper<UserPO>()
                 .eq(BaseEntity::getStatus, EnumLogicStatus.NORMAL.getValue());
-        if (!StrUtil.isEmpty(dto.getUsername())) {
+        if (StrUtil.isNotBlank(dto.getUsername())) {
             lambdaQueryWrapper.likeRight(UserPO::getUsername, dto.getUsername());
         }
-        if (!StrUtil.isEmpty(dto.getPasswordHash())) {
+        if (StrUtil.isNotBlank(dto.getPasswordHash())) {
             lambdaQueryWrapper.like(UserPO::getPasswordHash, dto.getPasswordHash());
         }
 

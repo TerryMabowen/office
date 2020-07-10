@@ -25,7 +25,7 @@ public class PageBean<T> implements Serializable {
     private static final int DEFAULT_PAGE_SIZE = 20;
 
     // 当前第几页
-    private Integer currentPageNum = DEFAULT_CURRENT_PAGE;
+    private Integer pageNumber = DEFAULT_CURRENT_PAGE;
 
     // 每页展示条数
     private Integer pageSize = DEFAULT_PAGE_SIZE;
@@ -45,8 +45,8 @@ public class PageBean<T> implements Serializable {
     public PageBean() {
     }
 
-    public PageBean(int currentPageNum, int pageSize) {
-        this.currentPageNum = currentPageNum;
+    public PageBean(int pageNumber, int pageSize) {
+        this.pageNumber = pageNumber;
         this.pageSize = pageSize;
     }
 
@@ -58,37 +58,37 @@ public class PageBean<T> implements Serializable {
 
     // 是否是第一页
     public boolean isFirst() {
-        return (this.currentPageNum == 1) || (this.totalCount == 0);
+        return (this.pageNumber == 1) || (this.totalCount == 0);
     }
 
     // 是否是最后一页
     public boolean isLast() {
-        return (this.totalCount == 0) || (this.currentPageNum >= getPageCount());
+        return (this.totalCount == 0) || (this.pageNumber >= getPageCount());
     }
 
     // 是否有下一页
     public boolean isHasNext() {
-        return this.currentPageNum < getPageCount();
+        return this.pageNumber < getPageCount();
     }
 
     // 是否有上一页
     public boolean isHasPrev() {
-        return this.currentPageNum > 1;
+        return this.pageNumber > 1;
     }
 
     // 下一页
     public long getNextPage() {
-        if (this.currentPageNum >= getPageCount()) {
+        if (this.pageNumber >= getPageCount()) {
             return getPageCount();
         }
-        return this.currentPageNum + 1;
+        return this.pageNumber + 1;
     }
 
     // 上一页
     public long getPrevPage() {
-        if (this.currentPageNum <= 1) {
+        if (this.pageNumber <= 1) {
             return 1;
         }
-        return this.currentPageNum - 1;
+        return this.pageNumber - 1;
     }
 }
