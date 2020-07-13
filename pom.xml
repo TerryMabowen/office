@@ -11,6 +11,7 @@
         <module>office-data-jpa-demo</module>
         <module>office-mybatis-plus-demo</module>
         <module>office-sso</module>
+        <module>mybatis-generate-demo</module>
     </modules>
     <name>office-parent</name>
 
