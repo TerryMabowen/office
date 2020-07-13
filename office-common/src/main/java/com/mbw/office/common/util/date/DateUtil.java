@@ -32,7 +32,11 @@ public class DateUtil {
     public static final String END_DAY_SUFFIX = " 23:59:59";
 
     public static Date now() {
-        return Calendar.getInstance().getTime();
+        return new Date();
+    }
+
+    public static String getCurrentDate() {
+        return formatShort(now());
     }
 
     /**
@@ -42,7 +46,7 @@ public class DateUtil {
      * @return
      */
     public static String getCurrentTimestamp() {
-        return format(Calendar.getInstance().getTime(), TIMESTAMP_PATTERN);
+        return format(now(), TIMESTAMP_PATTERN);
     }
 
     /**

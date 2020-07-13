@@ -66,4 +66,12 @@ public class GenerationCodeUtil {
             return afterShuffle.substring(5, 9);
         }
     }
+
+    public static String getUuid1() {
+        return UUID.randomUUID().toString();
+    }
+
+    public static String getUuid2() {
+        return getUuid1().replace("-", "");
+    }
 }

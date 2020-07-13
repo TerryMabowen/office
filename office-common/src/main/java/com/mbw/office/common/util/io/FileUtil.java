@@ -1,16 +1,14 @@
 package com.mbw.office.common.util.io;
 
+import cn.hutool.core.io.IoUtil;
 import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.util.validate.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.StreamUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 
 /**
@@ -23,6 +21,61 @@ public class FileUtil {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private static final String ATTACHMENT = "attachment;filename=";
     private static final String CONTENT_TYPE = "application/octet-stream";
+
+    public static boolean createFile(String dir, String filename) {
+        AssertUtil.assertNotEmpty(dir, "目录不能为空");
+        AssertUtil.assertNotEmpty(filename, "文件名不能为空");
+
+        try {
+            File fileDir = new File(dir);
+            if (!fileDir.exists()) {
+                if(fileDir.mkdirs()) {
+                    File file = new File(fileDir, filename);
+                    if (!file.exists()) {
+                        return file.createNewFile();
+                    }
+                }
+            }
+
+            return false;
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
+    public static File getFileByPath(String path) {
+        AssertUtil.assertNotEmpty(path, "文件路径不能为空");
+
+        return new File(path);
+    }
+
+    public static File[] getFilesByPath(String dir) {
+        AssertUtil.assertNotEmpty(dir, "文件目录不能为空");
+
+        File fileDir = new File(dir);
+        if (fileDir.exists() && fileDir.isDirectory()) {
+            return fileDir.listFiles();
+        } else {
+            return null;
+        }
+    }
+
+    public static boolean copy(File source, File target) {
+        AssertUtil.assertNotNull(source, "源文件不能为空");
+        AssertUtil.assertNotNull(target, "目标文件不能为空");
+
+        try {
+            FileInputStream fis = new FileInputStream(source);
+            FileOutputStream fos = new FileOutputStream(target);
+
+            IoUtil.copy(fis, fos);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * 下载单个文件
@@ -50,9 +103,7 @@ public class FileUtil {
             // 获取输出流
             OutputStream os = response.getOutputStream();
             FileInputStream fis = new FileInputStream(file);
-            StreamUtils.copy(fis, os);
-            fis.close();
-            os.close();
+            IoUtil.copy(fis, os);
         } catch (IOException e) {
             log.error("下载文件异常： " + e.getMessage(), e);
             throw new ServiceException("下载文件异常： " + e.getMessage(), e);
