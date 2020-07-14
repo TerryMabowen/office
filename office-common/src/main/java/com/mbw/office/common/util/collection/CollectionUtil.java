@@ -22,7 +22,7 @@ public class CollectionUtil {
      * @return
      */
     @SafeVarargs
-    public static <T> List<T> convergence(List<T>... args) {
+    public static <T> List<T> mergeList(List<T>... args) {
         Set<T> set = new HashSet<>();
         for (List<T> arg : args) {
             set.addAll(arg);

@@ -183,7 +183,6 @@ public abstract class OkHttpBaseManager {
                 throw new ServiceException("接口调用异常,  http code = " + response.code());
             }
         } catch(IOException exp) {
-            log.error(exp.getMessage(), exp);
             throw new ServiceException("接口调用异常" + exp.getMessage(), exp);
         }
     }

@@ -123,7 +123,6 @@ public class ImportExcelUtil {
                     workbook = new XSSFWorkbook(is);
                 }
             } catch (IOException e) {
-                log.error(e.getMessage(), e);
                 throw new ServiceException(e.getMessage(), e);
             }
         }

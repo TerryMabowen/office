@@ -21,7 +21,7 @@ public class ValidatorUtil {
     private static ValidatorUtil single;
 
     @Getter
-    private Validator validator;
+    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     public static ValidatorUtil getInstance() {
         if (single != null) {
@@ -31,8 +31,6 @@ public class ValidatorUtil {
         synchronized (ValidatorUtil.class) {
             if (single == null) {
                 single = new ValidatorUtil();
-
-                single.init();
             }
         }
 
@@ -43,6 +41,14 @@ public class ValidatorUtil {
         return FluentValidator
                 .checkAll()
                 .on(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
+                .doValidate()
+                .result(toSimple());
+    }
+
+    public <T> Result validateObject(T t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
+        return FluentValidator
+                .checkAll()
+                .on(t, v)
                 .doValidate()
                 .result(toSimple());
     }
@@ -61,9 +67,5 @@ public class ValidatorUtil {
                 .onEach(t, v)
                 .doValidate()
                 .result(toSimple());
-    }
-
-    private void init() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 }

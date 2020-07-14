@@ -60,7 +60,7 @@ public class ConvertUtil {
      * @author Mabowen
      * @date 11:19 2019-11-26
      */
-    private static <E> Collection<String> convertStrToCollection(String str, Class<? extends Collection> clz) {
+    private static Collection<String> convertStrToCollection(String str, Class<? extends Collection> clz) {
         if (StrUtil.isNotBlank(str)) {
             String[] split = str.split(",");
             if (clz.isAssignableFrom(List.class)) {
@@ -68,12 +68,12 @@ public class ConvertUtil {
             } else {
                 return new HashSet<>(Arrays.asList(split));
             }
-        }
-
-        if (clz.isAssignableFrom(List.class)) {
-            return Collections.emptyList();
         } else {
-            return Collections.emptySet();
+            if (clz.isAssignableFrom(List.class)) {
+                return Collections.emptyList();
+            } else {
+                return Collections.emptySet();
+            }
         }
     }
 }

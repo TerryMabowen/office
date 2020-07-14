@@ -1,5 +1,7 @@
 package com.mbw.office.common.util.tree;
 
+import com.mbw.office.common.exception.ServiceException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +18,6 @@ public class TreeUtil {
     private static final String SET = "set";
 
     /**
-     * 私有构造器
-     */
-    private TreeUtil() {
-        throw new IllegalStateException("Utility class");
-    }
-
-    /**
      * 使用递归方法建树
      * (如果项目中的各个表的id、父id、封装子对象的list名称均是固定，则可以再次简化，将反射获取属性的过程直接写
      * 死，这样调用时只需传list即可)
@@ -32,7 +27,7 @@ public class TreeUtil {
      * @param childrenName 实体类中封装树形的子list方法名(首字母需要大写,例如属性为list,则传List)
      * @return 树形list
      */
-    public static <T> List<T> buildByRecursive(List<T> list, String idName, String parentIdName, String childrenName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static <T> List<T> buildByRecursive(List<T> list, String idName, String parentIdName, String childrenName) {
         List<T> result = new ArrayList<>();
         try {
             //遍历封装pid=0的
@@ -45,12 +40,8 @@ public class TreeUtil {
                     result.add(findChildren(t, list, idName, parentIdName, childrenName));
                 }
             }
-        } catch (NoSuchMethodException e) {
-            throw new NoSuchMethodException(e.getMessage());
-        } catch (InvocationTargetException e) {
-            throw new InvocationTargetException(e, e.getMessage());
-        } catch (IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage());
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(), e);
         }
         return result;
     }

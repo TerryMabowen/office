@@ -53,7 +53,6 @@ public class ZkClient {
                     .withMode(mode)
                     .forPath(path, nodeData.getBytes(StandardCharsets.UTF_8));
         } catch (Exception exp) {
-            log.error("创建节点失败：" + exp.getMessage(), exp);
             throw new ServiceException("创建节点失败：" + exp.getMessage(), exp);
         }
     }
@@ -76,7 +75,6 @@ public class ZkClient {
                     .withMode(mode)
                     .forPath(path);
         } catch (Exception exp) {
-            log.error("创建节点异常：" + exp.getMessage(), exp);
             throw new ServiceException("创建节点异常：" + exp.getMessage(), exp);
         }
     }
@@ -91,7 +89,6 @@ public class ZkClient {
         try {
             client.setData().forPath(path, data);
         } catch (Exception exp) {
-            log.error("设置指定节点的数据异常：" + exp.getMessage(), exp);
             throw new ServiceException("设置指定节点的数据异常：" + exp.getMessage(), exp);
         }
     }
@@ -106,7 +103,6 @@ public class ZkClient {
         try {
             return client.getData().forPath(path);
         } catch (Exception exp) {
-            log.error("获取指定节点的数据异常：" + exp.getMessage(), exp);
             throw new ServiceException("获取指定节点的数据异常：" + exp.getMessage(), exp);
         }
     }
@@ -149,7 +145,6 @@ public class ZkClient {
         try {
             return client.getChildren().forPath(path);
         } catch (Exception exp) {
-            log.error("获取节点的子节点异常：" + exp.getMessage(), exp);
             throw new ServiceException("获取节点的子节点异常：" + exp.getMessage(), exp);
         }
     }
@@ -163,7 +158,6 @@ public class ZkClient {
         try {
             deleteNode(path, true);
         } catch (Exception exp) {
-            log.error("删除节点数据异常：" + exp.getMessage(), exp);
             throw new ServiceException("删除节点数据异常：" + exp.getMessage(), exp);
         }
     }
@@ -191,7 +185,6 @@ public class ZkClient {
                         .forPath(path);
             }
         } catch (Exception exp) {
-            log.error("删除节点数据异常：" + exp.getMessage(), exp);
             throw new ServiceException("删除节点数据异常：" + exp.getMessage(), exp);
         }
     }

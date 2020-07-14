@@ -44,7 +44,6 @@ public class ExportExcelUtil {
                 exportExcel(workbook, fileName, response);
             }
         } catch (Exception e) {
-            log.error("导出excel异常：" + e.getMessage(), e);
             throw new ServiceException("导出excel异常：" + e.getMessage(), e);
         }
 
@@ -66,7 +65,6 @@ public class ExportExcelUtil {
                 exportExcel(workbook, fileName, response);
             }
         } catch (Exception e) {
-            log.error("导出excel异常：" + e.getMessage(), e);
             throw new ServiceException("导出excel异常：" + e.getMessage(), e);
         }
     }
@@ -90,7 +88,6 @@ public class ExportExcelUtil {
                 exportExcel(workbook, fileName, response);
             }
         } catch (Exception e) {
-            log.error("导出动态表头excel异常：" + e.getMessage(), e);
             throw new ServiceException("导出动态表头excel异常：" + e.getMessage(), e);
         }
     }
@@ -109,7 +106,6 @@ public class ExportExcelUtil {
                 exportExcel(workbook, fileName, response);
             }
         } catch (Exception e) {
-            log.error("导出大数据量Excel异常：" + e.getMessage(), e);
             throw new ServiceException("导出大数据量Excel异常：" + e.getMessage(), e);
         }
     }
@@ -132,7 +128,6 @@ public class ExportExcelUtil {
             workbook.write(os);
             os.flush();
         } catch (Exception e) {
-            log.error(String.format("导出" + fileName + "失败, 失败原因: %s", e.getMessage()), e);
             throw new ServiceException(String.format("导出" + fileName + "失败, 失败原因: %s", e.getMessage()), e);
         } finally {
             if (null != workbook) {
@@ -182,7 +177,6 @@ public class ExportExcelUtil {
             fileName = URLEncoder.encode(fileName, "UTF-8");
             return fileName;
         } catch (UnsupportedEncodingException e) {
-            log.error("转码失败，失败原因: {}", e.getMessage(), e);
             throw new ServiceException(String.format("转码失败，失败原因: %s", e.getMessage()), e);
         }
     }

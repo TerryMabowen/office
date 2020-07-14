@@ -75,7 +75,7 @@ public class HttpClientUtil {
                 log.error("请求失败！" + response.toString());
             }
         } catch (Exception e) {
-            log.error("doGet请求错误: " + e.getMessage() + ", 请求url为" + url);
+            log.error("doGet请求错误: " + e.getMessage() + ", 请求url为" + url, e);
         } finally {
             try {
                 // 释放资源

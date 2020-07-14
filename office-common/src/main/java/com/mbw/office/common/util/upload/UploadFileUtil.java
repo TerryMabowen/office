@@ -62,7 +62,6 @@ public class UploadFileUtil {
                     throw new ServiceException(String.format("上传%s文件失败，失败原因是%s", oldName, "创建文件失败"));
                 }
             }catch (IOException e){
-                log.error("上传{}文件失败，失败原因是{}", oldName, e.getMessage());
                 throw new ServiceException(String.format("上传%s文件失败，失败原因是%s", oldName, e.getMessage()), e);
             }
         }
