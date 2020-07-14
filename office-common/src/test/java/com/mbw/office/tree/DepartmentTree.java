@@ -1,4 +1,4 @@
-package com.mbw.office.validate.tree;
+package com.mbw.office.tree;
 
 import lombok.Data;
 

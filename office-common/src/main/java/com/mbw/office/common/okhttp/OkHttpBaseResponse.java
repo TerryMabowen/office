@@ -1,4 +1,4 @@
-package com.mbw.office.common.api;
+package com.mbw.office.common.okhttp;
 
 import lombok.Data;
 import lombok.ToString;

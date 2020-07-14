@@ -1,4 +1,4 @@
-package com.mbw.office.common.api;
+package com.mbw.office.common.okhttp;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;

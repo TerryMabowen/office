@@ -1,4 +1,4 @@
-package com.mbw.office.validate.tree;
+package com.mbw.office.tree;
 
 import com.mbw.office.common.util.tree.TreeUtil;
 import org.junit.Test;

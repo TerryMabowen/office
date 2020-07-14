@@ -1,8 +1,8 @@
-package com.mbw.office.common.api;
+package com.mbw.office.common.okhttp;
 
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.google.gson.Gson;
-import com.mbw.office.common.api.domain.LoginResponseData;
+import com.mbw.office.common.okhttp.domain.LoginResponseData;
 import com.mbw.office.common.exception.ServiceException;
 import com.mbw.office.common.util.json.GsonFactory;
 import com.mbw.office.common.util.validate.AssertUtil;

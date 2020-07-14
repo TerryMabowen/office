@@ -1,4 +1,4 @@
-package com.mbw.office.common.api.domain;
+package com.mbw.office.common.okhttp.domain;
 
 /**
  * 例子

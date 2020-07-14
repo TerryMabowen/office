@@ -1,7 +1,7 @@
-package com.mbw.office.common.api;
+package com.mbw.office.common.okhttp;
 
-import com.mbw.office.common.api.domain.CourseScheduleData;
-import com.mbw.office.common.api.domain.LoginResponseData;
+import com.mbw.office.common.okhttp.domain.CourseScheduleData;
+import com.mbw.office.common.okhttp.domain.LoginResponseData;
 import retrofit2.Call;
 import retrofit2.http.*;
 
