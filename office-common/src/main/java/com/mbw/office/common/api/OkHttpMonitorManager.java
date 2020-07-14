@@ -21,6 +21,7 @@ public class OkHttpMonitorManager {
     @Subscribe
     public void onApiData(OkHttpApiData apiData) {
         String requestUrl = "?" + apiData.getQuery();
+        System.out.println(requestUrl);
         //保存OkHttpApi请求记录
         System.out.println(apiData);
     }

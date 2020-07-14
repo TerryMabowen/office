@@ -1,20 +1,16 @@
 package com.mbw.office.common.api;
 
-import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
-import com.baidu.unbiz.fluentvalidator.jsr303.HibernateSupportedValidator;
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mbw.office.common.api.domain.LoginResponseData;
 import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.util.json.GsonFactory;
+import com.mbw.office.common.util.validate.AssertUtil;
+import com.mbw.office.common.util.validate.ValidatorUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import okio.BufferedSink;
 import okio.BufferedSource;
 import okio.Okio;
@@ -25,17 +21,13 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toSimple;
 
 /**
  * OkHttp 服务
@@ -76,18 +68,15 @@ public abstract class OkHttpBaseManager {
 
                 Request request = chain.request()
                         .newBuilder()
-                        .addHeader("Content-Type","text/html")
-//                        .addHeader("Content-Type","application/json")
-//                        .addHeader("Authorization", "Bearer " + accessToken)
-//                        .addHeader("AppId", okHttpConfig.getAppId())
-//                        .addHeader("AppSecret", okHttpConfig.getAppSecret())
+                        .headers(Headers.of(okHttpConfig.getRequestHeaders()))
                         .build();
 
                 long beginTime = System.currentTimeMillis();
 
-                Response response = chain.proceed(request);
-//                response.header("Content-Type","application/json");
-                response.header("Content-Type","text/html");
+                Response response = chain.proceed(request)
+                        .newBuilder()
+                        .headers(Headers.of(okHttpConfig.getResponseHeaders()))
+                        .build();
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 Sink sink = Okio.sink(baos);
@@ -102,7 +91,7 @@ public abstract class OkHttpBaseManager {
 
                 System.out.println(String.format("RequestBody: %s", baos.toString(CHARSET)));
 
-                assert response.body() != null;
+                AssertUtil.assertNotNull(response.body(), "response.body()不存在");
                 BufferedSource source = response.body().source();
                 source.request(Long.MAX_VALUE);
 
@@ -141,10 +130,12 @@ public abstract class OkHttpBaseManager {
             }
         }).connectTimeout(okHttpConfig.getTimeout(), TimeUnit.MILLISECONDS).build();
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
+//        Gson gson = new GsonBuilder()
+//                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+//                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+//                .create();
+
+        Gson gson = GsonFactory.getInstance().getGson();
 
         /**
          * 转换工厂
@@ -204,15 +195,8 @@ public abstract class OkHttpBaseManager {
      * @return
      */
     protected <T> Result validate(T t) {
-        if (validator == null) {
-            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-            validator = factory.getValidator();
-        }
-        return FluentValidator
-                .checkAll()
-                .on(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
-                .doValidate()
-                .result(toSimple());
+        return ValidatorUtil.getInstance()
+                .validateObject(t);
     }
 
     /**

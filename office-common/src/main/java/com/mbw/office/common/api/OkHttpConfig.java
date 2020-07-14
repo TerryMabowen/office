@@ -3,6 +3,8 @@ package com.mbw.office.common.api;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * OkHttp 配置
  *
@@ -31,4 +33,14 @@ public class OkHttpConfig {
      * 请求超时时间，单位ms
      */
     private Integer timeout;
+
+    /**
+     * 请求头
+     */
+    private Map<String, String> requestHeaders;
+
+    /**
+     * 响应头
+     */
+    private Map<String, String> responseHeaders;
 }

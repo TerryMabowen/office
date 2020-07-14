@@ -7,7 +7,6 @@ import com.mbw.office.common.exception.AssertException;
 import com.mbw.office.common.util.enums.EnumUtil;
 
 import java.util.Collection;
-import java.util.Objects;
 
 /**
  * @author Mabowen
@@ -18,7 +17,7 @@ public class AssertUtil {
     }
 
     public static void assertNotNull(String value, String tips) {
-        if (Objects.isNull(value)) {
+        if (null == value) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 字符串不能为空" : tips);
         }
     }
@@ -28,7 +27,7 @@ public class AssertUtil {
     }
 
     public static void assertNotEmpty(String value, String tips) {
-        if (StrUtil.isBlank(value)) {
+        if (value == null || value.isEmpty() || StrUtil.isBlank(value)) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 字符串不能为空" : tips);
         }
     }
@@ -80,13 +79,13 @@ public class AssertUtil {
     }
 
     public static void assertGE0(Number value, String tips) {
-        if (value == null || value.doubleValue() < 0.0D) {
+        if (null == value || value.doubleValue() < 0.0D) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 必须大于等于0" : tips);
         }
     }
 
     public static void assertNotNull(Object obj, String tips) {
-        if (Objects.isNull(obj)) {
+        if (null == obj) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 对象不存在" : tips);
         }
     }
@@ -97,7 +96,7 @@ public class AssertUtil {
 
     public static void assertEnumExist(int status, Class<? extends BaseEnumStatus> cls, String tips) {
         BaseEnumStatus value = EnumUtil.getEnumByValue(cls, status);
-        if (Objects.isNull(value)) {
+        if (null == value) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 枚举类型不存在" : tips);
         }
     }
@@ -142,22 +141,12 @@ public class AssertUtil {
     }
 
     public static <E> void assertCollectionNotEmpty(Collection<E> collection, String tips) {
-        if (collection == null || collection.isEmpty()) {
+        if (collection == null || collection.size() == 0) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 集合不能为空" : tips);
         }
     }
 
     public static <E> void assertCollectionNotEmpty(Collection<E> collection) {
         assertCollectionNotEmpty(collection, null);
-    }
-
-    public static <E> void assertCollectionNotNull(Collection<E> collection, String tips) {
-        if (collection == null) {
-            throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 集合不能为null" : tips);
-        }
-    }
-
-    public static <E> void assertCollectionNotNull(Collection<E> collection) {
-        assertCollectionNotNull(collection, null);
     }
 }

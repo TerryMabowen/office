@@ -1,6 +1,7 @@
 package com.mbw.office.common.util.json;
 
 import cn.hutool.core.util.StrUtil;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -85,6 +86,9 @@ public class GsonFactory {
     }
     
     private void init() {
-        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
     }
 }
