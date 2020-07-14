@@ -1,6 +1,6 @@
 package com.mbw.office.demo.entity.base;
 
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

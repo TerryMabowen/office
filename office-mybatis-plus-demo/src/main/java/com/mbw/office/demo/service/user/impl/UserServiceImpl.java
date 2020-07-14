@@ -2,7 +2,7 @@ package com.mbw.office.demo.service.user.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import com.mbw.office.common.util.bean.BeanKit;
 import com.mbw.office.demo.entity.user.UserPO;
 import com.mbw.office.demo.mapper.user.UserMapper;

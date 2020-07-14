@@ -1,7 +1,7 @@
 package com.mbw.office.common.util.upload;
 
 import cn.hutool.core.util.StrUtil;
-import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.common.util.io.FileUtil;
 import com.mbw.office.common.util.validate.AssertUtil;

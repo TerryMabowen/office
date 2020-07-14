@@ -1,7 +1,7 @@
 package com.mbw.office.common.util.date;
 
 import cn.hutool.core.util.StrUtil;
-import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.lang.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,7 +2,7 @@ package com.mbw.office.common.util.encryption;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.lang.exception.ServiceException;
 
 import java.util.Base64;
 

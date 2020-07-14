@@ -1,6 +1,6 @@
 package com.mbw.office.sso.spi.enums;
 
-import com.mbw.office.common.enums.BaseEnumStatus;
+import com.mbw.office.common.lang.enums.BaseEnumStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

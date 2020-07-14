@@ -1,7 +1,7 @@
 package com.mbw.office.demo.web.controller.exception;
 
-import com.mbw.office.common.exception.ServiceException;
-import com.mbw.office.common.response.ResponseResults;
+import com.mbw.office.common.lang.exception.ServiceException;
+import com.mbw.office.common.lang.response.ResponseResults;
 import com.mbw.office.common.util.json.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;

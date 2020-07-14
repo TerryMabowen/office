@@ -1,6 +1,6 @@
 package com.mbw.office.sso.spi.zookeeper;
 
-import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.lang.exception.ServiceException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;

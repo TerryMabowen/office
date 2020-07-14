@@ -1,7 +1,7 @@
 package com.mbw.office.xxx;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.mbw.office.common.http.OkHttpClientFactory;
+import com.mbw.office.common.lang.http.OkHttpClientFactory;
 import com.mbw.office.common.util.json.JacksonFactory;
 import org.junit.Test;
 import org.springframework.http.HttpMethod;

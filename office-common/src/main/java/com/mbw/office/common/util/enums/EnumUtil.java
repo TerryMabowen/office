@@ -1,8 +1,8 @@
 package com.mbw.office.common.util.enums;
 
 
-import com.mbw.office.common.enums.BaseEnumStatus;
-import com.mbw.office.common.enums.CommonEnumStatus;
+import com.mbw.office.common.lang.enums.BaseEnumStatus;
+import com.mbw.office.common.lang.enums.CommonEnumStatus;
 
 /**
  * @author Mabowen

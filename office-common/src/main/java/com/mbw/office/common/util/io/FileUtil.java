@@ -1,7 +1,7 @@
 package com.mbw.office.common.util.io;
 
 import cn.hutool.core.io.IoUtil;
-import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.validate.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

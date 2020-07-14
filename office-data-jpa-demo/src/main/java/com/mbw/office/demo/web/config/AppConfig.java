@@ -1,6 +1,6 @@
 package com.mbw.office.demo.web.config;
 
-import com.mbw.office.common.helper.ApplicationContextHelper;
+import com.mbw.office.common.lang.helper.ApplicationContextHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

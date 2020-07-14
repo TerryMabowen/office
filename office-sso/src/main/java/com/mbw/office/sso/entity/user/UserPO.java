@@ -1,7 +1,7 @@
 package com.mbw.office.sso.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

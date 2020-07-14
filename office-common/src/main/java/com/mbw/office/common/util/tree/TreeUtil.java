@@ -1,6 +1,6 @@
 package com.mbw.office.common.util.tree;
 
-import com.mbw.office.common.exception.ServiceException;
+import com.mbw.office.common.lang.exception.ServiceException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

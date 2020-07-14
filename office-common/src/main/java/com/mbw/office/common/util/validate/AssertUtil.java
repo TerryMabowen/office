@@ -2,8 +2,8 @@ package com.mbw.office.common.util.validate;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.mbw.office.common.enums.BaseEnumStatus;
-import com.mbw.office.common.exception.AssertException;
+import com.mbw.office.common.lang.enums.BaseEnumStatus;
+import com.mbw.office.common.lang.exception.AssertException;
 import com.mbw.office.common.util.enums.EnumUtil;
 
 import java.util.Collection;

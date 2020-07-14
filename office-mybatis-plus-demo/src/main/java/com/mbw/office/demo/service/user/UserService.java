@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import com.mbw.office.demo.entity.base.BaseEntity;
 import com.mbw.office.demo.entity.user.UserPO;
 import com.mbw.office.demo.mapper.user.UserMapper;

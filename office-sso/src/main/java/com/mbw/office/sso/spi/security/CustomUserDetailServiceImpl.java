@@ -1,7 +1,7 @@
 package com.mbw.office.sso.spi.security;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.mbw.office.common.enums.EnumLogicStatus;
+import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import com.mbw.office.common.util.validate.AssertUtil;
 import com.mbw.office.sso.entity.user.UserPO;
 import com.mbw.office.sso.model.role.vo.RoleVO;
