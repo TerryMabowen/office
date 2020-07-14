@@ -12,6 +12,7 @@
         <module>office-mybatis-plus-demo</module>
         <module>office-sso</module>
         <module>mybatis-generate-demo</module>
+        <module>office-accessToken-demo</module>
     </modules>
     <name>office-parent</name>
 
