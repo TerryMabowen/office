@@ -53,10 +53,14 @@ public class UploadFileUtil {
 
         // 如果目录不存在则创建
         if (FileUtil.createFile(rootPath + currentDate, newName)) {
-            File tempFile = FileUtil.getFileByPath(rootPath + currentDate + newName);
+            File tempFile = FileUtil.getFile(rootPath + currentDate + newName);
             try{
-                //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
-                file.transferTo(tempFile);
+                if (tempFile != null) {
+                    //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
+                    file.transferTo(tempFile);
+                } else {
+                    throw new ServiceException(String.format("上传%s文件失败，失败原因是%s", oldName, "创建文件失败"));
+                }
             }catch (IOException e){
                 log.error("上传{}文件失败，失败原因是{}", oldName, e.getMessage());
                 throw new ServiceException(String.format("上传%s文件失败，失败原因是%s", oldName, e.getMessage()), e);

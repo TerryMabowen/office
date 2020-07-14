@@ -4,7 +4,6 @@ import cn.hutool.core.io.IoUtil;
 import com.mbw.office.common.exception.ServiceException;
 import com.mbw.office.common.util.validate.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,30 +26,31 @@ public class FileUtil {
         AssertUtil.assertNotEmpty(filename, "文件名不能为空");
 
         try {
-            File fileDir = new File(dir);
-            if (!fileDir.exists()) {
-                if(fileDir.mkdirs()) {
-                    File file = new File(fileDir, filename);
-                    if (!file.exists()) {
-                        return file.createNewFile();
-                    }
-                }
+            File file = new File(dir, filename);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
             }
 
-            return false;
+            return true;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             return false;
         }
     }
 
-    public static File getFileByPath(String path) {
+    public static File getFile(String path) {
         AssertUtil.assertNotEmpty(path, "文件路径不能为空");
 
-        return new File(path);
+        File file = new File(path);
+        if (file.exists()) {
+            return file;
+        } else {
+            return null;
+        }
     }
 
-    public static File[] getFilesByPath(String dir) {
+    public static File[] getFiles(String dir) {
         AssertUtil.assertNotEmpty(dir, "文件目录不能为空");
 
         File fileDir = new File(dir);
@@ -73,7 +73,48 @@ public class FileUtil {
 
             return true;
         } catch (Exception e) {
+            log.error(e.getMessage());
             return false;
+        }
+    }
+
+    public static void deleteDirectory(File dir) {
+        if (dir != null && dir.exists() && dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            if (files != null && files.length > 0) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        deleteDirectory(file);
+                    } else {
+                        file.delete();
+                    }
+                }
+            }
+
+            dir.delete();
+        }
+    }
+
+    /**
+     * 删除临时目录和临时目录下的文件
+     *
+     * @param path 临时目录
+     * @return
+     * @author Mabowen
+     * @date 17:32 2020-06-11
+     */
+    public static void deleteDirAndFiles(String path) {
+        if (StringUtils.isBlank(path)) {
+            throw new ServiceException("path can not be empty");
+        }
+
+        File file = new File(path);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                deleteDirectory(file);
+            } else {
+                file.delete();
+            }
         }
     }
 
@@ -107,30 +148,6 @@ public class FileUtil {
         } catch (IOException e) {
             log.error("下载文件异常： " + e.getMessage(), e);
             throw new ServiceException("下载文件异常： " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * 删除临时目录和临时目录下的文件
-     *
-     * @param path 临时目录
-     * @return
-     * @author Mabowen
-     * @date 17:32 2020-06-11
-     */
-    public static void deleteTempDirAndFiles(String path) {
-        if (StringUtils.isBlank(path)) {
-            throw new ServiceException("临时目录不能为空");
-        }
-
-        try {
-            File fileDir = new File(path);
-            if (fileDir.exists() && fileDir.isDirectory()) {
-                FileUtils.deleteDirectory(fileDir);
-            }
-        } catch (IOException e) {
-            log.error("删除临时目录和临时目录下的文件失败：" + e.getMessage(), e);
-            throw new ServiceException("删除临时目录和临时目录下的文件失败：" + e.getMessage(), e);
         }
     }
 }
