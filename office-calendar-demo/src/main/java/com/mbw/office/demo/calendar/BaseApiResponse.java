@@ -1,19 +1,17 @@
-package com.mbw.office.common.lang.okhttp;
+package com.mbw.office.demo.calendar;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import lombok.ToString;
 
 /**
- * OkHttp response
+ * TODO
  *
  * @author Mabowen
- * @date 2020-06-02 09:36
+ * @date 2020-07-15 15:39
  */
 @Data
-@ToString
-public class OkHttpBaseResponse<T> {
-    private Integer status;
+public class BaseApiResponse<T> {
+    private String status;
 
     private String t;
 

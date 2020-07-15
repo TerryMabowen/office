@@ -1,18 +1,20 @@
-package com.mbw.office.common.lang.okhttp;
+package com.mbw.office.demo.gson;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
- * OkHttp response
+ * TODO
  *
  * @author Mabowen
- * @date 2020-06-02 09:36
+ * @date 2020-07-15 12:07
  */
 @Data
 @ToString
-public class OkHttpBaseResponse<T> {
+public class BaseApiData {
     private Integer status;
 
     private String t;
@@ -20,5 +22,5 @@ public class OkHttpBaseResponse<T> {
     @SerializedName("set_cache_time")
     private String setCacheTime;
 
-    private T data;
+    private List<CalendarApiData> data;
 }

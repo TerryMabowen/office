@@ -1,11 +1,11 @@
 package com.mbw.office.common.lang.http;
 
-import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.lang.exception.ServiceException;
+import lombok.Setter;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 /**
  * OkHttpClient
@@ -15,7 +15,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class OkHttpClientFactory {
     private static OkHttpClientFactory factory;
-    private final MediaType JSON_CONTENT_TYPE = MediaType.get("application/json; charset=utf-8");
+    @Setter
+    private MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+    @Setter
+    private String charset = "UTF-8";
 
     private OkHttpClient defaultClient;
 
@@ -43,9 +46,9 @@ public class OkHttpClientFactory {
                     .build();
             Response response = defaultClient.newCall(request).execute();
             if (response.isSuccessful() && response.body() != null) {
-                return response.body().source().readByteString().string(StandardCharsets.UTF_8);
+                return response.body().source().readString(Charset.forName(charset));
             } else {
-                return StrUtil.EMPTY;
+                throw new ServiceException(response.message());
             }
         } catch (IOException e) {
             throw new ServiceException(e.getMessage(), e);
@@ -54,7 +57,7 @@ public class OkHttpClientFactory {
 
     public String doPost(String url, String jsonParams) {
         try {
-            RequestBody body = RequestBody.create(JSON_CONTENT_TYPE, jsonParams);
+            RequestBody body = RequestBody.create(mediaType, jsonParams);
             Request request = new Request.Builder()
                     .url(url)
                     .post(body)
@@ -62,9 +65,9 @@ public class OkHttpClientFactory {
 
             Response response = defaultClient.newCall(request).execute();
             if (response.isSuccessful() && response.body() != null) {
-                return response.body().source().readByteString().string(StandardCharsets.UTF_8);
+                return response.body().source().readString(Charset.forName(charset));
             } else {
-                return StrUtil.EMPTY;
+                throw new ServiceException(response.message());
             }
         } catch (IOException e) {
             throw new ServiceException(e.getMessage(), e);

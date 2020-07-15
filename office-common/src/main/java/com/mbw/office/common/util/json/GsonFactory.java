@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +51,7 @@ public class GsonFactory {
     public <T> T jsonToBean(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, clz);
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             log.error("json string to Object error: {}", e.getMessage(), e);
             return clz.cast(new Object());
         }
@@ -61,7 +60,7 @@ public class GsonFactory {
     public <T> List<T> jsonToList(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<List<T>>() {}.getType());
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             log.error("json string to List error: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
@@ -70,7 +69,7 @@ public class GsonFactory {
     public <T> Map<String, T> jsonToMap(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<Map<String, T>>() {}.getType());
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             log.error("json string to Map error: {}", e.getMessage(), e);
             return Collections.emptyMap();
         }
@@ -79,7 +78,7 @@ public class GsonFactory {
     public <T> List<Map<String, T>> jsonToListMap(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<List<Map<String, T>>>() {}.getType());
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             log.error("json string to List<Map> error: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
@@ -88,7 +87,7 @@ public class GsonFactory {
     private void init() {
         gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setDateFormat("yyyy-MM-dd")
                 .create();
     }
 }

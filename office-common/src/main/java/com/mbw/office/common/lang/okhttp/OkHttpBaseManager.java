@@ -1,10 +1,11 @@
 package com.mbw.office.common.lang.okhttp;
 
 import com.baidu.unbiz.fluentvalidator.Result;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.mbw.office.common.lang.okhttp.domain.LoginResponseData;
+import com.google.gson.GsonBuilder;
 import com.mbw.office.common.lang.exception.ServiceException;
-import com.mbw.office.common.util.json.GsonFactory;
+import com.mbw.office.common.lang.okhttp.domain.LoginResponseData;
 import com.mbw.office.common.util.validate.AssertUtil;
 import com.mbw.office.common.util.validate.ValidatorUtil;
 import lombok.Getter;
@@ -21,7 +22,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -54,8 +54,6 @@ public abstract class OkHttpBaseManager {
     private String accessToken = "";
     protected Integer expiryTime = 0;
     private Integer retryRefreshToken = 0;
-
-    private static Validator validator;
 
     public abstract OkHttpBaseResponse<LoginResponseData> refreshAccessToken();
 
@@ -130,12 +128,12 @@ public abstract class OkHttpBaseManager {
             }
         }).connectTimeout(okHttpConfig.getTimeout(), TimeUnit.MILLISECONDS).build();
 
-//        Gson gson = new GsonBuilder()
-//                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-//                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-//                .create();
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .setDateFormat("yyyy-MM-dd")
+                .create();
 
-        Gson gson = GsonFactory.getInstance().getGson();
+//        Gson gson = GsonFactory.getInstance().getGson();
 
         /**
          * 转换工厂

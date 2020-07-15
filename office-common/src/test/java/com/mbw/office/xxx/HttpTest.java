@@ -53,7 +53,7 @@ public class HttpTest {
         String url = "http://www.kuaidi100.com/query?type=yuantong&postid=11111111111";
         String result = OkHttpClientFactory.getInstance().doGet(url);
         JavaType javaType = JacksonFactory.getInstance().getConstructParametricJavaType(TestResponse.class, List.class);
-        TestResponse<List<Result>> response = (TestResponse<List<Result>>) JacksonFactory.getInstance().jsonToComplicatedBean(result, javaType);
+        TestResponse<List<Result>> response = JacksonFactory.getInstance().jsonToComplicatedBean(result, javaType);
         List<Result> results = response.getData();
         System.out.println(response);
         System.out.println(Arrays.toString(results.toArray()));
