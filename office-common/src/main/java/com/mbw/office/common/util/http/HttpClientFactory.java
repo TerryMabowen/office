@@ -33,7 +33,7 @@ public class HttpClientFactory {
 
     @Autowired
     @Getter @Setter
-    private HttpRequestConfig httpRequestConfig;
+    private HttpConfig httpRequestConfig;
 
     private CloseableHttpClient httpClient;
 

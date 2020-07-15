@@ -1,8 +1,10 @@
 package com.mbw.office.common.util.http;
 
 import com.mbw.office.common.lang.exception.ServiceException;
+import lombok.Getter;
 import lombok.Setter;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -16,11 +18,15 @@ import java.nio.charset.Charset;
 public class OkHttpClientFactory {
     private static OkHttpClientFactory factory;
     @Setter
-    private MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+    private static MediaType MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
     @Setter
-    private String charset = "UTF-8";
+    private static String CHARSET = "UTF-8";
 
     private OkHttpClient defaultClient;
+
+    @Autowired
+    @Getter @Setter
+    private OkHttpConfig okHttpConfig;
 
     public static OkHttpClientFactory getInstance() {
         if (factory != null) {
@@ -50,8 +56,8 @@ public class OkHttpClientFactory {
             Response response = defaultClient.newCall(request).execute();
 
             if (response.isSuccessful() && response.body() != null) {
-                System.out.println(String.format("ResponseBody: %s", response.body().source().readString(Charset.forName(charset))));
-                return response.body().source().readString(Charset.forName(charset));
+                System.out.println(String.format("ResponseBody: %s", response.body().source().readString(Charset.forName(CHARSET))));
+                return response.body().source().readString(Charset.forName(CHARSET));
             } else {
                 throw new ServiceException(response.message());
             }
@@ -62,7 +68,7 @@ public class OkHttpClientFactory {
 
     public String doPost(String url, String jsonParams) {
         try {
-            RequestBody body = RequestBody.create(mediaType, jsonParams);
+            RequestBody body = RequestBody.create(MEDIA_TYPE, jsonParams);
             Request request = new Request.Builder()
                     .url(url)
                     .post(body)
@@ -73,8 +79,8 @@ public class OkHttpClientFactory {
             Response response = defaultClient.newCall(request).execute();
 
             if (response.isSuccessful() && response.body() != null) {
-                System.out.println(String.format("ResponseBody: %s", response.body().source().readString(Charset.forName(charset))));
-                return response.body().source().readString(Charset.forName(charset));
+                System.out.println(String.format("ResponseBody: %s", response.body().source().readString(Charset.forName(CHARSET))));
+                return response.body().source().readString(Charset.forName(CHARSET));
             } else {
                 throw new ServiceException(response.message());
             }

@@ -55,7 +55,7 @@ public class OkHttpTest {
 
     private String getResult(String url) {
         OkHttpClientFactory clientFactory = OkHttpClientFactory.getInstance();
-        clientFactory.setCharset("GBK");
+        clientFactory.setCHARSET("GBK");
         return clientFactory.doGet(url);
     }
 }

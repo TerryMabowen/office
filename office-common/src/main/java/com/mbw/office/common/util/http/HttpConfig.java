@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-public class HttpRequestConfig {
+public class HttpConfig {
     private RequestConfig requestConfig;
+    private String charset;
     private Header[] headers;
 }
