@@ -44,8 +44,13 @@ public class OkHttpClientFactory {
                     .url(url)
                     .get()
                     .build();
+
+            System.out.println(String.format("RequestBody: %s", request.url().query()));
+
             Response response = defaultClient.newCall(request).execute();
+
             if (response.isSuccessful() && response.body() != null) {
+                System.out.println(String.format("ResponseBody: %s", response.body().source().readString(Charset.forName(charset))));
                 return response.body().source().readString(Charset.forName(charset));
             } else {
                 throw new ServiceException(response.message());
@@ -63,8 +68,12 @@ public class OkHttpClientFactory {
                     .post(body)
                     .build();
 
+            System.out.println(String.format("RequestBody: %s", request.url().query()));
+
             Response response = defaultClient.newCall(request).execute();
+
             if (response.isSuccessful() && response.body() != null) {
+                System.out.println(String.format("ResponseBody: %s", response.body().source().readString(Charset.forName(charset))));
                 return response.body().source().readString(Charset.forName(charset));
             } else {
                 throw new ServiceException(response.message());
