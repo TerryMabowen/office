@@ -1,4 +1,4 @@
-package com.mbw.office.common.lang.http;
+package com.mbw.office.common.util.http;
 
 import com.mbw.office.common.lang.exception.ServiceException;
 import lombok.Setter;

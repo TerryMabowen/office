@@ -1,6 +1,6 @@
 package com.mbw.office.test.jackson;
 
-import com.mbw.office.common.lang.http.OkHttpClientFactory;
+import com.mbw.office.common.util.http.OkHttpClientFactory;
 import com.mbw.office.common.util.json.GsonFactory;
 import com.mbw.office.common.util.json.JacksonFactory;
 import com.mbw.office.demo.calendar.BaseApiResponse;

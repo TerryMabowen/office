@@ -2,7 +2,7 @@ package com.mbw.office.demo.jackson;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.mbw.office.common.lang.exception.ServiceException;
-import com.mbw.office.common.lang.http.OkHttpClientFactory;
+import com.mbw.office.common.util.http.OkHttpClientFactory;
 import com.mbw.office.common.util.json.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

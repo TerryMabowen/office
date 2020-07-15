@@ -1,6 +1,6 @@
 package com.mbw.office.test.gson;
 
-import com.mbw.office.common.lang.http.OkHttpClientFactory;
+import com.mbw.office.common.util.http.OkHttpClientFactory;
 import com.mbw.office.common.util.json.GsonFactory;
 import com.mbw.office.demo.gson.BaseApiData;
 import org.junit.Test;
