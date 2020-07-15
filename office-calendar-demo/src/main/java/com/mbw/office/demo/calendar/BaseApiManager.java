@@ -66,7 +66,7 @@ public abstract class BaseApiManager {
                 if (StrUtil.isNotBlank(baos.toString(CHARSET))) {
                     System.out.println(String.format("RequestBody: %s", baos.toString(CHARSET)));
                 } else {
-                    System.out.println(String.format("RequestBody: %s", request.url().query()));
+                    System.out.println(String.format("RequestBody: %s", request.url().encodedQuery()));
                 }
 
                 AssertUtil.assertNotNull(response.body(), "response.body()不存在");
@@ -80,7 +80,7 @@ public abstract class BaseApiManager {
                 OkHttpApiData apiData = OkHttpApiData.builder()
                         .url(request.url().encodedPath())
                         .query(request.url().query())
-                        .requestBody(baos.toString(CHARSET))
+                        .requestBody(StrUtil.isNotBlank(baos.toString(CHARSET)) ? baos.toString(CHARSET) : request.url().encodedQuery())
                         .responseBody(body)
                         .httpMethod(request.method())
                         .httpStatus(response.code())

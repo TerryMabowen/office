@@ -49,6 +49,10 @@ public class DateUtil {
         return format(now(), TIMESTAMP_PATTERN);
     }
 
+//    public static String judgeDatePattern(String date) {
+//
+//    }
+
     /**
      * 格式化时间
      * @author Mabowen

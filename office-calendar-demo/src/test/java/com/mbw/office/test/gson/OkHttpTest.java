@@ -24,7 +24,8 @@ public class OkHttpTest {
 
     private String getUrl(String year, String month) {
         String query = year + "年" + month + "月";
-        return "http://opendata.baidu.com/api.php?query=" + query + "&resource_id=6018&format=json";
+//        return "http://opendata.baidu.com/api.php?query=" + query + "&resource_id=6018&format=json";
+        return "https://www.baidu.com//api.php?query=" + query + "&resource_id=6018&format=json";
     }
 
     private String getResult(String url) {

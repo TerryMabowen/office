@@ -39,7 +39,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public abstract class OkHttpBaseManager {
     private final static int LIMIT_PER_SECONDS = 100;
-    private final static String CHARSET = "UTF-8";
+
+    private static String CHARSET = "UTF-8";
 
     @Autowired
     @Getter
@@ -59,6 +60,10 @@ public abstract class OkHttpBaseManager {
     public abstract OkHttpBaseResponse<LoginResponseData> refreshAccessToken();
 
     protected Object createApiProxy(Class<?> cls) {
+        if (StrUtil.isNotBlank(okHttpConfig.getCharset())) {
+            CHARSET = okHttpConfig.getCharset();
+        }
+
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @Override
             public Response intercept(@NotNull Interceptor.Chain chain) throws IOException {
@@ -102,19 +107,18 @@ public abstract class OkHttpBaseManager {
                         .clone()
                         .readString(Charset.forName(CHARSET));
 
+                System.out.println(String.format("ResponseBody: %s", body));
+
                 OkHttpApiData apiData = OkHttpApiData.builder()
                         .url(request.url().encodedPath())
                         .query(request.url().query())
-                        .requestBody(baos.toString(CHARSET))
+                        .requestBody(StrUtil.isNotBlank(baos.toString(CHARSET)) ? baos.toString(CHARSET) : request.url().encodedQuery())
                         .responseBody(body)
                         .httpMethod(request.method())
                         .httpStatus(response.code())
                         .httpMessage(response.message())
                         .duration(System.currentTimeMillis() - beginTime)
                         .build();
-
-                System.out.println(String.format("ResponseBody: %s", body));
-
                 if (log.isDebugEnabled()) {
                     log.debug("ApiData: " + apiData.toString());
                 }

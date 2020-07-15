@@ -35,6 +35,11 @@ public class OkHttpConfig {
     private Integer timeout;
 
     /**
+     * 字符集
+     */
+    private String charset;
+
+    /**
      * 请求头
      */
     private Map<String, String> requestHeaders;
