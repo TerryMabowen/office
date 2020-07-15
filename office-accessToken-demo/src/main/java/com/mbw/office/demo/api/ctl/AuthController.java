@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController extends BaseApiService {
     @Autowired
     private BaseRedisService baseRedisService;
-    private long timeToken = 60 * 60 * 2;
+
+    private long TIME_TOKEN = 60 * 60 * 2;
+
     @Autowired
     private AppMapper appMapper;
 
@@ -47,7 +49,7 @@ public class AuthController extends BaseApiService {
         // 生成的新的accessToken
         String newAccessToken = newAccessToken(appResult.getAppId());
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("accessToken", newAccessToken);
+        jsonObject.set("accessToken", newAccessToken);
         return setResultSuccessData(jsonObject);
     }
 
@@ -56,7 +58,7 @@ public class AuthController extends BaseApiService {
         String accessToken = TokenUtil.getAccessToken();
         // 保证在同一个事物redis 事物中
         // 生成最新的token key为accessToken value 为 appid
-        baseRedisService.setString(accessToken, appId, timeToken);
+        baseRedisService.setString(accessToken, appId, TIME_TOKEN);
         // 表中保存当前accessToken
         appMapper.updateAccessToken(accessToken, appId);
         return accessToken;
