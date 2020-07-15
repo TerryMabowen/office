@@ -1,5 +1,6 @@
 package com.mbw.office.common.lang.okhttp;
 
+import cn.hutool.core.util.StrUtil;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -87,7 +88,11 @@ public abstract class OkHttpBaseManager {
                 bufferedSink.close();
                 sink.close();
 
-                System.out.println(String.format("RequestBody: %s", baos.toString(CHARSET)));
+                if (StrUtil.isNotBlank(baos.toString(CHARSET))) {
+                    System.out.println(String.format("RequestBody: %s", baos.toString(CHARSET)));
+                } else {
+                    System.out.println(String.format("RequestBody: %s", request.url().query()));
+                }
 
                 AssertUtil.assertNotNull(response.body(), "response.body()不存在");
                 BufferedSource source = response.body().source();

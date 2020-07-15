@@ -1,6 +1,5 @@
 package com.mbw.office.common.lang.okhttp;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.ToString;
 
@@ -15,10 +14,7 @@ import lombok.ToString;
 public class OkHttpBaseResponse<T> {
     private Integer status;
 
-    private String t;
-
-    @SerializedName("set_cache_time")
-    private String setCacheTime;
+    private String message;
 
     private T data;
 }
