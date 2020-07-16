@@ -1,12 +1,10 @@
 package com.mbw.office.demo.web.controller.fb;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
 
-import java.util.Set;
 
 /**
- * TODO
- *
  * @author Mabowen
  * @date 2020-07-03 10:08
  */
@@ -17,16 +15,12 @@ public class UserFB {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     /**
-     * 加密密码
+     * 密码
      */
-    private String passwordHash;
-
-    private Set<Long> ids;
-
-    private String beginTime;
-
-    private String endTime;
+    @NotBlank(message = "密码不能为空")
+    private String password;
 }

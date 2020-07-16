@@ -158,7 +158,7 @@ function getYearEndDate() {
     return formatDate(currentYearEndDate);
 }
 
-var datekit = {
+var dateKit = {
     getNowDate: getNowDate,
     getWeekStartDate: getWeekStartDate,
     getWeekEndDate: getWeekEndDate,

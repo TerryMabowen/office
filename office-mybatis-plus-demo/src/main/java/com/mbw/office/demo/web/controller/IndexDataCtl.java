@@ -1,10 +1,12 @@
 package com.mbw.office.demo.web.controller;
 
+import com.baidu.unbiz.fluentvalidator.Result;
 import com.mbw.office.common.lang.response.PageResult;
 import com.mbw.office.common.lang.response.ResponseResults;
 import com.mbw.office.demo.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
 import com.mbw.office.demo.web.controller.base.BaseDataCtl;
+import com.mbw.office.demo.web.controller.fb.UserFB;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -54,7 +56,7 @@ public class IndexDataCtl extends BaseDataCtl {
         }
     }
 
-    @PostMapping("page/users")
+    @PostMapping("/page/users")
     @ApiOperation(value = "分页查询用户")
     public PageResult pageUsers() {
         try {
@@ -65,6 +67,24 @@ public class IndexDataCtl extends BaseDataCtl {
         } catch (Exception e) {
             return PageResult.newFailed()
                     .setMessage(e.getMessage());
+        }
+    }
+
+    @PostMapping("/user/add")
+    @ApiOperation(value = "添加用户")
+    public ResponseResults addUser(UserFB fb) {
+        try {
+            Result result = validate(fb);
+            if (!result.isSuccess()) {
+                return ResponseResults.newFailed()
+                        .setMessage("参数校验失败，原因是：" + result.getErrors().toString());
+            }
+
+            return ResponseResults.newSuccess()
+                    .setMessage("添加用户成功");
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage("添加用户失败，原因是：" + e.getMessage());
         }
     }
 }
