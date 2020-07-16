@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import java.io.PrintWriter;
  */
 @Slf4j
 @ControllerAdvice(basePackages = {"com.mbw.office.sso.web.controller"})
+@ApiIgnore
 public class ExceptionAdvice {
     final static String DEFAULT_ERROR_MSG = "当前请求出现错误,请重试或者联系管理员";
 

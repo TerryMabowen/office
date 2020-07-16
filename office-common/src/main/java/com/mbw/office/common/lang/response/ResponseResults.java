@@ -1,5 +1,8 @@
 package com.mbw.office.common.lang.response;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +11,7 @@ import java.io.Serializable;
  * @author Mabowen
  * @date 2020-05-19 17:15
  */
+@ApiModel(value = "接口返回说明")
 public class ResponseResults implements Serializable {
     private static final long serialVersionUID = 5390343053421148656L;
 
@@ -22,11 +26,14 @@ public class ResponseResults implements Serializable {
     /**
      * 属性
      */
+    @ApiModelProperty(value = "请求是否成功；true：成功；false：失败")
     private boolean success;
+    @ApiModelProperty(value = "返回数据")
     private Object data;
+    @ApiModelProperty(value = "返回信息")
     private String message;
+    @ApiModelProperty(value = "请求状态码；200：请求成功；500：服务器错误；403：无权限访问；400：参数错误")
     private Integer code;
-    private Integer status;
 
     public ResponseResults() {
     }
@@ -109,15 +116,6 @@ public class ResponseResults implements Serializable {
         return this;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public ResponseResults setStatus(Integer status) {
-        this.status = status;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -138,9 +136,6 @@ public class ResponseResults implements Serializable {
         if (!message.equals(that.message)) {
             return false;
         }
-        if (!status.equals(that.status)) {
-            return false;
-        }
         return code.equals(that.code);
     }
 
@@ -150,7 +145,6 @@ public class ResponseResults implements Serializable {
         result = 31 * result + data.hashCode();
         result = 31 * result + message.hashCode();
         result = 31 * result + code.hashCode();
-        result = 31 * result + status.hashCode();
         return result;
     }
 
@@ -159,7 +153,6 @@ public class ResponseResults implements Serializable {
         return "ResponseResults{" +
                 "success=" + success +
                 ", code=" + code +
-                ", status=" + status +
                 ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';

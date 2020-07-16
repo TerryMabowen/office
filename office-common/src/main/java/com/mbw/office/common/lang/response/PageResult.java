@@ -1,5 +1,8 @@
 package com.mbw.office.common.lang.response;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +11,7 @@ import java.io.Serializable;
  * @author Mabowen
  * @date 2020-05-19 17:17
  */
+@ApiModel(value = "分页查询返回信息")
 public class PageResult implements Serializable {
     private static final long serialVersionUID = -8322865242392387264L;
 
@@ -22,10 +26,15 @@ public class PageResult implements Serializable {
     /**
      * 属性
      */
+    @ApiModelProperty(value = "请求是否成功；true：成功；false：失败")
     private boolean success;
+    @ApiModelProperty(value = "请求状态码；200：请求成功；500：服务器错误；403：无权限访问；400：参数错误")
     private Integer code;
+    @ApiModelProperty(value = "返回信息")
     private String message;
+    @ApiModelProperty(value = "返回数据总数")
     private long count;
+    @ApiModelProperty(value = "返回数据")
     private Object data;
 
     public PageResult() {
@@ -60,7 +69,7 @@ public class PageResult implements Serializable {
     public static PageResult newSuccess(String msg, Object data, long count) {
         PageResult responsePage = new PageResult();
         responsePage.setSuccess(true);
-        responsePage.setCode(OK);
+        responsePage.setCode(SUCCESS);
         responsePage.setMessage(msg);
         responsePage.setData(data);
         responsePage.setCount(count);

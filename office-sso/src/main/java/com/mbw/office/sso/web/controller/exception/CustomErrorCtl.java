@@ -78,13 +78,11 @@ public class CustomErrorCtl implements ErrorController {
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 return ResponseResults
                         .newFailed("接口没有找到.")
-                        .setStatus(statusCode)
                         .setCode(statusCode)
                         .setData(body);
             }
 
             return ResponseResults.newFailed("请求错误")
-                    .setStatus(statusCode)
                     .setCode(statusCode)
                     .setData(body);
         }

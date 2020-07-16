@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.ServletWebRequest;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import java.util.Map;
  */
 @Slf4j
 @Controller
+@ApiIgnore
 public class CustomErrorCtl implements ErrorController {
 
     private static final String ERROR_404_VIEW = "errors/404.html";
@@ -78,13 +80,11 @@ public class CustomErrorCtl implements ErrorController {
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 return ResponseResults
                         .newFailed("接口没有找到.")
-                        .setStatus(statusCode)
                         .setCode(statusCode)
                         .setData(body);
             }
 
             return ResponseResults.newFailed("请求错误")
-                    .setStatus(statusCode)
                     .setCode(statusCode)
                     .setData(body);
         }
