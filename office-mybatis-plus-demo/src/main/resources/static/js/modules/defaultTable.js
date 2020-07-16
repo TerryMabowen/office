@@ -16,10 +16,11 @@ function resize(tableId) {
  * @param  {[type]} value [description]
  * @param  {[type]} row   [description]
  * @param  {[type]} index [description]
+ * @param option 操作栏html
  * @return {[type]}       [description]
  */
-function infoFormatter(value, row, index) {
-    return "id:" + row.id + " name:" + row.name + " age:" + row.age;
+function infoFormatter(value, row, index, option) {
+    return option;
 }
 
 function renderTable(tableId, url, columns, toolbarId) {
@@ -70,13 +71,13 @@ function renderTable(tableId, url, columns, toolbarId) {
         //     $element.css("background-color", "green");
         // },//单击row事件
         locale: "zh-CN", //中文支持
-        // detailView: false, //是否显示详情折叠
+        // detailView: true, //是否显示详情折叠
         // detailFormatter: function (index, row, element) {
-        //     var html = '';
-        //     $.each(row, function (key, val) {
-        //         html += "<p>" + key + ":" + val + "</p>"
-        //     });
-        //     return html;
+        //     return  '<button type="button" class="btn btn-default btn-sm" style="margin-right:15px;">A权限</button>' +
+        //         '<button type="button" class="btn btn-default btn-sm" style="margin-right:15px;">B权限</button>' +
+        //         '<button type="button" class="btn btn-default btn-sm" style="margin-right:15px;">C权限</button>' +
+        //         '<button type="button" class="btn btn-default btn-sm" id="bind-cell" style="margin-right:15px;">绑定D</button>' +
+        //         '<button type="button" class="btn btn-default btn-sm" id="edit=cell" style="margin-right:15px;">编辑</button>';
         // }
     });
 }
@@ -88,5 +89,6 @@ function refresh(tableId) {
 var defaultTable = {
     renderTable: renderTable,
     resize: resize,
-    refresh: refresh
+    refresh: refresh,
+    infoFormatter: infoFormatter
 };

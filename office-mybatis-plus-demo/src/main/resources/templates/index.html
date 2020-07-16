@@ -94,43 +94,56 @@
 </div>
 
 </body>
+<script type="text/html">
+    <div id="edit-user" style="display: none;">
+        <form class="form-horizontal" role="form" action="javascript:void(0)" id="edit-user-form">
+            <input type="hidden" id="userId" name="id">
+            <div class="form-group row">
+                <label for="username" class="col-sm-3 control-label">
+                    <span style="color: #CF1900">*</span>用户名
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="username" placeholder="请输入用户名" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="username" class="col-sm-3 control-label">
+                    <span style="color: #CF1900">*</span>密码
+                </label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="password" placeholder="请输入密码" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group" style="text-align: center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="editRecord">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
 <script type="text/javascript">
-    $('#button1').click(function () {
-        http.getData('/index/user/1'
-        ).then(function (res) {
-            alert('user: ' + JSON.stringify(res.data));
-        }).catch(function (res) {
-            alert(res.message);
-        })
-    });
+    // 时间
+    function events() {
+        $('#button1').click(function () {
+            let sum = test(1, 2, 3);
+            console.log(sum);
+           getUserById(1);
+        });
 
-    $('#button2').click(function () {
-        http.getData('/index/users'
-        ).then(function (res) {
-            alert('users: ' + JSON.stringify(res.data));
-        }).catch(function (res) {
-            alert(res.message);
-        })
-    });
+        $('#button2').click(function () {
+            listUsers();
+        });
 
-    $('#addRecord').on('click', function () {
-        let username = $("#username").val();
-        let password = $("#password").val();
-        http.postData('/index/user/add', {
-            username: username,
-            password: password
-        }).then(function (result) {
-            alert(result.message);
+        $('#addRecord').on('click', function () {
+            let username = $("#username").val();
+            let password = $("#password").val();
+            addUser(username, password);
+        });
+
+        $('#refresh').on('click', function () {
             defaultTable.refresh('main-table');
-            parent.layer.closeAll()
-        }).catch(function (result) {
-            alert(result.message);
-        })
-    });
-
-    $('#refresh').on('click', function () {
-        defaultTable.refresh('main-table');
-    });
+        });
+    }
 
     function renderTable() {
         let columns = [
@@ -164,18 +177,76 @@
             {
                 title: "更新时间",
                 field: "updatedTime",
+            },
+            {
+                title: "操作",
+                field: "id",
+                formatter: option
             }
         ];
         defaultTable.resize('main-table');
         defaultTable.renderTable('main-table', '/index/page/users', columns, 'toolbar');
     }
 
+    function option(value, row, index) {
+        return  '<button class="bt btn-primary" onclick="deleteUser(' + value + ')" >删除</button>'
+            + '&nbsp;&nbsp;&nbsp;'
+            + '<button class="bt btn-primary" onclick="editUser(' + value + ')">修改</button>'
+    }
+
     function formValidator() {
         validator.validate('add-user-form', username, password);
     }
 
+    function test(a, b, c) {
+        return (a + b + c);
+    }
+
+    function getUserById(userId) {
+        http.getData('/index/user/'+
+            userId,
+        ).then(function (result) {
+            alert('user: ' + JSON.stringify(result.data));
+            return result.data;
+        }).catch(function (result) {
+            alert(result.message);
+        })
+    }
+
+    function listUsers() {
+        http.getData('/index/users'
+        ).then(function (result) {
+            alert('user: ' + JSON.stringify(result.data));
+            return result.data;
+        }).catch(function (result) {
+            alert(result.message);
+        })
+    }
+
+    function addUser(username, password) {
+        http.postData('/index/user/add', {
+            username: username,
+            password: password
+        }).then(function (result) {
+            alert(result.message);
+            defaultTable.refresh('main-table');
+            parent.layer.closeAll()
+        }).catch(function (result) {
+            alert(result.message);
+        })
+    }
+
+    function editUser(userId) {
+        console.log(userId);
+    }
+
+    function deleteUser(userId) {
+        console.log(userId);
+    }
+
     // 页面html加载完后执行
     $(function () {
+        events();
         renderTable();
         formValidator();
     })
