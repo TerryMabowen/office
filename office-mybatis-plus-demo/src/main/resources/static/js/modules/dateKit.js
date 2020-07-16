@@ -1,7 +1,6 @@
 /**
  * 获取本周、本季度、本月、上月的开始日期、结束日期
  */
-var layer = layui.layer;
 
 //当前日期
 var now = new Date();
@@ -40,7 +39,7 @@ function parseStrDate(strDate) {
         strDate += ' GMT+8';
         return new Date(strDate);
     } else {
-        layer.msg('传入的字符串日期不能为空字符串');
+        alert('传入的字符串日期不能为空字符串');
     }
 }
 

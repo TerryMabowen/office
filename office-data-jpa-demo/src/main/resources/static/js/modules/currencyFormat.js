@@ -1,12 +1,11 @@
-var layer = layui.layer;
 /**
  * 对前端展示的金额进行格式化，使其以千分位显示
  */
 var formatCurrency = function format(num) {
-    if (num == null || num == undefined || '' == num) {
+    if (num === null || num === undefined || '' === num) {
         return "0.00";
     } else {
-        if (0 == num || isNaN(num)) {
+        if (0 === num || isNaN(num)) {
             return "0.00";
         }
         //将num中的$,去掉，将num变成一个纯粹的数据格式字符串
@@ -17,7 +16,7 @@ var formatCurrency = function format(num) {
         var cents = num.indexOf(".") > 0 ? num.substr(num.indexOf(".")) : '';
         cents = cents.length > 1 ? cents : '.00';
         //如果小数部分只有一位，则在后面补上0
-        if (cents.length == 2) {
+        if (cents.length === 2) {
             cents = cents + '0';
         }
         //获取数字的整数数部分
