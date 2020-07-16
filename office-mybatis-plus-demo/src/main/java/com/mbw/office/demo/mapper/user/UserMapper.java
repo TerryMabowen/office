@@ -26,7 +26,7 @@ public interface UserMapper extends BaseMapper<UserPO> {
             @Result(column = "id", property = "id"),
             @Result(column = "id", property = "roles", many = @Many(select = "com.mbw.office.demo.mapper.role.RoleMapper.listRolesByUserIds", fetchType = FetchType.EAGER))
     })
-    @Select("select u.* from oc_sso_users u where u.status = #{status}")
+    @Select("select u.* from oc_sso_users u where u.status = #{status} order by u.updated_time")
     List<UserPO> listUserWithRoles(@Param("status") Integer status);
 
 

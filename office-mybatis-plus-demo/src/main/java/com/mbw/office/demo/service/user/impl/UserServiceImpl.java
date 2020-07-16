@@ -4,8 +4,10 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import com.mbw.office.common.util.bean.BeanKit;
+import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.demo.entity.user.UserPO;
 import com.mbw.office.demo.mapper.user.UserMapper;
+import com.mbw.office.demo.model.user.dto.UserDTO;
 import com.mbw.office.demo.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,5 +45,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
         List<UserVO> vos = BeanKit.toBeans(pos, UserVO.class);
         log.info("UserVOS: {}", Arrays.toString(vos.toArray()));
         return vos;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addUser(UserDTO dto) {
+        UserPO po = new UserPO().setUsername(dto.getUsername())
+                .setPasswordHash(dto.getPassword());
+        po.setCreatedTime(DateUtil.now());
+        po.setUpdatedTime(DateUtil.now());
+        po.setStatus(EnumLogicStatus.NORMAL.getValue());
+
+        userMapper.insert(po);
     }
 }

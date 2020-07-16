@@ -59,8 +59,8 @@ public class UserService {
         if (StrUtil.isNotBlank(dto.getUsername())) {
             lambdaQueryWrapper.likeRight(UserPO::getUsername, dto.getUsername());
         }
-        if (StrUtil.isNotBlank(dto.getPasswordHash())) {
-            lambdaQueryWrapper.like(UserPO::getPasswordHash, dto.getPasswordHash());
+        if (StrUtil.isNotBlank(dto.getPassword())) {
+            lambdaQueryWrapper.like(UserPO::getPasswordHash, dto.getPassword());
         }
 
         lambdaQueryWrapper.in(UserPO::getId, dto.getIds())

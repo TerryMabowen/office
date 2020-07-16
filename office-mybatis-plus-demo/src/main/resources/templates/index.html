@@ -45,6 +45,7 @@
         <div class="col-*-12">
 
             <div id="toolbar">
+                <div class= "btn btn-primary" id="refresh">刷新</div>
                 <div class="btn btn-primary" data-toggle="modal" data-target="#addModal">添加用户</div>
             </div>
 
@@ -79,7 +80,7 @@
 
                                 <div class="form-group" style="text-align: center">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="submit" class="btn btn-primary" id="addRecord">确定</button>
+                                    <button type="button" class="btn btn-primary" id="addRecord">确定</button>
                                 </div>
                             </form>
                         </div>
@@ -97,7 +98,7 @@
     $('#button1').click(function () {
         http.getData('/index/user/1'
         ).then(function (res) {
-            console.log(res.data);
+            alert('user: ' + JSON.stringify(res.data));
         }).catch(function (res) {
             alert(res.message);
         })
@@ -106,7 +107,7 @@
     $('#button2').click(function () {
         http.getData('/index/users'
         ).then(function (res) {
-            console.log(res.data);
+            alert('users: ' + JSON.stringify(res.data));
         }).catch(function (res) {
             alert(res.message);
         })
@@ -120,10 +121,15 @@
             password: password
         }).then(function (result) {
             alert(result.message);
-            renderTable();
+            defaultTable.refresh('main-table');
+            parent.layer.closeAll()
         }).catch(function (result) {
             alert(result.message);
         })
+    });
+
+    $('#refresh').on('click', function () {
+        defaultTable.refresh('main-table');
     });
 
     function renderTable() {
@@ -160,6 +166,7 @@
                 field: "updatedTime",
             }
         ];
+        defaultTable.resize('main-table');
         defaultTable.renderTable('main-table', '/index/page/users', columns, 'toolbar');
     }
 

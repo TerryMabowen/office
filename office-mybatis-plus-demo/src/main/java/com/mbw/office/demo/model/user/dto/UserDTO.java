@@ -23,7 +23,7 @@ public class UserDTO {
     /**
      * 加密密码
      */
-    private String passwordHash;
+    private String password;
 
     private Set<Long> ids;
 

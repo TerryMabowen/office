@@ -81,7 +81,12 @@ function renderTable(tableId, url, columns, toolbarId) {
     });
 }
 
+function refresh(tableId) {
+    $("#" + tableId).bootstrapTable('refresh');
+}
+
 var defaultTable = {
     renderTable: renderTable,
-    resize: resize
+    resize: resize,
+    refresh: refresh
 };

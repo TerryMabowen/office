@@ -3,6 +3,7 @@ package com.mbw.office.demo.web.controller;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.mbw.office.common.lang.response.PageResult;
 import com.mbw.office.common.lang.response.ResponseResults;
+import com.mbw.office.demo.model.user.dto.UserDTO;
 import com.mbw.office.demo.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
 import com.mbw.office.demo.web.controller.base.BaseDataCtl;
@@ -79,6 +80,12 @@ public class IndexDataCtl extends BaseDataCtl {
                 return ResponseResults.newFailed()
                         .setMessage("参数校验失败，原因是：" + result.getErrors().toString());
             }
+
+            UserDTO dto = UserDTO.builder()
+                    .username(fb.getUsername())
+                    .password(fb.getPassword())
+                    .build();
+            userService.addUser(dto);
 
             return ResponseResults.newSuccess()
                     .setMessage("添加用户成功");
