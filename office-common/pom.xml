@@ -104,6 +104,11 @@
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!--微信支付封装sdk-->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-pay</artifactId>
+        </dependency>
         <!--retrofit2-->
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
