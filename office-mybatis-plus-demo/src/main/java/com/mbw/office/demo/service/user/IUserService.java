@@ -2,8 +2,8 @@ package com.mbw.office.demo.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mbw.office.demo.entity.user.UserPO;
-import com.mbw.office.demo.model.user.dto.UserDTO;
-import com.mbw.office.demo.model.user.vo.UserVO;
+import com.mbw.office.demo.jalian.model.user.dto.UserDTO;
+import com.mbw.office.demo.jalian.model.user.vo.UserVO;
 
 import java.util.List;
 

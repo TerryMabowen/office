@@ -9,8 +9,8 @@ import com.mbw.office.common.lang.enums.EnumLogicStatus;
 import com.mbw.office.demo.entity.base.BaseEntity;
 import com.mbw.office.demo.entity.user.UserPO;
 import com.mbw.office.demo.mapper.user.UserMapper;
-import com.mbw.office.demo.model.user.dto.UserDTO;
-import com.mbw.office.demo.model.user.vo.UserVO;
+import com.mbw.office.demo.jalian.model.user.dto.UserDTO;
+import com.mbw.office.demo.jalian.model.user.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

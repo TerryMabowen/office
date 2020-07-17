@@ -1,6 +1,6 @@
 package com.mbw.office.demo.service.user;
 
-import com.mbw.office.demo.model.user.vo.UserVO;
+import com.mbw.office.demo.jalian.model.user.vo.UserVO;
 
 import java.util.List;
 

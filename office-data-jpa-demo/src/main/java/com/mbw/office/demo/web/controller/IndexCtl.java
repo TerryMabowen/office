@@ -1,6 +1,6 @@
 package com.mbw.office.demo.web.controller;
 
-import com.mbw.office.demo.model.user.vo.UserVO;
+import com.mbw.office.demo.jalian.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
 import com.mbw.office.demo.web.controller.base.BaseCtl;
 import org.springframework.beans.factory.annotation.Autowired;
