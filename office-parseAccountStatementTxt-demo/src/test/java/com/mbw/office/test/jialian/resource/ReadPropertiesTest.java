@@ -1,6 +1,6 @@
 package com.mbw.office.test.jialian.resource;
 
-import com.mbw.office.demo.biz.jalian.resource.ReadPropertiesDemo;
+import com.mbw.office.demo.biz.jalian.resource.ReadPropertiesService;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * @date 2020-07-17 11:33
  */
 public class ReadPropertiesTest {
-    private ReadPropertiesDemo readPropertiesDemo = new ReadPropertiesDemo();
+    private ReadPropertiesService readPropertiesDemo = new ReadPropertiesService();
 
     @Test
     public void f1() {

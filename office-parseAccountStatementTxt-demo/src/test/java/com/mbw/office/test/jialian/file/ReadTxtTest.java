@@ -1,6 +1,6 @@
 package com.mbw.office.test.jialian.file;
 
-import com.mbw.office.demo.biz.jalian.file.ReadTxtDemo;
+import com.mbw.office.demo.biz.jalian.file.ReadTxtService;
 import org.junit.Test;
 
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ReadTxtTest {
     private String rootPath = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
-    private ReadTxtDemo readTxtDemo = new ReadTxtDemo();
+    private ReadTxtService readTxtDemo = new ReadTxtService();
     @Test
     public void f1() {
         String path = rootPath + "51010718062610109608_20190605_5.txt";

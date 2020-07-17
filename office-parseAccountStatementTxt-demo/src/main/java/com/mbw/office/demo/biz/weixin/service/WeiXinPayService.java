@@ -18,9 +18,11 @@ public class WeiXinPayService {
     @Autowired
     private WxPayService wxPayService;
 
-    public void downloadBill(WxPayDownloadBillRequest request) throws WxPayException {
+    public WxPayBillResult downloadBill(WxPayDownloadBillRequest request) throws WxPayException {
         WxPayBillResult wxPayBillResult = wxPayService.downloadBill(request);
 
         System.out.println(wxPayBillResult);
+
+        return wxPayBillResult;
     }
 }

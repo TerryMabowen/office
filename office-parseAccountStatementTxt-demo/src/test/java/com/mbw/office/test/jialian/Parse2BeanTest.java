@@ -1,6 +1,6 @@
 package com.mbw.office.test.jialian;
 
-import com.mbw.office.demo.biz.jalian.ParseToBeanDemo;
+import com.mbw.office.demo.biz.jalian.JlBillService;
 import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Parse2BeanTest {
     private String rootPath = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
-    private ParseToBeanDemo parseToBeanDemo = new ParseToBeanDemo();
+    private JlBillService parseToBeanDemo = new JlBillService();
 
     @Test
     public void f1() {

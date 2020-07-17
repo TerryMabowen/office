@@ -5,10 +5,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.util.string.StringUtil;
-import com.mbw.office.demo.biz.jalian.file.ReadTxtDemo;
+import com.mbw.office.demo.biz.jalian.file.ReadTxtService;
 import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
-import com.mbw.office.demo.biz.jalian.resource.ReadPropertiesDemo;
+import com.mbw.office.demo.biz.jalian.resource.ReadPropertiesService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +21,13 @@ import java.util.*;
  * @date 2020-07-17 10:46
  */
 @Slf4j
-public class ParseToBeanDemo {
-    private ReadPropertiesDemo readPropertiesDemo = new ReadPropertiesDemo();
+@Service
+public class JlBillService {
+    @Autowired
+    private ReadPropertiesService readPropertiesDemo;
 
-    private ReadTxtDemo readTxtDemo = new ReadTxtDemo();
+    @Autowired
+    private ReadTxtService readTxtDemo;
 
     public List<String> getLineList(String path) {
         List<String> lineList = new ArrayList<>();
@@ -58,12 +63,12 @@ public class ParseToBeanDemo {
                         String key = StringUtil.underline2Camel(field);
                         String value = split[i];
                         if (StrUtil.isNotBlank(key) && !lineMap.containsKey(key)) {
-                            lineMap.put(key, value);
+                            lineMap.put(key, StrUtil.isNotBlank(value) ? value : null);
                         }
                     }
                 }
 
-                AccountStatementData data = BeanUtil.mapToBeanIgnoreCase(lineMap, AccountStatementData.class, false);
+                AccountStatementData data = BeanUtil.mapToBean(lineMap, AccountStatementData.class, true);
 
                 dataList.add(data);
             }

@@ -1,27 +1,48 @@
 package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
+import com.github.binarywang.wxpay.bean.result.WxPayBillResult;
 import com.mbw.office.common.lang.response.ResponseResults;
-import com.mbw.office.demo.web.ctl.fb.BillFB;
+import com.mbw.office.demo.biz.jalian.JlBillService;
+import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
 import com.mbw.office.demo.biz.weixin.service.WeiXinPayService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.mbw.office.demo.web.ctl.fb.BillFB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Mabowen
  * @date 2020-07-17 15:02
  */
-@Api("微信支付")
 @RestController
 @RequestMapping("/pay")
 public class WeiXinPayDataCtl {
+    private static final String ROOT_PATH = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
 
     @Autowired
     private WeiXinPayService weiXinPayService;
+
+    @Autowired
+    private JlBillService jlBillService;
+
+    @GetMapping("/jlBill")
+    public ResponseResults jlBills(@RequestParam("filename") String filename) {
+        try {
+            List<String> lineList = jlBillService.getLineList(ROOT_PATH + filename);
+            String[] fields = jlBillService.getFields("field", "column_eng_names");
+            List<AccountStatementData> statementData = jlBillService.parse(lineList, fields);
+            return ResponseResults.newSuccess()
+                    .setData(statementData);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
 
     /**
      * <pre>
@@ -42,16 +63,17 @@ public class WeiXinPayDataCtl {
      *                deviceInfo 设备号	   device_info	非必传参数，终端设备号
      * @return 保存到本地的临时文件
      */
-    @ApiOperation(value = "下载对账单")
-    @GetMapping("/downloadBill")
+    @GetMapping("/wxBill")
     public ResponseResults downloadBill(BillFB fb) {
         try {
             WxPayDownloadBillRequest request = new WxPayDownloadBillRequest();
             request.setBillDate(fb.getBillDate());
             request.setBillType(fb.getBillType());
 
-            weiXinPayService.downloadBill(request);
-            return ResponseResults.newSuccess();
+            WxPayBillResult wxPayBillResult = weiXinPayService.downloadBill(request);
+
+            return ResponseResults.newSuccess()
+                    .setData(wxPayBillResult);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());

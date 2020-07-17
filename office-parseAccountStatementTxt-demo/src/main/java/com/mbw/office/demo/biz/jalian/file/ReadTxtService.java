@@ -3,6 +3,7 @@ package com.mbw.office.demo.biz.jalian.file;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.util.io.FileUtil;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,7 +17,8 @@ import java.util.List;
  * @author Mabowen
  * @date 2020-07-17 10:18
  */
-public class ReadTxtDemo {
+@Service
+public class ReadTxtService {
     public File getTxtFile(String path) {
         return FileUtil.getFile(path);
     }
