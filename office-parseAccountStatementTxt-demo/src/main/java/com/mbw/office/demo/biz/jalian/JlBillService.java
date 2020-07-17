@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.mbw.office.common.util.reflection.ReflectUtil;
 import com.mbw.office.common.util.string.StringUtil;
 import com.mbw.office.demo.biz.jalian.file.ReadTxtService;
 import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
@@ -51,7 +52,11 @@ public class JlBillService {
         return new String[0];
     }
 
-    public List<AccountStatementData> parse(List<String> lineList, String[] fields) {
+    public String[] getFields() {
+       return readPropertiesDemo.getFields();
+    }
+
+    public List<AccountStatementData> parse(List<String> lineList, String[] fields) throws IllegalAccessException {
         List<AccountStatementData> dataList = new ArrayList<>();
         if (CollUtil.isNotEmpty(lineList) && ArrayUtil.isNotEmpty(fields)) {
             for (String line : lineList) {
@@ -70,7 +75,9 @@ public class JlBillService {
 
                 AccountStatementData data = BeanUtil.mapToBean(lineMap, AccountStatementData.class, true);
 
-                dataList.add(data);
+                if (ReflectUtil.judgeAllFieldsIsNotNull(data)) {
+                    dataList.add(data);
+                }
             }
         }
 

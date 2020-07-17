@@ -1,9 +1,6 @@
 package com.mbw.office.common.util.collection;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 集合工具类
@@ -28,5 +25,13 @@ public class CollectionUtil {
             set.addAll(arg);
         }
         return new ArrayList<>(set);
+    }
+
+    public static <E> boolean isNotEmpty(Collection<E> collection) {
+        return !isEmpty(collection);
+    }
+
+    public static <E> boolean isEmpty(Collection<E> collection) {
+        return collection == null || collection.isEmpty();
     }
 }

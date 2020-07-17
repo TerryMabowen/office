@@ -1,5 +1,6 @@
 package com.mbw.office.demo.biz.jalian.resource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ResourceBundle;
@@ -10,6 +11,9 @@ import java.util.ResourceBundle;
  */
 @Service
 public class ReadPropertiesService {
+    @Value("jialian.column.englist.fields")
+    private String jlFields;
+
     public ResourceBundle readProperties(String filename) {
         return ResourceBundle.getBundle(filename);
     }
@@ -20,5 +24,9 @@ public class ReadPropertiesService {
 
     public String[] getFields(String field) {
         return field.split("\\|");
+    }
+
+    public String[] getFields() {
+        return jlFields.split("\\|");
     }
 }

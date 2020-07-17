@@ -20,8 +20,8 @@ import java.util.List;
  * @date 2020-07-17 15:02
  */
 @RestController
-@RequestMapping("/pay")
-public class WeiXinPayDataCtl {
+@RequestMapping("/index")
+public class IndexDataCtl {
     private static final String ROOT_PATH = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
 
     @Autowired
@@ -34,7 +34,8 @@ public class WeiXinPayDataCtl {
     public ResponseResults jlBills(@RequestParam("filename") String filename) {
         try {
             List<String> lineList = jlBillService.getLineList(ROOT_PATH + filename);
-            String[] fields = jlBillService.getFields("field", "column_eng_names");
+//            String[] fields = jlBillService.getFields("field", "column_eng_names");
+            String[] fields = jlBillService.getFields();
             List<AccountStatementData> statementData = jlBillService.parse(lineList, fields);
             return ResponseResults.newSuccess()
                     .setData(statementData);

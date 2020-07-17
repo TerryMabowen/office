@@ -109,6 +109,11 @@
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-pay</artifactId>
         </dependency>
+        <!--企业微信封装sdk-->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-cp</artifactId>
+        </dependency>
         <!--retrofit2-->
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>

@@ -2,10 +2,10 @@ package com.mbw.office.common.util.reflection;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.mbw.office.common.util.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -71,7 +71,7 @@ public class ReflectUtil {
         }
     }
 
-    public static List<Field> getFiles(Class<?> clz) {
+    public static List<Field> getFields(Class<?> clz) {
         List<Field> fields = new ArrayList<>();
         if (clz != null) {
             fields.addAll(Arrays.asList(clz.getDeclaredFields()));
@@ -109,6 +109,28 @@ public class ReflectUtil {
         return cn.hutool.core.util.ReflectUtil.newInstance(clz, args);
     }
 
+    public static boolean judgeAllFieldsIsNull(Object obj) throws IllegalAccessException {
+        if (obj == null) {
+            return true;
+        }
+        boolean flag = true;
+        Class<?> clz = obj.getClass();
+        List<Field> fields = getFields(clz);
+        if (CollectionUtil.isNotEmpty(fields)) {
+            for (Field field : fields) {
+                field.setAccessible(false);
+                if (null != getFieldValue(obj, field.getName())) {
+                    flag = false;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public static boolean judgeAllFieldsIsNotNull(Object obj) throws IllegalAccessException {
+        return !judgeAllFieldsIsNull(obj);
+    }
+
     /**
      * 带下划线的key的Map转成驼峰形式的实体对象
      *
@@ -120,7 +142,7 @@ public class ReflectUtil {
         if (CollUtil.isNotEmpty(map)) {
 
             try {
-                List<Field> fields = getFiles(clz);
+                List<Field> fields = getFields(clz);
                 for (Field field : fields) {
                     field.setAccessible(true);
                     // 获取带_下划线的名称的value值

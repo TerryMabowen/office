@@ -15,6 +15,8 @@
         <module>office-accessToken-demo</module>
         <module>office-calendar-demo</module>
         <module>office-parseAccountStatementTxt-demo</module>
+        <module>office-wexin-pay-demo</module>
+        <module>office-weixin-qiye-demo</module>
     </modules>
     <name>office-parent</name>
 
@@ -361,6 +363,18 @@
                     <exclusion>
                         <groupId>com.fasterxml.jackson.core</groupId>
                         <artifactId>jackson-databind</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--企业微信封装sdk-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-cp</artifactId>
+                <version>${weixin.java.sdk.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

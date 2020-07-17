@@ -18,7 +18,7 @@ public class Parse2BeanTest {
     private JlBillService parseToBeanDemo = new JlBillService();
 
     @Test
-    public void f1() {
+    public void f1() throws IllegalAccessException {
         String path = rootPath + "51010718062610109608_20190605_5.txt";
         String filename = "field";
         String key = "column_eng_names";
