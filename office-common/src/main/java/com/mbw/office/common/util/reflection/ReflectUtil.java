@@ -1,15 +1,18 @@
 package com.mbw.office.common.util.reflection;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 反射工具类
@@ -92,7 +95,7 @@ public class ReflectUtil {
             if (instance != null && StrUtil.isNotBlank(fieldName)) {
                 String name = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 String methodName = type + name;
-                return instance.getClass().getDeclaredMethod(methodName);
+                return instance.getClass().getDeclaredMethod(methodName, String.class);
             }
 
             return null;
@@ -106,6 +109,34 @@ public class ReflectUtil {
         return cn.hutool.core.util.ReflectUtil.newInstance(clz, args);
     }
 
+    /**
+     * 带下划线的key的Map转成驼峰形式的实体对象
+     *
+     * @param map   map实体对象包含属性
+     * @param clz 实体对象类型
+     * @return
+     */
+    public static Object map2Object(Map<String, Object> map, Class<?> clz) {
+        if (CollUtil.isNotEmpty(map)) {
+
+            try {
+                List<Field> fields = getFiles(clz);
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    // 获取带_下划线的名称的value值
+                    Object value = map.get(field.getName());
+                    setFieldValueNotIgnoreNullValue(clz.newInstance(), field.getName(), value);
+                }
+
+                return clz.newInstance();
+            } catch (Exception e) {
+                throw new ServiceException(e.getMessage(), e);
+            }
+        }
+
+        return clz.cast(new Object());
+    }
+
     private static void setAllFieldValue(Object instance, String fieldName, Object value, boolean ignoreNullValue) {
         try {
             if (instance != null && StrUtil.isNotBlank(fieldName)) {
@@ -113,15 +144,14 @@ public class ReflectUtil {
                 if (field != null) {
                     field.setAccessible(true);
                     Object fieldValue = convert(value, field.getType());
+                    Method setMethod = getMethod(instance, fieldName, SET);
                     if (ignoreNullValue) {
                         if (fieldValue != null) {
-                            Method setMethod = getMethod(instance, fieldName, SET);
                             if (setMethod != null) {
                                 setMethod.invoke(instance, convert(fieldValue, field.getType()));
                             }
                         }
                     } else {
-                        Method setMethod = getMethod(instance, fieldName, SET);
                         if (setMethod != null) {
                             setMethod.invoke(instance, convert(fieldValue, field.getType()));
                         }
