@@ -3,7 +3,7 @@ package com.mbw.office.demo.service.user.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.mbw.office.common.util.bean.BeanKit;
 import com.mbw.office.demo.entity.user.UserPO;
-import com.mbw.office.demo.jalian.model.user.vo.UserVO;
+import com.mbw.office.demo.biz.jalian.model.user.vo.UserVO;
 import com.mbw.office.demo.repositories.user.UserRepository;
 import com.mbw.office.demo.service.user.IUserService;
 import lombok.extern.slf4j.Slf4j;

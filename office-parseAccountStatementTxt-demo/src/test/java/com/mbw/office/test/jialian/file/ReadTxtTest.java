@@ -1,6 +1,6 @@
 package com.mbw.office.test.jialian.file;
 
-import com.mbw.office.demo.jalian.file.ReadTxtDemo;
+import com.mbw.office.demo.biz.jalian.file.ReadTxtDemo;
 import org.junit.Test;
 
 import java.io.File;

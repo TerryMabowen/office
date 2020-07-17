@@ -1,7 +1,7 @@
 package com.mbw.office.test.jialian;
 
-import com.mbw.office.demo.jalian.ParseToBeanDemo;
-import com.mbw.office.demo.jalian.model.AccountStatementData;
+import com.mbw.office.demo.biz.jalian.ParseToBeanDemo;
+import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
 import org.junit.Test;
 
 import java.util.Arrays;

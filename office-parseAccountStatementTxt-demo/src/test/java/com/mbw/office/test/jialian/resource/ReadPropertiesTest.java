@@ -1,6 +1,6 @@
 package com.mbw.office.test.jialian.resource;
 
-import com.mbw.office.demo.jalian.resource.ReadPropertiesDemo;
+import com.mbw.office.demo.biz.jalian.resource.ReadPropertiesDemo;
 import org.junit.Test;
 
 import java.util.Arrays;
