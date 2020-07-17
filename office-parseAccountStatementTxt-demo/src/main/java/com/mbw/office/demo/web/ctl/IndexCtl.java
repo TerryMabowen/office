@@ -12,6 +12,6 @@ public class IndexCtl {
 
     @GetMapping(value = {"","/","/index"})
     public String index() {
-        return "index.html";
+        return "/index.html";
     }
 }

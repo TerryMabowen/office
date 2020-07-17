@@ -23,17 +23,17 @@ public class StringUtil {
         }
 
         int len = underlineStr.length();
-        StringBuilder strb = new StringBuilder(len);
+        StringBuilder builder = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
             char c = underlineStr.charAt(i);
             if (c == UNDERLINE_CHAR && (++i) < len) {
                 c = underlineStr.charAt(i);
-                strb.append(Character.toUpperCase(c));
+                builder.append(Character.toUpperCase(c));
             } else {
-                strb.append(c);
+                builder.append(c);
             }
         }
-        return strb.toString();
+        return builder.toString();
     }
 
     /**
@@ -48,16 +48,16 @@ public class StringUtil {
         }
 
         int len = camelStr.length();
-        StringBuilder strb = new StringBuilder(len + len >> 1);
+        StringBuilder builder = new StringBuilder(len + len >> 1);
         for (int i = 0; i < len; i++) {
             char c = camelStr.charAt(i);
             if (Character.isUpperCase(c)) {
-                strb.append(UNDERLINE_CHAR);
-                strb.append(Character.toLowerCase(c));
+                builder.append(UNDERLINE_CHAR);
+                builder.append(Character.toLowerCase(c));
             } else {
-                strb.append(c);
+                builder.append(c);
             }
         }
-        return strb.toString();
+        return builder.toString();
     }
 }
