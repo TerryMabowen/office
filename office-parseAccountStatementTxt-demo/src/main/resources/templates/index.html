@@ -49,7 +49,7 @@
     $('#down-bills').on('click', function () {
        let billDate = $('#billDate').val();
        let billType = $('#billType').val();
-       http.getData('', {
+       http.getData('/pay/downloadBill', {
            billDate: billDate,
            billType: billType
        }).then(function (res) {

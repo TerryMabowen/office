@@ -1,8 +1,8 @@
-package com.mbw.office.demo.biz.weixin.ctl;
+package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
 import com.mbw.office.common.lang.response.ResponseResults;
-import com.mbw.office.demo.biz.weixin.ctl.fb.BillFB;
+import com.mbw.office.demo.web.ctl.fb.BillFB;
 import com.mbw.office.demo.biz.weixin.service.WeiXinPayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

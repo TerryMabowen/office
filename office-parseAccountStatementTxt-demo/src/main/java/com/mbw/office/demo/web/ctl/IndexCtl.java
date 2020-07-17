@@ -1,4 +1,4 @@
-package com.mbw.office.demo.biz.weixin.ctl;
+package com.mbw.office.demo.web.ctl;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
