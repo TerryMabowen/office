@@ -10,13 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Mabowen
  * @date 2020-07-03 16:17
  */
 @Slf4j
-@Deprecated
 public class GsonUtil {
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
@@ -48,6 +48,15 @@ public class GsonUtil {
         } catch (JsonSyntaxException e) {
             log.error("json string to List error: {}", e.getMessage(), e);
             return Collections.emptyList();
+        }
+    }
+
+    public static <T> Set<T> jsonToSet(String jsonStr, Class<T> clz) {
+        try {
+            return gson.fromJson(jsonStr, new TypeToken<Set<T>>() {}.getType());
+        } catch (JsonSyntaxException e) {
+            log.error("json string to Set error: {}", e.getMessage(), e);
+            return Collections.emptySet();
         }
     }
 

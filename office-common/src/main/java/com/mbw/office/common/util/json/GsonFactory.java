@@ -17,6 +17,7 @@ import java.util.Map;
  * @date 2020-07-06 09:37
  */
 @Slf4j
+@Deprecated
 public class GsonFactory {
     private static GsonFactory factory;
 

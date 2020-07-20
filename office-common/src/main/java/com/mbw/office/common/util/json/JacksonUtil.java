@@ -7,8 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Jackson 工具类
@@ -17,7 +19,6 @@ import java.util.Map;
  * @date 2020-05-20 17:08
  */
 @Slf4j
-@Deprecated
 public class JacksonUtil {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -39,7 +40,7 @@ public class JacksonUtil {
             return objectMapper.readValue(jsonStr, clz);
         } catch (IOException e) {
             log.error("json string to Object error: {}", e.getMessage(), e);
-            return null;
+            return clz.cast(new Object());
         }
     }
 
@@ -48,7 +49,16 @@ public class JacksonUtil {
             return objectMapper.readValue(jsonStr, new TypeReference<List<T>>(){});
         } catch (IOException e) {
             log.error("json string to List error: {}", e.getMessage(), e);
-            return null;
+            return Collections.emptyList();
+        }
+    }
+
+    public static <T> Set<T> jsonToSet(String jsonStr, Class<T> clz) {
+        try {
+            return objectMapper.readValue(jsonStr, new TypeReference<Set<T>>(){});
+        } catch (IOException e) {
+            log.error("json string to Set error: {}", e.getMessage(), e);
+            return Collections.emptySet();
         }
     }
 
@@ -57,7 +67,7 @@ public class JacksonUtil {
             return objectMapper.readValue(jsonStr, new TypeReference<Map<String, T>>(){});
         } catch (IOException e) {
             log.error("json string to Map error: {}", e.getMessage(), e);
-            return null;
+            return Collections.emptyMap();
         }
     }
 
@@ -66,7 +76,7 @@ public class JacksonUtil {
             return objectMapper.readValue(jsonStr, new TypeReference<List<Map<String, T>>>(){});
         } catch (IOException e) {
             log.error("json string to List<Map> error: {}", e.getMessage(), e);
-            return null;
+            return Collections.emptyList();
         }
     }
 }

@@ -16,6 +16,7 @@ import java.util.Map;
  * @date 2020-07-03 10:53
  */
 @Slf4j
+@Deprecated
 public class JacksonFactory {
     private static JacksonFactory factory;
 
