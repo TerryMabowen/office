@@ -29,7 +29,7 @@ public class HttpClientFactory {
     private static HttpClientFactory factory;
 
     @Setter
-    private static String CHARSET = "UTF-8";
+    private String CHARSET = "UTF-8";
 
     @Autowired
     @Getter @Setter

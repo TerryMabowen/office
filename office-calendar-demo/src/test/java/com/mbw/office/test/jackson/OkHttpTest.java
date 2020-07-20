@@ -22,11 +22,6 @@ public class OkHttpTest {
         String result = getResult(url);
 
         JacksonFactory factory = JacksonFactory.getInstance();
-//        ObjectMapper objectMapper = factory.getObjectMapper();
-//        JsonParser parser = objectMapper.getFactory().createParser(result);
-//        String data = parser.getValueAsString("data");
-//        List<CalendarApiData> apiDataList = factory.jsonToList(factory.beanToJson(data), CalendarApiData.class);
-//        System.out.println(apiDataList);
         BaseApiData baseApiData = factory.jsonToBean(result, BaseApiData.class);
         if ("0".equals(baseApiData.getStatus())) {
             System.out.println(baseApiData);

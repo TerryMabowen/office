@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 /**
- * TODO
- *
  * @author Mabowen
  * @date 2020-07-15 15:39
  */

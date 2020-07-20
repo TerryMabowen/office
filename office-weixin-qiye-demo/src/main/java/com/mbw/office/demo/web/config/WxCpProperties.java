@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@ConfigurationProperties(prefix = "qy.wx")
 public class WxCpProperties {
     /**
      * 设置微信企业号的corpId

@@ -18,9 +18,9 @@ import java.nio.charset.Charset;
 public class OkHttpClientFactory {
     private static OkHttpClientFactory factory;
     @Setter
-    private static MediaType MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
+    private MediaType MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
     @Setter
-    private static String CHARSET = "UTF-8";
+    private String CHARSET = "UTF-8";
 
     private OkHttpClient defaultClient;
 
