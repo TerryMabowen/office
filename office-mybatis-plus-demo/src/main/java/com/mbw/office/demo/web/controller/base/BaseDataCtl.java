@@ -1,7 +1,7 @@
 package com.mbw.office.demo.web.controller.base;
 
 import com.baidu.unbiz.fluentvalidator.Result;
-import com.mbw.office.common.util.validate.ValidatorUtil;
+import com.mbw.office.common.util.validate.ValidatorFactory;
 import com.mbw.office.demo.web.binder.CustomStringEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -29,7 +29,7 @@ public class BaseDataCtl {
      * @date 2020-07-01 18:37
      */
     protected <T> Result validate(T t) {
-        return ValidatorUtil.getInstance()
+        return ValidatorFactory.getInstance()
                 .validateObject(t);
     }
 }

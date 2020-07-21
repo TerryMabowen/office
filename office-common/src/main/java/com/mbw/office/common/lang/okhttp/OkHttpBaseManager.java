@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.lang.okhttp.domain.LoginResponseData;
 import com.mbw.office.common.util.validate.AssertUtil;
-import com.mbw.office.common.util.validate.ValidatorUtil;
+import com.mbw.office.common.util.validate.ValidatorFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -202,7 +202,7 @@ public abstract class OkHttpBaseManager {
      * @return
      */
     protected <T> Result validate(T t) {
-        return ValidatorUtil.getInstance()
+        return ValidatorFactory.getInstance()
                 .validateObject(t);
     }
 

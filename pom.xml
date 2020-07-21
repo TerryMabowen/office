@@ -17,6 +17,7 @@
         <module>office-parseAccountStatementTxt-demo</module>
         <module>office-wexin-pay-demo</module>
         <module>office-weixin-qiye-demo</module>
+        <module>office-test</module>
     </modules>
     <name>office-parent</name>
 

@@ -3,7 +3,7 @@ package com.mbw.office.common.util.validate;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.jsr303.HibernateSupportedValidator;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -12,16 +12,33 @@ import java.util.Collection;
 import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toSimple;
 
 /**
+ * FluentValidator验证器
+ *
  * @author Mabowen
- * @date 2020-07-20 11:09
+ * @date 2020-07-03 15:14
  */
-@Component
-public class ValidatorUtil {
-//    @Autowired
-//    private Validator validator;
-    private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+@Deprecated
+public class ValidatorFactory {
+    private static ValidatorFactory single;
 
-    public static <T> Result validateObject(T t) {
+    @Getter
+    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+    public static ValidatorFactory getInstance() {
+        if (single != null) {
+            return single;
+        }
+
+        synchronized (ValidatorFactory.class) {
+            if (single == null) {
+                single = new ValidatorFactory();
+            }
+        }
+
+        return single;
+    }
+
+    public <T> Result validateObject(T t) {
         return FluentValidator
                 .checkAll()
                 .on(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
@@ -29,7 +46,7 @@ public class ValidatorUtil {
                 .result(toSimple());
     }
 
-    public static <T> Result validateObject(T t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
+    public <T> Result validateObject(T t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
         return FluentValidator
                 .checkAll()
                 .on(t, v)
@@ -37,7 +54,7 @@ public class ValidatorUtil {
                 .result(toSimple());
     }
 
-    public static <T> Result validateCollection(Collection<T> t) {
+    public <T> Result validateCollection(Collection<T> t) {
         return FluentValidator
                 .checkAll()
                 .onEach(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
@@ -45,7 +62,7 @@ public class ValidatorUtil {
                 .result(toSimple());
     }
 
-    public static <T> Result validateCollection(Collection<T> t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
+    public <T> Result validateCollection(Collection<T> t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
         return FluentValidator
                 .checkAll()
                 .onEach(t, v)

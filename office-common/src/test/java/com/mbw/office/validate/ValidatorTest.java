@@ -1,7 +1,7 @@
 package com.mbw.office.validate;
 
 import com.baidu.unbiz.fluentvalidator.Result;
-import com.mbw.office.common.util.validate.ValidatorUtil;
+import com.mbw.office.common.util.validate.ValidatorFactory;
 import com.mbw.office.validate.pojo.TestPojo;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class ValidatorTest {
                 .setId(null);
         System.out.println("TestPojo: " + pojo.toString());
 
-        Result result = ValidatorUtil.getInstance()
+        Result result = ValidatorFactory.getInstance()
                 .validateObject(pojo);
         if (result.isSuccess()) {
             System.out.println("----------------------");
@@ -54,7 +54,7 @@ public class ValidatorTest {
 
         System.out.println("TestPojoList: " + Arrays.toString(list.toArray()));
 
-        Result result = ValidatorUtil.getInstance()
+        Result result = ValidatorFactory.getInstance()
                 .validateCollection(list);
         if (result.isSuccess()) {
             System.out.println("----------------------");

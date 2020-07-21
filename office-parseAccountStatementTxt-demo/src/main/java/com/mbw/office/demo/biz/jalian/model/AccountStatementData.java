@@ -3,6 +3,7 @@ package com.mbw.office.demo.biz.jalian.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 对账单
@@ -38,12 +39,12 @@ public class AccountStatementData {
     private String tradeCardNo;
 
     /**
-     * 交易金额
+     * 交易金额 money
      */
     private BigDecimal moneyAmount;
 
     /**
-     * 手续费
+     * 手续费 charge
      */
     private BigDecimal serviceFee;
 
@@ -75,55 +76,55 @@ public class AccountStatementData {
     /**
      * 交易时间
      */
-    private String paidTime;
+    private Date paidTime;
 
     /**
-     * 清算日期
+     * 清算日期---记账日期
      */
-    private String accountDate;
+    private Date accountDate;
 
     /**
      * 手续费封顶标记
      */
-    private String feeFlag;
+    private Integer feeFlag;
 
     /**
-     * 渠道手续费
+     * 渠道手续费---channel_charge
      */
     private BigDecimal channelFee;
 
     /**
-     * 附加手续费
+     * 附加手续费---extra_charge
      */
     private BigDecimal extraFee;
 
     /**
-     * 交易订单号
+     * 交易订单号---order_no
      */
     private String orderId;
 
     /**
-     * 原交易订单号
+     * 原交易订单号---origin_order_no
      */
     private String originOrderId;
 
     /**
-     * 客户订单号
+     * 客户订单号---customer_order_no
      */
     private String userOrderId;
 
     /**
-     * 非标价格商户
+     * 非标价格商户---non_standard_merch
      */
     private String instdMerch;
 
     /**
-     * 免密免签标志
+     * 免密免签标志 sign_password_flag
      */
-    private String signPwdFlag;
+    private Integer signPwdFlag;
 
     /**
-     * 渠道金额
+     * 渠道金额---channel_fee
      */
     private BigDecimal channelAmount;
 
