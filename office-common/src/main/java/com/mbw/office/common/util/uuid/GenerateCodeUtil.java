@@ -12,7 +12,7 @@ import java.util.*;
  * @author Mabowen
  * @date 2020-04-08 21:31
  */
-public class GenerationCodeUtil {
+public class GenerateCodeUtil {
     private final static String DATE_FORMAT = "yyyyMMddHHmmssSSS";
     private static int sed  = 0;
     private static String[] beforeShuffle = new String[]
@@ -32,7 +32,7 @@ public class GenerationCodeUtil {
     public synchronized static String generateClientId() {
         String prefix = DateUtil.format(new Date(), DATE_FORMAT);
 
-        synchronized (GenerationCodeUtil.class) {
+        synchronized (GenerateCodeUtil.class) {
             sed++;
             if (sed > 999) {
                 sed = 1;

@@ -59,7 +59,7 @@ public class TreeUtil {
         //获取bean的id, bean.getId()
         String id = bean.getClass().getMethod(GET + idName).invoke(bean).toString();
         //获取bean用来封装子对象的list, bean.getList()
-        List<T> children = (List) reflect(bean.getClass(), GET + childrenName, bean);
+        List<T> children = (List<T>) reflect(bean.getClass(), GET + childrenName, bean);
         //递归遍历
         for (T it : beans) {
             //根据反射，获取it的pId的值 it.getParentId()
@@ -71,7 +71,7 @@ public class TreeUtil {
                     bean.getClass().getMethod(SET + childrenName, List.class).invoke(bean, new ArrayList<>());
                 }
                 //重新获取子对象的list
-                children = (List) reflect(bean.getClass(), GET + childrenName, bean);
+                children = (List<T>) reflect(bean.getClass(), GET + childrenName, bean);
                 //继续递归遍历
                 children.add(findChildren(it, beans, idName, parentIdName, childrenName));
             }
