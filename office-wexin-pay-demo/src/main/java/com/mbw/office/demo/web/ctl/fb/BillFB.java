@@ -1,7 +1,8 @@
 package com.mbw.office.demo.web.ctl.fb;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author Mabowen
