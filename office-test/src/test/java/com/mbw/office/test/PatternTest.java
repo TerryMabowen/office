@@ -22,4 +22,14 @@ public class PatternTest {
             System.out.println("匹配失败");
         }
     }
+
+    @Test
+    public void f2() {
+        double n = Math.ceil(Math.sin(0.5));
+        System.out.println(n);
+
+//        double m = Math.ceil(Math.asin(0.5));
+        double m = Math.asin(1.0);
+        System.out.println(m);
+    }
 }

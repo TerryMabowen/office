@@ -9,8 +9,8 @@ import java.util.regex.PatternSyntaxException;
  * @date 2020/01/11 23:21
  */
 public class PhoneCheckUtil {
-    private static Pattern CHINA_PHONE_LEGAL = Pattern.compile("^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$");
-    private static Pattern HK_PHONE_LEGAL = Pattern.compile("^([5689])\\d{7}$");
+    private static Pattern CHINA_PHONE_LEGAL = Pattern.compile("^((13[0-9])|(14[579])|(15[0-3,5-9])|(166)|(17[35678])|(18[0-9])|(19[8,9]))\\\\d{8}$");
+    private static Pattern HK_PHONE_LEGAL = Pattern.compile("^([5689])\\\\d{7}$");
 
     /**
      * 大陆号码或香港号码均可

@@ -22,7 +22,7 @@ public class ValidatorFactory {
     private static ValidatorFactory single;
 
     @Getter
-    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private Validator validator;
 
     public static ValidatorFactory getInstance() {
         if (single != null) {
@@ -32,6 +32,8 @@ public class ValidatorFactory {
         synchronized (ValidatorFactory.class) {
             if (single == null) {
                 single = new ValidatorFactory();
+
+                single.init();
             }
         }
 
@@ -68,5 +70,9 @@ public class ValidatorFactory {
                 .onEach(t, v)
                 .doValidate()
                 .result(toSimple());
+    }
+
+    private void init() {
+        validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 }

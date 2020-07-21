@@ -36,15 +36,15 @@ public class AssertUtil {
         assertNotEmpty(value, (String)null);
     }
 
-    public static void assertTel(String value, String tips) {
+    public static void assertValidateTel(String value, String tips) {
         assertNotNull(value, tips);
         if (!RegexUtil.isTel(value)) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 不是一个有效的手机/电话号码" : tips);
         }
     }
 
-    public static void assertTel(String value) {
-        assertTel(value, (String)null);
+    public static void assertValidateTel(String value) {
+        assertValidateTel(value, (String)null);
     }
 
     public static void assertValidateEmail(String value, String tips) {
@@ -58,14 +58,14 @@ public class AssertUtil {
         assertValidateEmail(value, (String)null);
     }
 
-    public static void assertMobile(String value, String tips) {
+    public static void assertValidateMobile(String value, String tips) {
         if (!RegexUtil.isMobile(value)) {
             throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 不是一个有效的手机号" : tips);
         }
     }
 
-    public static void assertMobile(String value) {
-        assertMobile(value, (String)null);
+    public static void assertValidateMobile(String value) {
+        assertValidateMobile(value, (String)null);
     }
 
     public static void assertGT0(Number value, String tips) {
@@ -147,6 +147,6 @@ public class AssertUtil {
     }
 
     public static <E> void assertCollectionNotEmpty(Collection<E> collection) {
-        assertCollectionNotEmpty(collection, null);
+        assertCollectionNotEmpty(collection, (String)null);
     }
 }
