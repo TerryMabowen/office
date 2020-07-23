@@ -12,11 +12,11 @@ import java.util.Date;
  * @date 2020-07-17 11:22
  */
 @Data
-public class AccountStatementData {
+public class JlBillDetail {
     /**
-     * 商户号
+     * 商户号---mch_id
      */
-    private String merchNo;
+    private String mchId;
 
     /**
      * 终端号
@@ -39,14 +39,14 @@ public class AccountStatementData {
     private String tradeCardNo;
 
     /**
-     * 交易金额 money
+     * 交易金额 trade_money
      */
-    private BigDecimal moneyAmount;
+    private BigDecimal tradeMoney;
 
     /**
-     * 手续费 charge
+     * 手续费 commissions
      */
-    private BigDecimal serviceFee;
+    private BigDecimal commissions;
 
     /**
      * 批次号
@@ -74,14 +74,14 @@ public class AccountStatementData {
     private String retCode;
 
     /**
-     * 交易时间
+     * 交易时间---trade_time
      */
-    private Date paidTime;
+    private Date tradeTime;
 
     /**
-     * 清算日期---记账日期
+     * 清算日期---记账日期 liquidation_date
      */
-    private Date accountDate;
+    private Date liquidationDate;
 
     /**
      * 手续费封顶标记
@@ -89,47 +89,47 @@ public class AccountStatementData {
     private Integer feeFlag;
 
     /**
-     * 渠道手续费---channel_charge
+     * 渠道手续费---channel_commissions
      */
-    private BigDecimal channelFee;
+    private BigDecimal channelCommissions;
 
     /**
-     * 附加手续费---extra_charge
+     * 附加手续费---extra_commissions
      */
-    private BigDecimal extraFee;
+    private BigDecimal extraCommissions;
 
     /**
      * 交易订单号---order_no
      */
-    private String orderId;
+    private String orderNo;
 
     /**
      * 原交易订单号---origin_order_no
      */
-    private String originOrderId;
+    private String originOrderNo;
 
     /**
      * 客户订单号---customer_order_no
      */
-    private String userOrderId;
+    private String customerOrderNo;
 
     /**
-     * 非标价格商户---non_standard_merch
+     * 非标价格商户---non_standard_merchant
      */
-    private String instdMerch;
+    private String nonStandardMerchant;
 
     /**
      * 免密免签标志 sign_password_flag
      */
-    private Integer signPwdFlag;
+    private Integer signPasswordFlag;
 
     /**
      * 渠道金额---channel_fee
      */
-    private BigDecimal channelAmount;
+    private BigDecimal channelFee;
 
     /**
-     * 处理方式
+     * 处理方式---process_type
      */
-    private Integer procType;
+    private Integer processType;
 }

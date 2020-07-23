@@ -1,14 +1,16 @@
 package com.mbw.office.common.util.reflection;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.util.collection.CollectionUtil;
+import com.mbw.office.common.util.date.DateUtil;
+import com.mbw.office.common.util.validate.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,11 +45,11 @@ public class ReflectUtil {
     }
 
     public static void setFieldValueIgnoreNullValue(Object instance, String fieldName, Object value) {
-        setAllFieldValue(instance, fieldName, value, true);
+        setFieldValue(instance, fieldName, value, true);
     }
 
     public static void setFieldValueNotIgnoreNullValue(Object instance, String fieldName, Object value) {
-        setAllFieldValue(instance, fieldName, value, false);
+        setFieldValue(instance, fieldName, value, false);
     }
 
     public static Field getField(Class<?> clz, String fieldName) {
@@ -113,53 +115,56 @@ public class ReflectUtil {
         if (obj == null) {
             return true;
         }
-        boolean flag = true;
+
         Class<?> clz = obj.getClass();
         List<Field> fields = getFields(clz);
         if (CollectionUtil.isNotEmpty(fields)) {
             for (Field field : fields) {
                 field.setAccessible(false);
                 if (null != getFieldValue(obj, field.getName())) {
-                    flag = false;
+                    return false;
                 }
             }
         }
-        return flag;
+        return true;
     }
 
     public static boolean judgeAllFieldsIsNotNull(Object obj) throws IllegalAccessException {
         return !judgeAllFieldsIsNull(obj);
     }
 
-    /**
-     * 带下划线的key的Map转成驼峰形式的实体对象
-     *
-     * @param map   map实体对象包含属性
-     * @param clz 实体对象类型
-     * @return
-     */
-    public static Object map2Object(Map<String, Object> map, Class<?> clz) {
-        if (CollUtil.isNotEmpty(map)) {
+    public static <T> T mapToBean(Map<String, Object> map, Class<T> clz, boolean ignoreNullValue) {
+        AssertUtil.assertMapNotEmpty(map, "map cannot be empty");
 
-            try {
-                List<Field> fields = getFields(clz);
-                for (Field field : fields) {
-                    field.setAccessible(true);
-                    // 获取带_下划线的名称的value值
-                    Object value = map.get(field.getName());
-                    setFieldValueNotIgnoreNullValue(clz.newInstance(), field.getName(), value);
+        try {
+            List<Field> fields = getFields(clz);
+            for (Field field : fields) {
+                field.setAccessible(true);
+                // 获取带_下划线的名称的value值
+                Object value = map.get(field.getName());
+
+                if (ignoreNullValue) {
+                    setFieldValueIgnoreNullValue(newInstance(clz), field.getName(), value);
+                } else {
+                    setFieldValueNotIgnoreNullValue(newInstance(clz), field.getName(), value);
                 }
-
-                return clz.newInstance();
-            } catch (Exception e) {
-                throw new ServiceException(e.getMessage(), e);
             }
-        }
 
-        return clz.cast(new Object());
+            return newInstance(clz);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
     }
 
-    private static void setAllFieldValue(Object instance, String fieldName, Object value, boolean ignoreNullValue) {
+    public static <T> T mapToBeanNotIgnoreNullValue(Map<String, Object> map, Class<T> clz) {
+        return mapToBean(map, clz, false);
+    }
+
+    public static <T> T mapToBeanIgnoreNullValue(Map<String, Object> map, Class<T> clz) {
+        return mapToBean(map, clz, true);
+    }
+
+    private static void setFieldValue(Object instance, String fieldName, Object value, boolean ignoreNullValue) {
         try {
             if (instance != null && StrUtil.isNotBlank(fieldName)) {
                 Field field = getField(instance.getClass(), fieldName);
@@ -170,12 +175,12 @@ public class ReflectUtil {
                     if (ignoreNullValue) {
                         if (fieldValue != null) {
                             if (setMethod != null) {
-                                setMethod.invoke(instance, convert(fieldValue, field.getType()));
+                                setMethod.invoke(instance, convert(value, field.getType()));
                             }
                         }
                     } else {
                         if (setMethod != null) {
-                            setMethod.invoke(instance, convert(fieldValue, field.getType()));
+                            setMethod.invoke(instance, convert(value, field.getType()));
                         }
                     }
                 }
@@ -190,31 +195,28 @@ public class ReflectUtil {
             return null;
         }
 
-        if (type.isInstance(value)) {
-            return type.cast(value);
+        String fieldType = type.toString();
+        switch (fieldType) {
+            case "class java.lang.String":
+                return type.cast(String.valueOf(value));
+            case "class java.lang.Short":
+                return type.cast(Short.parseShort(String.valueOf(value)));
+            case "class java.lang.Integer":
+                return type.cast(Integer.parseInt(String.valueOf(value)));
+            case "class java.lang.Long":
+                return type.cast(Long.parseLong(String.valueOf(value)));
+            case "class java.lang.Float":
+                return type.cast(Float.parseFloat(String.valueOf(value)));
+            case "class java.lang.Double":
+                return type.cast(Double.parseDouble(String.valueOf(value)));
+            case "class java.lang.Boolean":
+                return type.cast(Boolean.parseBoolean(String.valueOf(value)));
+            case "class java.lang.Date":
+                return type.cast(DateUtil.parseDefault(String.valueOf(value)));
+            case "class java.math.BigDecimal":
+                return type.cast(new BigDecimal(String.valueOf(value)));
+            default:
+                return type.cast(value);
         }
-
-//        String fieldType = type.toString();
-//        if ("class java.lang.String".equals(fieldType)) {
-//            return String.valueOf(value);
-//        } else if ("class java.lang.Short".equals(fieldType)) {
-//            return Short.parseShort(String.valueOf(value));
-//        } else if ("class java.lang.Integer".equals(fieldType)) {
-//            return Integer.parseInt(String.valueOf(value));
-//        } else if ("class java.lang.Long".equals(fieldType)) {
-//            return Long.parseLong(String.valueOf(value));
-//        } else if ("class java.lang.Float".equals(fieldType)) {
-//            return Float.parseFloat(String.valueOf(value));
-//        } else if ("class java.lang.Double".equals(fieldType)) {
-//            return Double.parseDouble(String.valueOf(value));
-//        } else if ("class java.lang.Boolean".equals(fieldType)) {
-//            return Boolean.parseBoolean(String.valueOf(value));
-//        } else if ("class java.lang.Date".equals(fieldType)) {
-//            return DateUtil.parseDefault(String.valueOf(value));
-//        } else if ("class java.math.BigDecimal".equals(fieldType)) {
-//            return new BigDecimal(String.valueOf(value));
-//        }
-
-        return null;
     }
 }

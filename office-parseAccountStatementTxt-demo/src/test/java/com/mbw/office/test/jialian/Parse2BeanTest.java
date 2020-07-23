@@ -1,7 +1,7 @@
 package com.mbw.office.test.jialian;
 
 import com.mbw.office.demo.biz.jalian.JlBillService;
-import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
+import com.mbw.office.demo.biz.jalian.model.JlBillDetail;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class Parse2BeanTest {
 
         String[] fields = parseToBeanDemo.getFields(filename, key);
 
-        List<AccountStatementData> dataList = parseToBeanDemo.parse(lineList, fields);
+        List<JlBillDetail> dataList = parseToBeanDemo.parse(lineList, fields);
 
         System.out.println(Arrays.toString(dataList.toArray()));
     }

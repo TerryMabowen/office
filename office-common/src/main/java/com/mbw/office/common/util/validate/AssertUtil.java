@@ -7,6 +7,7 @@ import com.mbw.office.common.lang.exception.AssertException;
 import com.mbw.office.common.util.enums.EnumUtil;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Mabowen
@@ -148,5 +149,15 @@ public class AssertUtil {
 
     public static <E> void assertCollectionNotEmpty(Collection<E> collection) {
         assertCollectionNotEmpty(collection, (String)null);
+    }
+
+    public static <K, V> void assertMapNotEmpty(Map<K, V> map, String tips) {
+        if (map == null || map.size() == 0) {
+            throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 集合不能为空" : tips);
+        }
+    }
+
+    public static <K, V> void assertMapNotEmpty(Map<K, V> map) {
+        assertMapNotEmpty(map, (String)null);
     }
 }

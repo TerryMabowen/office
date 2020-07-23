@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  */
 @Service
 public class ReadPropertiesService {
-    @Value("${jialian.column.englist.fields}")
+    @Value("${jl.column.en.fields}")
     private String jlFields;
 
     public ResourceBundle readProperties(String filename) {

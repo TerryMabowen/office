@@ -1,10 +1,10 @@
 package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
-import com.github.binarywang.wxpay.bean.result.WxPayBillResult;
 import com.mbw.office.common.lang.response.ResponseResults;
 import com.mbw.office.demo.biz.jalian.JlBillService;
-import com.mbw.office.demo.biz.jalian.model.AccountStatementData;
+import com.mbw.office.demo.biz.jalian.model.JlBill;
+import com.mbw.office.demo.biz.weixin.model.WxBill;
 import com.mbw.office.demo.biz.weixin.service.WeiXinPayService;
 import com.mbw.office.demo.web.ctl.fb.BillFB;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +33,9 @@ public class IndexDataCtl {
     @GetMapping("/jlBill")
     public ResponseResults jlBills(@RequestParam("filename") String filename) {
         try {
-            List<String> lineList = jlBillService.getLineList(ROOT_PATH + filename);
-//            String[] fields = jlBillService.getFields("field", "column_eng_names");
-            String[] fields = jlBillService.getFields();
-            List<AccountStatementData> statementData = jlBillService.parse(lineList, fields);
+            JlBill jlBill = jlBillService.getJlBill(ROOT_PATH + filename);
             return ResponseResults.newSuccess()
-                    .setData(statementData);
+                    .setData(jlBill);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());
@@ -71,7 +68,7 @@ public class IndexDataCtl {
             request.setBillDate(fb.getBillDate());
             request.setBillType(fb.getBillType());
 
-            WxPayBillResult wxPayBillResult = weiXinPayService.downloadBill(request);
+            List<WxBill> wxPayBillResult = weiXinPayService.downloadBill(request);
 
             return ResponseResults.newSuccess()
                     .setData(wxPayBillResult);
