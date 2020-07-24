@@ -1,6 +1,5 @@
 package com.mbw.office.test.holiday;
 
-import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.common.util.json.GsonUtil;
 import com.mbw.office.demo.holiday.HolidayService;
 import com.mbw.office.demo.holiday.model.SettlementDateDO;
@@ -21,12 +20,17 @@ public class HolidayTest {
 
     @Test
     public void f1() {
-        createSettlementDays();
+        createSettlementDays("2019");
     }
 
-    private void createSettlementDays() {
-        String year = DateUtil.getYear();
-        System.out.println(year);
+    @Test
+    public void f2() {
+        service.createSettlementDays("2019", "07");
+    }
+
+    private void createSettlementDays(String year) {
+//        String year = DateUtil.getYear();
+//        System.out.println(year);
 
         List<SettlementDateDO> dos = new ArrayList<>();
         for (String month : months) {

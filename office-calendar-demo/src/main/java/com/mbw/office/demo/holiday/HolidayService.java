@@ -1,5 +1,6 @@
 package com.mbw.office.demo.holiday;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.date.DateUtil;
@@ -32,68 +33,77 @@ public class HolidayService {
         List<CalendarApiData> calendarApiData = listHolidays(year, month);
         AssertUtil.assertCollectionNotEmpty(calendarApiData, "calendarApiData cannot be null");
 
-        List<Almanac> almanacs = calendarApiData.get(0).getAlmanacs();
-        List<String> dates = almanacs.stream().map(Almanac::getDate).collect(Collectors.toList());
+        if (calendarApiData.get(0) != null) {
+            List<Almanac> almanacs = calendarApiData.get(0).getAlmanacs();
+            if (CollUtil.isNotEmpty(almanacs)) {
+                List<String> dates = almanacs.stream().map(Almanac::getDate).collect(Collectors.toList());
 //        System.out.println(GsonUtil.beanToJson(dates));
 
-        List<DateList> restDays = new ArrayList<>();
-        List<Holiday> holidays = calendarApiData.get(0).getHolidays();
-        holidays.forEach(h -> {
-            restDays.addAll(h.getList());
-        });
-        //去重
-        List<DateList> collect = restDays.stream()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toCollection(() -> new TreeSet<>(
-                                Comparator.comparing(DateList::getDate)
-                        )),
-                        ArrayList::new
-                    )
-                );
+                List<DateList> restDays = new ArrayList<>();
+                List<Holiday> holidays = calendarApiData.get(0).getHolidays();
+
+                if (CollUtil.isNotEmpty(holidays)) {
+                    holidays.forEach(h -> {
+                        restDays.addAll(h.getList());
+                    });
+                    //去重
+                    List<DateList> collect = restDays.stream()
+                            .collect(Collectors.collectingAndThen(
+                                    Collectors.toCollection(() -> new TreeSet<>(
+                                            Comparator.comparing(DateList::getDate)
+                                    )),
+                                    ArrayList::new
+                                    )
+                            );
 //        System.out.println(GsonUtil.beanToJson(collect));
-        Map<String, DateList> dateListMap = collect.stream().collect(Collectors.toMap(DateList::getDate, Function.identity()));
+                    Map<String, DateList> dateListMap = collect.stream().collect(Collectors.toMap(DateList::getDate, Function.identity()));
 
-        List<SettlementDateDO> dos = new ArrayList<>();
-        dates.forEach(d -> {
-            Date date = DateUtil.parseShort(d);
-            String dayOfWeek = DateUtil.getDayOfWeek(date);
-            if (StrUtil.isNotBlank(dayOfWeek)) {
-                SettlementDateDO dateDO = new SettlementDateDO();
-                dateDO.setCalendarDate(date);
-                dateDO.setDayOfWeek(dayOfWeek);
-                dateDO.setSourceType(1);//自动
+                    List<SettlementDateDO> dos = new ArrayList<>();
+                    dates.forEach(d -> {
+                        Date date = DateUtil.parseShort(d);
+                        String dayOfWeek = DateUtil.getDayOfWeek(date);
+                        if (StrUtil.isNotBlank(dayOfWeek)) {
+                            SettlementDateDO dateDO = new SettlementDateDO();
+                            dateDO.setCalendarDate(date);
+                            dateDO.setDayOfWeek(dayOfWeek);
+                            dateDO.setSourceType(1);//自动
 
-                /**
-                 * 首先把周六日置成非结算日，周一至周五置成结算日
-                 */
-                if ("星期六".equals(dayOfWeek) || "星期日".equals(dayOfWeek)) {
-                    dateDO.setSettlementDay(2);
-                    dateDO.setSettlementDayDesc("休息日");
-                } else {
-                    dateDO.setSettlementDay(1);
-                    dateDO.setSettlementDayDesc("结算日");
-                }
+                            /**
+                             * 首先把周六日置成非结算日，周一至周五置成结算日
+                             */
+                            if ("星期六".equals(dayOfWeek) || "星期日".equals(dayOfWeek)) {
+                                dateDO.setSettlementDay(2);
+                                dateDO.setSettlementDayDesc("休息日");
+                            } else {
+                                dateDO.setSettlementDay(1);
+                                dateDO.setSettlementDayDesc("结算日");
+                            }
 
-                /**
-                 * 检测接口返回的节假日列表，根据节假日和工作日重新设置是否结算日
-                 */
-                DateList dateList = dateListMap.get(d);
-                if (dateList != null && dateDO.getCalendarDate().compareTo(DateUtil.parseShort(dateList.getDate())) == 0) {
-                    if (1 == dateList.getStatus()) {
-                        dateDO.setSettlementDay(2);
-                        dateDO.setSettlementDayDesc("休息日");
-                    } else {
-                        dateDO.setSettlementDay(1);
-                        dateDO.setSettlementDayDesc("结算日");
-                    }
-                }
+                            /**
+                             * 检测接口返回的节假日列表，根据节假日和工作日重新设置是否结算日
+                             */
+                            DateList dateList = dateListMap.get(d);
+                            if (dateList != null && dateDO.getCalendarDate().compareTo(DateUtil.parseShort(dateList.getDate())) == 0) {
+                                if (1 == dateList.getStatus()) {
+                                    dateDO.setSettlementDay(2);
+                                    dateDO.setSettlementDayDesc("休息日");
+                                } else {
+                                    dateDO.setSettlementDay(1);
+                                    dateDO.setSettlementDayDesc("结算日");
+                                }
+                            }
 
-                dos.add(dateDO);
-            }
-        });
+                            dos.add(dateDO);
+                        }
+                    });
 //        System.out.println(GsonUtil.beanToJson(dos));
 
-        return dos;
+                    return dos;
+                }
+            }
+        }
+
+        return Collections.emptyList();
     }
 
     private List<CalendarApiData> listHolidays(String year, String month) {
