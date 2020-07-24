@@ -39,6 +39,10 @@ public class DateUtil {
         return formatShort(now());
     }
 
+    public static String getYear() {
+        return format(now(), "yyyy");
+    }
+
     /**
      * 获取当前时间戳---精确到毫秒
      * @author bowen.M
@@ -49,9 +53,47 @@ public class DateUtil {
         return format(now(), TIMESTAMP_PATTERN);
     }
 
-//    public static String judgeDatePattern(String date) {
-//
-//    }
+    public static String getDayOfWeek(String date, String pattern) {
+        if (StrUtil.isNotBlank(date) && StrUtil.isNotBlank(pattern)) {
+            return getDayOfWeek(parse(date, pattern));
+        }
+
+        throw new ServiceException("date str cannot be empty");
+    }
+
+    /**
+     * 获取当前时间是星期几
+     * @author Mabowen
+     * @date 16:52 2020-07-24
+     * @param date
+     */
+    public static String getDayOfWeek(Date date) {
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
+            switch (day) {
+                case 0:
+                    return "星期日";
+                case 1:
+                    return "星期一";
+                case 2:
+                    return "星期二";
+                case 3:
+                    return "星期三";
+                case 4:
+                    return "星期四";
+                case 5:
+                    return "星期五";
+                case 6:
+                    return "星期六";
+                default:
+                    return "";
+            }
+        }
+
+        throw new ServiceException("date cannot be null");
+    }
 
     /**
      * 格式化时间
@@ -182,6 +224,44 @@ public class DateUtil {
         }
 
         throw new ServiceException("date cannot be null");
+    }
+
+    /**
+     * 获取指定年份的开始日期
+     * @param year
+     * @return
+     */
+    public static String getBeginYear(Date year) {
+        if (year != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(year);
+
+            int y = cal.get(Calendar.YEAR) - 1;
+            cal.set(y, Calendar.JANUARY, 1);
+
+            return formatShort(cal.getTime());
+        }
+
+        throw new ServiceException("year cannot be null");
+    }
+
+    /**
+     * 获取指定年份的结束日期
+     * @param year
+     * @return
+     */
+    public static String getEndYear(Date year) {
+        if (year != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(year);
+
+            int y = cal.get(Calendar.YEAR) - 1;
+            cal.set(y, Calendar.DECEMBER, 31);
+
+            return formatShort(cal.getTime());
+        }
+
+        throw new ServiceException("year cannot be null");
     }
 
     /**

@@ -3,7 +3,6 @@ package com.mbw.office.demo.gson;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,44 +75,4 @@ public class CalendarApiData {
 
     @SerializedName("appinfo")
     private String appInfo;
-
-    @Data
-    private static class Almanac {
-        private String avoid;
-
-        private Date date;
-
-        private String suit;
-    }
-
-    @Data
-    private static class Holiday {
-        private String desc;
-
-        private Date festival;
-
-        private List<DateList> list;
-
-        @SerializedName("list#num#baidu")
-        private Integer listNumBaidu;
-
-        private String name;
-
-        private String rest;
-    }
-
-    @Data
-    private static class DateList {
-        private Date date;
-
-        private Integer status;
-    }
-
-    @Data
-    private static class HolidayList {
-        private String name;
-
-        @SerializedName("startday")
-        private Date startDay;
-    }
 }

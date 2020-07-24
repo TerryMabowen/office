@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public abstract class BaseApiManager {
-    private final static String CHARSET = "GBK";
+    private static final String CHARSET = "GBK";
 
     @Getter@Setter
     private BaseHttpConfig httpConfig;

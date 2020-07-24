@@ -14,6 +14,6 @@ public interface CalendarRequestProxy {
 
     @GET("/api.php")
     public Call<BaseApiResponse<List<CalendarApiData>>> getCalendar(@Query("query") String query,
-                                                                   @Query("resource_id") String resourceId,
-                                                                   @Query("format") String format);
+                                                                    @Query("resource_id") String resourceId,
+                                                                    @Query("format") String format);
 }
