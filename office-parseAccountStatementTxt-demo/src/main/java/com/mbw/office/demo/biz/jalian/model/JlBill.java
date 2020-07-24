@@ -20,6 +20,11 @@ public class JlBill {
     private String appId;
 
     /**
+     * 商户号---mch_id
+     */
+    private String mchId;
+
+    /**
      * 账单日期
      */
     private Date billDate;

@@ -33,9 +33,9 @@ public class IndexDataCtl {
     @GetMapping("/jlBill")
     public ResponseResults jlBills(@RequestParam("filename") String filename) {
         try {
-            JlBill jlBill = jlBillService.getJlBill(ROOT_PATH + filename);
+            List<JlBill> jlBills = jlBillService.getJlBill(ROOT_PATH + filename);
             return ResponseResults.newSuccess()
-                    .setData(jlBill);
+                    .setData(jlBills);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());
@@ -68,10 +68,10 @@ public class IndexDataCtl {
             request.setBillDate(fb.getBillDate());
             request.setBillType(fb.getBillType());
 
-            List<WxBill> wxPayBillResult = weiXinPayService.downloadBill(request);
+            List<WxBill> wxBills = weiXinPayService.downloadBill(request);
 
             return ResponseResults.newSuccess()
-                    .setData(wxPayBillResult);
+                    .setData(wxBills);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());

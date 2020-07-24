@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,12 +27,12 @@ public class WeXinPayConfig {
     @ConditionalOnMissingBean
     public WxPayService wxService() {
         WxPayConfig payConfig = new WxPayConfig();
-        payConfig.setAppId(StringUtils.trimToNull(this.properties.getAppId()));
-        payConfig.setMchId(StringUtils.trimToNull(this.properties.getMchId()));
-        payConfig.setMchKey(StringUtils.trimToNull(this.properties.getMchKey()));
-        payConfig.setSubAppId(StringUtils.trimToNull(this.properties.getSubAppId()));
-        payConfig.setSubMchId(StringUtils.trimToNull(this.properties.getSubMchId()));
-        payConfig.setKeyPath(StringUtils.trimToNull(this.properties.getKeyPath()));
+        payConfig.setAppId(StringUtils.trimToNull(properties.getAppId()));
+        payConfig.setMchId(StringUtils.trimToNull(properties.getMchId()));
+        payConfig.setMchKey(StringUtils.trimToNull(properties.getMchKey()));
+        payConfig.setSubAppId(StringUtils.trimToNull(properties.getSubAppId()));
+        payConfig.setSubMchId(StringUtils.trimToNull(properties.getSubMchId()));
+        payConfig.setKeyPath(StringUtils.trimToNull(properties.getKeyPath()));
 
         // 可以指定是否使用沙箱环境
         payConfig.setUseSandboxEnv(false);

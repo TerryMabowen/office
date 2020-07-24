@@ -9,8 +9,8 @@ import com.mbw.office.common.util.decimal.BigDecimalUtil;
 import com.mbw.office.common.util.reflection.ReflectUtil;
 import com.mbw.office.common.util.string.StringUtil;
 import com.mbw.office.demo.biz.jalian.file.ReadTxtService;
-import com.mbw.office.demo.biz.jalian.model.JlBillDetail;
 import com.mbw.office.demo.biz.jalian.model.JlBill;
+import com.mbw.office.demo.biz.jalian.model.JlBillDetail;
 import com.mbw.office.demo.biz.jalian.resource.ReadPropertiesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Mabowen
@@ -34,6 +35,58 @@ public class JlBillService {
     @Autowired
     private ReadTxtService readTxtDemo;
 
+    public List<JlBill> getJlBill(String path) {
+        try {
+            String fileName = getFileName(path);
+            String appId = getAppId(fileName);
+            Date billDate = getBillDate(fileName);
+
+            List<JlBillDetail> jlBills = getJlBills(path);
+            Map<String, List<JlBillDetail>> jlBillGroup = jlBills.stream().collect(Collectors.groupingBy(bill -> appId + "_" + bill.getMchId()));
+
+            return jlBillGroup.keySet().stream().map(key -> {
+                String[] split = key.split("_");
+                String mcnId = split[1];
+                List<JlBillDetail> jlBillDetails = jlBillGroup.get(key);
+                JlBill jlBill = new JlBill();
+                jlBill.setAppId(appId);
+                jlBill.setMchId(mcnId);
+                jlBill.setFileName(fileName);
+                jlBill.setFilePath(path);
+                jlBill.setBillDate(billDate);
+                jlBill.setRecords(jlBillDetails);
+                jlBill.setTotalRecord(jlBillDetails.size());
+
+                BigDecimal totalFee = jlBillDetails.stream().filter(bill -> bill.getTradeMoney() != null).map(JlBillDetail::getTradeMoney).reduce(BigDecimal.ZERO, BigDecimal::add);
+                jlBill.setTotalFee(totalFee);
+
+                BigDecimal totalCommissions = jlBillDetails.stream().filter(bill -> bill.getCommissions() != null).map(JlBillDetail::getCommissions).reduce(BigDecimal.ZERO, BigDecimal::add);
+                jlBill.setTotalCommissions(totalCommissions);
+
+                BigDecimal totalChannelCommissions = jlBillDetails.stream().filter(bill -> bill.getChannelCommissions() != null).map(JlBillDetail::getChannelCommissions).reduce(BigDecimal.ZERO, BigDecimal::add);
+                jlBill.setTotalChannelCommissions(totalChannelCommissions);
+
+                BigDecimal totalExtraCommissions = jlBillDetails.stream().filter(bill -> bill.getExtraCommissions() != null).map(JlBillDetail::getExtraCommissions).reduce(BigDecimal.ZERO, BigDecimal::add);
+                jlBill.setTotalExtraCommissions(totalExtraCommissions);
+
+                BigDecimal totalChannelFee = jlBillDetails.stream().filter(bill -> bill.getChannelFee() != null).map(JlBillDetail::getChannelFee).reduce(BigDecimal.ZERO, BigDecimal::add);
+                jlBill.setTotalChannelFee(totalChannelFee);
+
+                return jlBill;
+            }).collect(Collectors.toList());
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    public List<JlBillDetail> getJlBills(String path) throws IllegalAccessException {
+        List<String> lineList = getLineList(path);
+        String[] fields = getFields();
+        return parse(lineList, fields);
+    }
+
     public List<String> getLineList(String path) {
         List<String> lineList = new ArrayList<>();
         try {
@@ -46,18 +99,8 @@ public class JlBillService {
         return lineList;
     }
 
-    public String[] getFields(String fieldName, String field) {
-        if (StrUtil.isNotBlank(fieldName) && StrUtil.isNotBlank(field)) {
-            ResourceBundle bundle = readPropertiesDemo.readProperties(fieldName);
-            String valueByKey = readPropertiesDemo.getValueByKey(bundle, field);
-            return readPropertiesDemo.getFields(valueByKey);
-        }
-
-        return new String[0];
-    }
-
     public String[] getFields() {
-       return readPropertiesDemo.getFields();
+        return readPropertiesDemo.getFields();
     }
 
     public List<JlBillDetail> parse(List<String> lineList, String[] fields) throws IllegalAccessException {
@@ -103,22 +146,14 @@ public class JlBillService {
         return dataList;
     }
 
-    public JlBill getJlBill(String path) throws IllegalAccessException {
-        JlBill jlBill = new JlBill();
-        jlBill.setFileName(getFileName(path));
-        jlBill.setFilePath(path);
-        jlBill.setAppId(getAppId(jlBill.getFileName()));
-        jlBill.setBillDate(getBillDate(jlBill.getFileName()));
+    public String[] getFields(String fieldName, String field) {
+        if (StrUtil.isNotBlank(fieldName) && StrUtil.isNotBlank(field)) {
+            ResourceBundle bundle = readPropertiesDemo.readProperties(fieldName);
+            String valueByKey = readPropertiesDemo.getValueByKey(bundle, field);
+            return readPropertiesDemo.getFields(valueByKey);
+        }
 
-        List<String> lineList = getLineList(path);
-        String[] fields = getFields();
-        List<JlBillDetail> data = parse(lineList, fields);
-        jlBill.setRecords(data);
-        jlBill.setTotalRecord(data.size());
-        BigDecimal totalFee = data.stream().map(JlBillDetail::getTradeMoney).reduce(BigDecimal.ZERO, BigDecimal::add);
-        jlBill.setTotalFee(totalFee);
-
-        return jlBill;
+        return new String[0];
     }
 
     private String getFileName(String path) {
