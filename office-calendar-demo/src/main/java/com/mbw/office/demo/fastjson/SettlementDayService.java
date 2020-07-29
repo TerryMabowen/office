@@ -2,7 +2,6 @@ package com.mbw.office.demo.fastjson;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.common.util.json.FastJsonUtil;
@@ -106,25 +105,37 @@ public class SettlementDayService {
     }
 
     private List<Almanac> listAlmanacs(String result) {
-        JSONObject jsonObject = FastJsonUtil.getJsonObject(result);
-        String almanac = FastJsonUtil.getJsonByName(jsonObject, "almanac");
-        if (StrUtil.isNotBlank(almanac)) {
-            System.out.println(almanac);
-            return FastJsonUtil.jsonToList(almanac, Almanac.class);
+        String data = FastJsonUtil.getJsonByKey(result, "data");
+        Map<String, Object> jsonToMap = FastJsonUtil.jsonToMap(data);
+        List<Almanac> almanacs = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : jsonToMap.entrySet()) {
+            if ("almanac".equals(entry.getKey()) && entry.getValue() != null) {
+                String value = String.valueOf(entry.getValue());
+                if (value.startsWith("[")) {
+                    almanacs = FastJsonUtil.jsonToList(value, Almanac.class);
+                }
+            }
         }
 
-        return Collections.emptyList();
+        return almanacs;
     }
 
     private List<Holiday> listHolidays(String result) {
-        JSONObject jsonObject = FastJsonUtil.getJsonObject(result);
-        String holiday = FastJsonUtil.getJsonByName(jsonObject, "holiday");
-        if (StrUtil.isNotBlank(holiday)) {
-            System.out.println(holiday);
-            return FastJsonUtil.jsonToList(holiday, Holiday.class);
+        String data = FastJsonUtil.getJsonByKey(result, "data");
+        Map<String, Object> jsonToMap = FastJsonUtil.jsonToMap(data);
+        List<Holiday> holidays = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : jsonToMap.entrySet()) {
+            if ("holiday".equals(entry.getKey()) && entry.getValue() != null) {
+                String value = String.valueOf(entry.getValue());
+                if (value.startsWith("[")) {
+                    holidays = FastJsonUtil.jsonToList(value, Holiday.class);
+                } else if (value.startsWith("{")) {
+                    holidays.add(FastJsonUtil.jsonToBean(value, Holiday.class));
+                }
+            }
         }
 
-        return Collections.emptyList();
+        return holidays;
     }
 
     private String getResult(String year, String month) {

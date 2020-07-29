@@ -5,8 +5,10 @@ import com.github.binarywang.wxpay.bean.result.WxPayBillInfo;
 import com.github.binarywang.wxpay.bean.result.WxPayBillResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.bean.BeanKit;
 import com.mbw.office.common.util.date.DateUtil;
+import com.mbw.office.demo.biz.weixin.WxConfigFactory;
 import com.mbw.office.demo.biz.weixin.model.WxBill;
 import com.mbw.office.demo.biz.weixin.model.WxBillDetail;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +29,12 @@ import java.util.stream.Collectors;
 @Service
 public class WeiXinPayService {
     @Autowired
-    private WxPayService wxPayService;
+    private WxConfigFactory wxConfigFactory;
 
-    public List<WxBill> downloadBill(WxPayDownloadBillRequest request) throws WxPayException {
+    public List<WxBill> downloadBill(WxPayDownloadBillRequest request, String appIdMchId) throws WxPayException {
         try {
+            WxPayService wxPayService = wxConfigFactory.getWxPayService(appIdMchId);
+
             WxPayBillResult wxPayBillResult = wxPayService.downloadBill(request);
             List<WxPayBillInfo> billInfoList = wxPayBillResult.getBillInfoList();
             Map<String, List<WxPayBillInfo>> billInfoGroup = billInfoList.stream().collect(Collectors.groupingBy(bill -> bill.getAppId() + "_" + bill.getMchId()));
@@ -71,8 +75,13 @@ public class WeiXinPayService {
                 return wxBill;
             }).collect(Collectors.toList());
         } catch (WxPayException e) {
-            log.error(e.getReturnMsg());
-            return Collections.emptyList();
+            if ("No Bill Exist".equals(e.getReturnMsg())) {
+                log.info("账单不存在");
+                return Collections.emptyList();
+            } else {
+                log.error(e.getReturnMsg());
+                throw new ServiceException(e.getReturnMsg(), e);
+            }
         }
     }
 }

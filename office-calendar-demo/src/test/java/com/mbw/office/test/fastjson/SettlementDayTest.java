@@ -29,6 +29,7 @@ public class SettlementDayTest {
     @Test
     public void f2() {
         createSettlementDays("2019");
+//        createSettlementDays();
     }
 
     private void createSettlementDays(String year) {

@@ -104,7 +104,7 @@ public class RegexUtil {
     }
 
     public static boolean isMobile(String text) {
-        return text.length() != 11 ? false : match(text, "^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]){1}|(14[0-9]){1}|(18[0-9]{1}))+\\d{8})$");
+        return text.length() == 11 && match(text, "^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]){1}|(14[0-9]){1}|(18[0-9]{1}))+\\d{8})$");
     }
 
     public static boolean isIdCardNo(String text) {
@@ -160,11 +160,10 @@ public class RegexUtil {
             return false;
         } else {
             String[] chars = new String[]{"[", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "|", "{", "}", "'", ":", ";", "'", ",", "[", "]", ".", "<", ">", "/", "?", "~", "！", "@", "#", "￥", "%", "…", "&", "*", "（", "）", "—", "+", "|", "{", "}", "【", "】", "‘", "；", "：", "”", "“", "’", "。", "，", "、", "？", "]"};
-            String[] var2 = chars;
             int var3 = chars.length;
 
             for(int var4 = 0; var4 < var3; ++var4) {
-                String ch = var2[var4];
+                String ch = chars[var4];
                 if (text.contains(ch)) {
                     return true;
                 }
@@ -175,7 +174,7 @@ public class RegexUtil {
     }
 
     public static String stringFilter(String text) {
-        String regExpr = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String regExpr = "[`~!@#$%^&*()+=|{}':;,\\[\\].<>/?！￥…（）—【】‘；：”“’。，、？]";
         Pattern p = Pattern.compile(regExpr);
         Matcher m = p.matcher(text);
         return m.replaceAll("").trim();
@@ -186,20 +185,20 @@ public class RegexUtil {
         String textStr = "";
 
         try {
-            String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>";
-            String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>";
+            String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?/[\\s]*?script[\\s]*?>";
+            String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?/[\\s]*?style[\\s]*?>";
             String regEx_html = "<[^>]+>";
             String patternStr = "\\s+";
-            Pattern p_script = Pattern.compile(regEx_script, 2);
+            Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);
             Matcher m_script = p_script.matcher(htmlStr);
             htmlStr = m_script.replaceAll("");
-            Pattern p_style = Pattern.compile(regEx_style, 2);
+            Pattern p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);
             Matcher m_style = p_style.matcher(htmlStr);
             htmlStr = m_style.replaceAll("");
-            Pattern p_html = Pattern.compile(regEx_html, 2);
+            Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
             Matcher m_html = p_html.matcher(htmlStr);
             htmlStr = m_html.replaceAll("");
-            Pattern p_ba = Pattern.compile(patternStr, 2);
+            Pattern p_ba = Pattern.compile(patternStr, Pattern.CASE_INSENSITIVE);
             Matcher m_ba = p_ba.matcher(htmlStr);
             htmlStr = m_ba.replaceAll("");
             textStr = htmlStr;
@@ -208,6 +207,14 @@ public class RegexUtil {
         }
 
         return textStr;
+    }
+
+    public static boolean isMonth(String text) {
+        return match(text, "^(0[469]|11)([012][0-9]|30)|(0[13578]|1[02])([012][0-9]|3[01])|(02([01][0-9]|2[0-8]))$");
+    }
+
+    public static boolean isYear(String text) {
+        return match(text, "^19[0-9]{2}|20([01][0-9])$");
     }
 
     private static boolean match(String text, String reg) {

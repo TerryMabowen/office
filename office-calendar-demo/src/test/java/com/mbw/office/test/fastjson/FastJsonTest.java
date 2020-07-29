@@ -2,7 +2,13 @@ package com.mbw.office.test.fastjson;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mbw.office.common.util.json.FastJsonUtil;
+import com.mbw.office.demo.fastjson.domain.Almanac;
+import com.mbw.office.demo.fastjson.domain.Holiday;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * TODO
@@ -16,21 +22,47 @@ public class FastJsonTest {
     @Test
     public void f1() {
         JSONObject jsonObject = FastJsonUtil.getJsonObject(json);
-        String data = FastJsonUtil.getJsonByName(jsonObject, "data");
+        String data = FastJsonUtil.getJsonByKey(jsonObject, "data");
         System.out.println(data);
     }
 
     @Test
     public void f2() {
         JSONObject jsonObject = FastJsonUtil.getJsonObject(json);
-        String almanac = FastJsonUtil.getJsonByName(jsonObject, "almanac");
-        System.out.println(almanac);
+        String data = FastJsonUtil.getJsonByKey(jsonObject, "data");
+        Map<String, Object> jsonToMap = FastJsonUtil.jsonToMap(data, Object.class);
+        List<Almanac> almanacs = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : jsonToMap.entrySet()) {
+            if ("almanac".equals(entry.getKey()) && entry.getValue() != null) {
+                String value = String.valueOf(entry.getValue());
+                if (value.startsWith("[")) {
+                    almanacs = FastJsonUtil.jsonToList(value, Almanac.class);
+                } else if (value.startsWith("{")) {
+                    almanacs.add(FastJsonUtil.jsonToBean(value, Almanac.class));
+                }
+            }
+        }
+
+        System.out.println(almanacs);
     }
 
     @Test
     public void f3() {
         JSONObject jsonObject = FastJsonUtil.getJsonObject(json);
-        String holiday = FastJsonUtil.getJsonByName(jsonObject, "holiday");
-        System.out.println(holiday);
+        String data = FastJsonUtil.getJsonByKey(jsonObject, "data");
+        Map<String, Object> jsonToMap = FastJsonUtil.jsonToMap(data, Object.class);
+        List<Holiday> holidays = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : jsonToMap.entrySet()) {
+            if ("holiday".equals(entry.getKey()) && entry.getValue() != null) {
+                String value = String.valueOf(entry.getValue());
+                if (value.startsWith("[")) {
+                    holidays = FastJsonUtil.jsonToList(value, Holiday.class);
+                } else if (value.startsWith("{")) {
+                    holidays.add(FastJsonUtil.jsonToBean(value, Holiday.class));
+                }
+            }
+        }
+
+        System.out.println(holidays);
     }
 }

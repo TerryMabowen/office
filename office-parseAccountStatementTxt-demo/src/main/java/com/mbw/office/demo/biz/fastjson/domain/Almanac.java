@@ -1,4 +1,4 @@
-package com.mbw.office.demo.fastjson.domain;
+package com.mbw.office.demo.biz.fastjson.domain;
 
 import lombok.Data;
 

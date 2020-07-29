@@ -1,14 +1,13 @@
 package com.mbw.office.demo.web.config;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Mabowen
  * @date 2020-07-17 14:58
  */
 @Data
-@ConfigurationProperties(prefix = "wx.pay")
+//@ConfigurationProperties(prefix = "wx.pay")
 public class WxPayProperties {
     /**
      * 设置微信公众号或者小程序等的appid

@@ -1,11 +1,11 @@
 package com.mbw.office.common.util.reflection;
 
 import cn.hutool.core.util.StrUtil;
+import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.collection.CollectionUtil;
 import com.mbw.office.common.util.date.DateUtil;
 import com.mbw.office.common.util.validate.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.service.spi.ServiceException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -33,7 +33,7 @@ public class ReflectUtil {
                 Field field = getField(instance.getClass(), fieldName);
                 if (field != null) {
                     field.setAccessible(true);
-                    return convert(field.get(instance), field.getType());
+                    return convertValueByType(field.get(instance), field.getType());
                 }
             }
 
@@ -44,12 +44,12 @@ public class ReflectUtil {
         }
     }
 
-    public static void setFieldValueIgnoreNullValue(Object instance, String fieldName, Object value) {
-        setFieldValue(instance, fieldName, value, true);
+    public static void setAttributeValueIgnoreNullValue(Object instance, String fieldName, Object value) {
+        setAttributeValue(instance, fieldName, value, true);
     }
 
-    public static void setFieldValueNotIgnoreNullValue(Object instance, String fieldName, Object value) {
-        setFieldValue(instance, fieldName, value, false);
+    public static void setAttributeValueNotIgnoreNullValue(Object instance, String fieldName, Object value) {
+        setAttributeValue(instance, fieldName, value, false);
     }
 
     public static Field getField(Class<?> clz, String fieldName) {
@@ -92,19 +92,25 @@ public class ReflectUtil {
         return fields;
     }
 
-    public static Method getMethod(Object instance, String fieldName, String type) {
-        try {
-            if (instance != null && StrUtil.isNotBlank(fieldName)) {
-                String name = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                String methodName = type + name;
-                return instance.getClass().getDeclaredMethod(methodName, String.class);
-            }
+    public static Method[] getMethods(Object instance) {
+        return instance.getClass().getDeclaredMethods();
+    }
 
-            return null;
-        } catch (NoSuchMethodException e) {
-            log.error(e.getMessage(), e);
-            return null;
+    public static Method getMethod(Object instance, String fieldName, String type) {
+        if (StrUtil.isNotBlank(fieldName)) {
+            String name = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+            String methodName = type + name;
+            Method[] methods = getMethods(instance);
+            if (methods.length > 0) {
+                for (Method method : methods) {
+                    if (methodName.equals(method.getName())) {
+                        return method;
+                    }
+                }
+            }
         }
+
+        return null;
     }
 
     public static <T> T newInstance(Class<T> clz, Object... args) {
@@ -144,9 +150,9 @@ public class ReflectUtil {
                 Object value = map.get(field.getName());
 
                 if (ignoreNullValue) {
-                    setFieldValueIgnoreNullValue(newInstance(clz), field.getName(), value);
+                    setAttributeValueIgnoreNullValue(newInstance(clz), field.getName(), value);
                 } else {
-                    setFieldValueNotIgnoreNullValue(newInstance(clz), field.getName(), value);
+                    setAttributeValueNotIgnoreNullValue(newInstance(clz), field.getName(), value);
                 }
             }
 
@@ -164,23 +170,22 @@ public class ReflectUtil {
         return mapToBean(map, clz, true);
     }
 
-    private static void setFieldValue(Object instance, String fieldName, Object value, boolean ignoreNullValue) {
+    private static void setAttributeValue(Object instance, String fieldName, Object value, boolean ignoreNullValue) {
         try {
             if (instance != null && StrUtil.isNotBlank(fieldName)) {
                 Field field = getField(instance.getClass(), fieldName);
                 if (field != null) {
                     field.setAccessible(true);
-                    Object fieldValue = convert(value, field.getType());
                     Method setMethod = getMethod(instance, fieldName, SET);
                     if (ignoreNullValue) {
-                        if (fieldValue != null) {
+                        if (value != null) {
                             if (setMethod != null) {
-                                setMethod.invoke(instance, convert(value, field.getType()));
+                                setMethod.invoke(instance, convertValueByType(value, field.getType()));
                             }
                         }
                     } else {
                         if (setMethod != null) {
-                            setMethod.invoke(instance, convert(value, field.getType()));
+                            setMethod.invoke(instance, convertValueByType(value, field.getType()));
                         }
                     }
                 }
@@ -190,7 +195,7 @@ public class ReflectUtil {
         }
     }
 
-    private static <T> T convert(Object value, Class<T> type) {
+    private static <T> T convertValueByType(Object value, Class<T> type) {
         if (value == null || type == null) {
             return null;
         }

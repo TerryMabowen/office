@@ -160,4 +160,18 @@ public class AssertUtil {
     public static <K, V> void assertMapNotEmpty(Map<K, V> map) {
         assertMapNotEmpty(map, (String)null);
     }
+
+    public static void assertValidateYear(String year, String tips) {
+        assertNotEmpty(year, "年份不能为空");
+        if (!RegexUtil.isYear(year)) {
+            throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 年份格式不正确" : tips);
+        }
+    }
+
+    public static void assertValidateMonth(String month, String tips) {
+        assertNotEmpty(month, "月份不能为空");
+        if (!RegexUtil.isMonth(month)) {
+            throw new AssertException(StrUtil.isBlank(tips) ? "验证失败, 月份格式不正确" : tips);
+        }
+    }
 }

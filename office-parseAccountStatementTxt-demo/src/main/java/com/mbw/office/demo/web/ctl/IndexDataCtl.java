@@ -2,8 +2,11 @@ package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
 import com.mbw.office.common.lang.response.ResponseResults;
+import com.mbw.office.demo.biz.fastjson.SettlementDayService;
+import com.mbw.office.demo.biz.fastjson.model.SettlementDateDO;
 import com.mbw.office.demo.biz.jalian.JlBillService;
 import com.mbw.office.demo.biz.jalian.model.JlBill;
+import com.mbw.office.demo.biz.weixin.WxConfigFactory;
 import com.mbw.office.demo.biz.weixin.model.WxBill;
 import com.mbw.office.demo.biz.weixin.service.WeiXinPayService;
 import com.mbw.office.demo.web.ctl.fb.BillFB;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mabowen
@@ -29,6 +35,9 @@ public class IndexDataCtl {
 
     @Autowired
     private JlBillService jlBillService;
+
+    @Autowired
+    private SettlementDayService settlementDayService;
 
     @GetMapping("/jlBill")
     public ResponseResults jlBills(@RequestParam("filename") String filename) {
@@ -62,16 +71,41 @@ public class IndexDataCtl {
      * @return 保存到本地的临时文件
      */
     @GetMapping("/wxBill")
-    public ResponseResults downloadBill(BillFB fb) {
+    public ResponseResults wxBills(BillFB fb) {
         try {
             WxPayDownloadBillRequest request = new WxPayDownloadBillRequest();
             request.setBillDate(fb.getBillDate());
             request.setBillType(fb.getBillType());
 
-            List<WxBill> wxBills = weiXinPayService.downloadBill(request);
+            //通过查询数据库或者根据传递的参数操作
+            List<WxConfigFactory.AppConfig> list = new ArrayList<>();
+            list.add(new WxConfigFactory.AppConfig("wxba30f2ef0e485274", "1540637701", "A4659A63476446D29526D8FC78BJLEGO"));
+            list.add(new WxConfigFactory.AppConfig("wx8c9148cee130fba4", "1540637701", "A4659A63476446D29526D8FC78BJLEGO"));
+
+            Map<String, List<WxBill>> result = new HashMap<>();
+            for (WxConfigFactory.AppConfig appConfig : list) {
+                String key = appConfig.getAppId() + "_" + appConfig.getMchId();
+
+                List<WxBill> wxBills = weiXinPayService.downloadBill(request, key);
+                result.put(key, wxBills);
+            }
+
 
             return ResponseResults.newSuccess()
-                    .setData(wxBills);
+                    .setData(result);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/day")
+    public ResponseResults settlementDays(@RequestParam("year") String year,
+                                          @RequestParam("month") String month) {
+        try {
+            List<SettlementDateDO> settlementDays = settlementDayService.createSettlementDays(year, month);
+            return ResponseResults.newSuccess()
+                    .setData(settlementDays);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());

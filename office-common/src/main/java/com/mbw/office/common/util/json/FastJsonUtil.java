@@ -2,13 +2,12 @@ package com.mbw.office.common.util.json;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * fastjson工具类
@@ -30,8 +29,16 @@ public class FastJsonUtil {
         return JSON.parseObject(json);
     }
 
-    public static String getJsonByName(JSONObject jsonObject, String name) {
-        return jsonObject.getString(name);
+    public static String getJsonByKey(JSONObject jsonObject, String key) {
+        return jsonObject.getString(key);
+    }
+
+    public static String getJsonByKey(String json, String key) {
+        if (StrUtil.isNotBlank(json) && StrUtil.isNotBlank(key)) {
+            JSONObject jsonObject = getJsonObject(json);
+            return jsonObject.getString(key);
+        }
+        return StrUtil.EMPTY;
     }
 
     public static String beanToJson(Object obj) {
@@ -43,42 +50,18 @@ public class FastJsonUtil {
     }
 
     public static <T> T jsonToBean(String json, Class<T> clz) {
-        if (StrUtil.isNotBlank(json) && clz != null) {
-            return JSON.parseObject(json, clz);
-        }
-
-        return null;
+        return JSON.parseObject(json, clz);
     }
 
     public static <T> List<T> jsonToList(String json, Class<T> clz) {
-        if (StrUtil.isNotBlank(json) && clz != null) {
-            return JSON.parseObject(json, new TypeReference<List<T>>() {});
-        }
-
-        return Collections.emptyList();
+        return JSONArray.parseArray(json, clz);
     }
 
-    public static <T> Set<T> jsonToSet(String json, Class<T> clz) {
-        if (StrUtil.isNotBlank(json) && clz != null) {
-            return JSON.parseObject(json, new TypeReference<Set<T>>() {});
-        }
-
-        return Collections.emptySet();
+    public static Map<String, Object> jsonToMap(String json) {
+        return JSON.parseObject(json, new TypeReference<Map<String, Object>>() {});
     }
 
     public static <T> Map<String, T> jsonToMap(String json, Class<T> clz) {
-        if (StrUtil.isNotBlank(json) && clz != null) {
-            return JSON.parseObject(json, new TypeReference<Map<String, T>>() {});
-        }
-
-        return Collections.emptyMap();
-    }
-
-    public static <T> List<Map<String, T>> jsonToListMap(String json, Class<T> clz) {
-        if (StrUtil.isNotBlank(json) && clz != null) {
-            return JSON.parseObject(json, new TypeReference<List<Map<String, T>>>() {});
-        }
-
-        return Collections.emptyList();
+        return JSON.parseObject(json, new TypeReference<Map<String, T>>() {});
     }
 }
