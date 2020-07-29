@@ -10,5 +10,5 @@ public abstract class AbstractColumnConvert<T> {
     @Getter
     protected T value;
 
-    public abstract T convert(Object value);
+    public abstract T convert(String value, Class<T> type);
 }

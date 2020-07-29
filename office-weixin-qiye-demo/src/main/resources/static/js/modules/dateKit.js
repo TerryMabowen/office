@@ -43,7 +43,7 @@ function parseStrDate(strDate) {
     }
 }
 
-//比较两个时间的前后，返回true表示date1>date2, 返回false表示date1<=date2
+//比较两个时间的前后，返回true表示date1在date2之后, 返回false表示date1在date2之前
 function compareToDate(date1, date2) {
     if (typeof date1 == "string") {
         date1 = parseStrDate(date1);
