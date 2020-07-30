@@ -1,6 +1,11 @@
 /**
  * 对前端展示的金额进行格式化，使其以千分位显示
+ * 验证金额格式是否正确
+ * 验证金额是否大于等于0
+ * @author mabowen
  */
+var amtReg = /^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/;
+
 var formatCurrency = function format(num) {
     if (num === null || num === undefined || '' === num) {
         return "0.00";
@@ -40,6 +45,47 @@ var formatCurrency = function format(num) {
     }
 };
 
+/**
+ * 验证金额格式
+ * @param amount 金额
+ * @returns {boolean} true:是金额，false:不是金额
+ */
+var verifyAmount = function (amount) {
+    if (amount !== null && amount !== undefined && amount !== '') {
+        if (!amtReg.test(amount.replace(/,/g, ''))) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
+};
+
+/**
+ * 金额不能小于0
+ * @param amount
+ * @returns {boolean} true: >= 0, false: <0 或者为空
+ */
+var verifyAmountGtZero = function (amount) {
+    if (verifyAmount(amount)) {
+        let monty = Number(amount.replace(/,/g, ''));
+        return monty >= 0;
+    }
+};
+
+/**
+ * 比较两个金额的大小
+ * @param amt1
+ * @param amt2
+ */
+var compareTwoAmount = function (amt1, amt2) {
+
+};
+
 var currencyFormat = {
-    formatCurrency: formatCurrency
+    formatCurrency: formatCurrency,
+    verifyAmount: verifyAmount,
+    compareTwoAmount: compareTwoAmount,
+    verifyAmountGtZero: verifyAmountGtZero
 };

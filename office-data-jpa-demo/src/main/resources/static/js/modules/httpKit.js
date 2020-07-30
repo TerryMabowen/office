@@ -1,3 +1,8 @@
+/**
+ * ajax请求封装
+ * @author mabowen
+ */
+
 function getData(url, params) {
     return new Promise(function (resolve, reject) {
         $.getJSON(url, params, function (result) {
