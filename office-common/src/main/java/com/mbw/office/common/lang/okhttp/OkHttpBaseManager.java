@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.lang.okhttp.domain.LoginResponseData;
 import com.mbw.office.common.util.validate.AssertUtil;
-import com.mbw.office.common.util.validate.ValidatorFactory;
+import com.mbw.office.common.util.validate.ValidatorUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,6 +47,9 @@ public abstract class OkHttpBaseManager {
     @Getter
     @Setter
     private OkHttpConfig okHttpConfig;
+
+    @Autowired
+    private Validator validator;
 
     private AtomicInteger speedPerSecond = new AtomicInteger(0);
     private long currentSecond = 0;
@@ -202,8 +206,7 @@ public abstract class OkHttpBaseManager {
      * @return
      */
     protected <T> Result validate(T t) {
-        return ValidatorFactory.getInstance()
-                .validateObject(t);
+        return ValidatorUtil.validateObject(t, validator);
     }
 
     /**

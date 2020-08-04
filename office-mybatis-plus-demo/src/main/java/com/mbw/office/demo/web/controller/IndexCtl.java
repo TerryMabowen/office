@@ -1,8 +1,8 @@
 package com.mbw.office.demo.web.controller;
 
+import com.mbw.office.common.web.base.BaseCtl;
 import com.mbw.office.demo.biz.jalian.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
-import com.mbw.office.demo.web.controller.base.BaseCtl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

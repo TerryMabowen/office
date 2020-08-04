@@ -23,18 +23,18 @@ public class ValidatorUtil {
                 .result(toSimple());
     }
 
-    public static <T> Result validateObject(T t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
-        return FluentValidator
-                .checkAll()
-                .on(t, v)
-                .doValidate()
-                .result(toSimple());
-    }
-
     public static <T> Result validateCollection(Collection<T> t, Validator validator) {
         return FluentValidator
                 .checkAll()
                 .onEach(t, new HibernateSupportedValidator<T>().setHiberanteValidator(validator))
+                .doValidate()
+                .result(toSimple());
+    }
+
+    public static <T> Result validateObject(T t, com.baidu.unbiz.fluentvalidator.Validator<T> v) {
+        return FluentValidator
+                .checkAll()
+                .on(t, v)
                 .doValidate()
                 .result(toSimple());
     }

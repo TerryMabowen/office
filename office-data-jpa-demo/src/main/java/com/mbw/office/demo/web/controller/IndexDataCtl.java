@@ -2,9 +2,9 @@ package com.mbw.office.demo.web.controller;
 
 import com.mbw.office.common.lang.response.PageResult;
 import com.mbw.office.common.lang.response.ResponseResults;
+import com.mbw.office.common.web.base.BaseDataCtl;
 import com.mbw.office.demo.biz.jalian.model.user.vo.UserVO;
 import com.mbw.office.demo.service.user.IUserService;
-import com.mbw.office.demo.web.controller.base.BaseDataCtl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

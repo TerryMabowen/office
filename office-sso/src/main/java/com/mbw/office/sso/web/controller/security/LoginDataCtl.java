@@ -1,7 +1,7 @@
 package com.mbw.office.sso.web.controller.security;
 
 import com.mbw.office.common.lang.response.ResponseResults;
-import com.mbw.office.sso.web.controller.base.BaseDataCtl;
+import com.mbw.office.common.web.base.BaseDataCtl;
 import com.mbw.office.sso.web.controller.security.fb.LoginUserFB;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

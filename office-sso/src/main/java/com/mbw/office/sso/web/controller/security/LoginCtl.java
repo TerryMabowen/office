@@ -1,6 +1,6 @@
 package com.mbw.office.sso.web.controller.security;
 
-import com.mbw.office.sso.web.controller.base.BaseCtl;
+import com.mbw.office.common.web.base.BaseCtl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
