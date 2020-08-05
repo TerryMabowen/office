@@ -26,4 +26,28 @@ public class DateTest {
         Date date2 = DateUtil.parse(s2, "yyyyMMddHHmmss");
         System.out.println(DateUtil.formatDefault(date2));
     }
+
+    @Test
+    public void f3() {
+        String date = "2004-02-15";
+        String monthBegin = DateUtil.getMonthBegin(DateUtil.parseShort(date));
+        String monthEnd = DateUtil.getMonthEnd(DateUtil.parseShort(date));
+        System.out.println(monthBegin + " ~ " + monthEnd);
+    }
+
+    @Test
+    public void f4() {
+        String date = "2000-02-15";
+        String yearBegin = DateUtil.getYearBegin(DateUtil.parseShort(date));
+        String yearEnd = DateUtil.getYearEnd(DateUtil.parseShort(date));
+        System.out.println(yearBegin + " ~ " + yearEnd);
+    }
+
+    @Test
+    public void f5() {
+        String date = "2000-02-15";
+        String dayBegin = DateUtil.getDayBegin(DateUtil.parseShort(date));
+        String dayEnd = DateUtil.getDayEnd(DateUtil.parseShort(date));
+        System.out.println(dayBegin + " ~ " + dayEnd);
+    }
 }

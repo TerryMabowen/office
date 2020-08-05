@@ -17,29 +17,29 @@ public class ConvertTest {
     public void f1() {
         IntegerColumnConvert columnConvert = ColumnConvertFactory.getInstance()
                 .getIntegerColumnConvert();
-        Integer convert = columnConvert.convert("12");
+        Integer convert = columnConvert.convert("12", Integer.class);
         System.out.println(convert + ", " + convert.getClass());
     }
 
     @Test
     public void f2() {
-        AbstractColumnConvert columnConvert = ColumnConvertFactory.getInstance().getColumnConvert(Integer.class);
-        Integer convert = (Integer) columnConvert.convert("12");
+        AbstractColumnConvert columnConvert = ColumnConvertFactory.getInstance().getColumnConvert();
+        Integer convert = (Integer) columnConvert.convert("12", Integer.class);
         System.out.println(convert + ", " + convert.getClass());
     }
 
     @Test
     public void f3() {
-        AbstractColumnConvert columnConvert = ColumnConvertFactory.getInstance().getColumnConvert(Double.class);
-        Double convert = (Double) columnConvert.convert("12");
+        AbstractColumnConvert columnConvert = ColumnConvertFactory.getInstance().getColumnConvert();
+        Double convert = (Double) columnConvert.convert("12", Double.class);
         System.out.println(convert + ", " + convert.getClass());
     }
 
     @Test
     public void f4() {
         try {
-            AbstractColumnConvert columnConvert = ColumnConvertFactory.getInstance().getColumnConvert(Boolean.class);
-            Boolean convert = (Boolean) columnConvert.convert("sssfe");
+            AbstractColumnConvert columnConvert = ColumnConvertFactory.getInstance().getColumnConvert();
+            Boolean convert = (Boolean) columnConvert.convert("sssfe", Boolean.class);
             System.out.println(convert + ", " + convert.getClass());
         } catch (Exception e) {
             e.printStackTrace();

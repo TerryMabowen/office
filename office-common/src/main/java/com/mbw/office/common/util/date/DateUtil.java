@@ -2,8 +2,6 @@ package com.mbw.office.common.util.date;
 
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.lang.exception.ServiceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +19,6 @@ import java.util.List;
  * @date 2020-04-08 22:07
  */
 public class DateUtil {
-    private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
     public static final String TIMESTAMP_PATTERN = "yyyyMMddHHmmssSSS";
     public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String SHORT_DATE_PATTERN = "yyyy-MM-dd";
@@ -39,8 +36,12 @@ public class DateUtil {
         return formatShort(now());
     }
 
-    public static String getYear() {
+    public static String getCurrentYear() {
         return format(now(), "yyyy");
+    }
+
+    public static String getCurrentMonth() {
+        return format(now(), "MM");
     }
 
     /**
@@ -203,7 +204,7 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String getBeginDay(Date date) {
+    public static String getDayBegin(Date date) {
         if (date != null) {
             return format(date, SHORT_DATE_PATTERN) + BEGIN_DAY_SUFFIX;
         }
@@ -218,7 +219,7 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String getEndDay(Date date) {
+    public static String getDayEnd(Date date) {
         if (date != null) {
             return format(date, SHORT_DATE_PATTERN) + END_DAY_SUFFIX;
         }
@@ -227,41 +228,93 @@ public class DateUtil {
     }
 
     /**
-     * 获取指定年份的开始日期
-     * @param year
+     * 获取传入时间月份的第一天
+     * @param date
      * @return
      */
-    public static String getBeginYear(Date year) {
-        if (year != null) {
+    public static String getMonthBegin(Date date) {
+        if (date != null) {
             Calendar cal = Calendar.getInstance();
-            cal.setTime(year);
+            cal.setTime(date);
 
-            int y = cal.get(Calendar.YEAR) - 1;
-            cal.set(y, Calendar.JANUARY, 1);
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
 
             return formatShort(cal.getTime());
         }
 
-        throw new ServiceException("year cannot be null");
+        throw new ServiceException("date cannot be null");
+    }
+
+    /**
+     * 获取传入时间月份的最后一天
+     * @param date
+     * @return
+     */
+    public static String getMonthEnd(Date date) {
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+
+            //2月份平年和瑞年
+            int lastDay = 0;
+            if (2 == month) {
+                lastDay = cal.getLeastMaximum(Calendar.DAY_OF_MONTH);
+            } else {
+                lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+            }
+            cal.set(Calendar.DAY_OF_MONTH, lastDay);
+
+            return formatShort(cal.getTime());
+        }
+
+        throw new ServiceException("date cannot be null");
+    }
+
+    /**
+     * 获取指定年份的开始日期
+     * @param date
+     * @return
+     */
+    public static String getYearBegin(Date date) {
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+
+            int year = cal.get(Calendar.YEAR);
+            cal.set(year, Calendar.JANUARY, 1);
+
+            return formatShort(cal.getTime());
+        }
+
+        throw new ServiceException("date cannot be null");
     }
 
     /**
      * 获取指定年份的结束日期
-     * @param year
+     * @param date
      * @return
      */
-    public static String getEndYear(Date year) {
-        if (year != null) {
+    public static String getYearEnd(Date date) {
+        if (date != null) {
             Calendar cal = Calendar.getInstance();
-            cal.setTime(year);
+            cal.setTime(date);
 
-            int y = cal.get(Calendar.YEAR) - 1;
-            cal.set(y, Calendar.DECEMBER, 31);
+            int year = cal.get(Calendar.YEAR);
+            cal.set(year, Calendar.DECEMBER, 31);
 
             return formatShort(cal.getTime());
         }
 
-        throw new ServiceException("year cannot be null");
+        throw new ServiceException("date cannot be null");
     }
 
     /**
