@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.validate.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,14 @@ public class FileUtil {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private static final String ATTACHMENT = "attachment;filename=";
     private static final String CONTENT_TYPE = "application/octet-stream";
+
+    public static String readFileToString(File file, String charset) {
+        try {
+            return FileUtils.readFileToString(file, charset);
+        } catch (IOException e) {
+            throw new ServiceException("read file to string error: " + e.getMessage(), e);
+        }
+    }
 
     public static boolean createFile(String dir, String filename) {
         AssertUtil.assertNotEmpty(dir, "目录不能为空");

@@ -2,24 +2,25 @@ package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
 import com.mbw.office.common.lang.response.ResponseResults;
+import com.mbw.office.common.util.collection.CollectionUtil;
+import com.mbw.office.demo.biz.department.DepartmentReceivableService;
 import com.mbw.office.demo.biz.fastjson.SettlementDayService;
 import com.mbw.office.demo.biz.fastjson.model.SettlementDateDO;
 import com.mbw.office.demo.biz.jalian.JlBillService;
 import com.mbw.office.demo.biz.jalian.model.JlBill;
+import com.mbw.office.demo.biz.statistics.BudgetStatisticsService;
+import com.mbw.office.demo.biz.statistics.dto.BudgetDepartmentJlBillDTO;
+import com.mbw.office.demo.biz.statistics.dto.BudgetDepartmentWxBillDTO;
+import com.mbw.office.demo.biz.statistics.vo.DepartmentAmountReceivableVO;
 import com.mbw.office.demo.biz.weixin.WxConfigFactory;
 import com.mbw.office.demo.biz.weixin.model.WxBill;
-import com.mbw.office.demo.biz.weixin.service.WeiXinPayService;
+import com.mbw.office.demo.biz.weixin.service.WxBillService;
 import com.mbw.office.demo.web.ctl.fb.BillFB;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Mabowen
@@ -31,13 +32,19 @@ public class IndexDataCtl {
     private static final String ROOT_PATH = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
 
     @Autowired
-    private WeiXinPayService weiXinPayService;
+    private WxBillService wxBillService;
 
     @Autowired
     private JlBillService jlBillService;
 
     @Autowired
     private SettlementDayService settlementDayService;
+
+    @Autowired
+    private BudgetStatisticsService budgetStatisticsService;
+
+    @Autowired
+    private DepartmentReceivableService departmentReceivableService;
 
     @GetMapping("/jlBill")
     public ResponseResults jlBills(@RequestParam("filename") String filename) {
@@ -82,14 +89,13 @@ public class IndexDataCtl {
             list.add(new WxConfigFactory.AppConfig("wxba30f2ef0e485274", "1540637701", "A4659A63476446D29526D8FC78BJLEGO"));
             list.add(new WxConfigFactory.AppConfig("wx8c9148cee130fba4", "1540637701", "A4659A63476446D29526D8FC78BJLEGO"));
 
-            Map<String, List<WxBill>> result = new HashMap<>();
+            List<WxBill> wxBills = new ArrayList<>();
             for (WxConfigFactory.AppConfig appConfig : list) {
                 String key = appConfig.getAppId() + "_" + appConfig.getMchId();
-
-                List<WxBill> wxBills = weiXinPayService.downloadBill(request, key);
-                result.put(key, wxBills);
+                wxBills.addAll(wxBillService.downloadBill(request, key));
             }
 
+            List<WxBill> result = CollectionUtil.mergeList(wxBills);
 
             return ResponseResults.newSuccess()
                     .setData(result);
@@ -106,6 +112,78 @@ public class IndexDataCtl {
             List<SettlementDateDO> settlementDays = settlementDayService.createSettlementDays(year, month);
             return ResponseResults.newSuccess()
                     .setData(settlementDays);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/jl/budget")
+    public ResponseResults jlBudget() {
+        try {
+            List<BudgetDepartmentJlBillDTO> dtos = budgetStatisticsService.listDepartmentJlBills();
+            return ResponseResults.newSuccess()
+                    .setData(dtos);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/wx/budget")
+    public ResponseResults wxBudget() {
+        try {
+            List<BudgetDepartmentWxBillDTO> dtos = budgetStatisticsService.listDepartmentWxBills();
+            return ResponseResults.newSuccess()
+                    .setData(dtos);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/department/history/amount/receivable")
+    public ResponseResults departmentHistoryAmountReceivable() {
+        try {
+            List<DepartmentAmountReceivableVO> vos = budgetStatisticsService.listDepartmentHistoryAmountReceivables();
+            return ResponseResults.newSuccess()
+                    .setData(vos);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/department/current/amount/receivable")
+    public ResponseResults departmentCurrentAmountReceivable() {
+        try {
+            List<DepartmentAmountReceivableVO> vos = budgetStatisticsService.listDepartmentCurrentAmountReceivables();
+            return ResponseResults.newSuccess()
+                    .setData(vos);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/f1")
+    public ResponseResults f1() {
+        try {
+            List<com.mbw.office.demo.biz.department.vo.DepartmentAmountReceivableVO> vos = departmentReceivableService.listDepartmentReceivables();
+            return ResponseResults.newSuccess()
+                    .setData(vos);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/f2/{month}")
+    public ResponseResults f2(@PathVariable("month") String month) {
+        try {
+            List<com.mbw.office.demo.biz.department.vo.DepartmentAmountReceivableVO> vos = departmentReceivableService.listDepartmentReceivables(month);
+            return ResponseResults.newSuccess()
+                    .setData(vos);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());

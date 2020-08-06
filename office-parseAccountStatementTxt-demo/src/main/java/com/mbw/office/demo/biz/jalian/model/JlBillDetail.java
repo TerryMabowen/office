@@ -13,6 +13,10 @@ import java.util.Date;
  */
 @Data
 public class JlBillDetail {
+    private Long departmentId;
+    private String departmentName;
+    private Date settlementDate;
+
     /**
      * 商户号---mch_id
      */

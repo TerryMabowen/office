@@ -81,7 +81,7 @@ public class JlBillService {
         }
     }
 
-    public List<JlBillDetail> getJlBills(String path) throws IllegalAccessException {
+    private List<JlBillDetail> getJlBills(String path) throws IllegalAccessException {
         List<String> lineList = getLineList(path);
         String[] fields = getFields();
         return parse(lineList, fields);
@@ -99,7 +99,7 @@ public class JlBillService {
         return lineList;
     }
 
-    public String[] getFields() {
+    private String[] getFields() {
         return readPropertiesDemo.getFields();
     }
 

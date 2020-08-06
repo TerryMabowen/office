@@ -242,6 +242,9 @@ public class DateUtil {
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
 
             return formatShort(cal.getTime());
         }
@@ -273,6 +276,10 @@ public class DateUtil {
             }
             cal.set(Calendar.DAY_OF_MONTH, lastDay);
 
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+
             return formatShort(cal.getTime());
         }
 
@@ -290,7 +297,7 @@ public class DateUtil {
             cal.setTime(date);
 
             int year = cal.get(Calendar.YEAR);
-            cal.set(year, Calendar.JANUARY, 1);
+            cal.set(year, Calendar.JANUARY, 1, 0, 0, 0);
 
             return formatShort(cal.getTime());
         }
@@ -309,7 +316,7 @@ public class DateUtil {
             cal.setTime(date);
 
             int year = cal.get(Calendar.YEAR);
-            cal.set(year, Calendar.DECEMBER, 31);
+            cal.set(year, Calendar.DECEMBER, 31, 23, 59, 59);
 
             return formatShort(cal.getTime());
         }
@@ -393,6 +400,61 @@ public class DateUtil {
         }
 
         throw new ServiceException("beginTime or endTime cannot be null");
+    }
+
+    /**
+     * 获取两个日期之间的所有月份
+     * @author Mabowen
+     * @date 18:31 2020-08-06
+     * @param beginDate
+     * @return
+     */
+    public static List<Date> listMonthsBetweenBeginDateAndEndDate(Date beginDate, Date endDate) {
+        if (beginDate != null && endDate != null) {
+            Calendar min = Calendar.getInstance();
+            min.setTime(beginDate);
+            int beginYear = min.get(Calendar.YEAR);
+            int beginMonth = min.get(Calendar.MONTH);
+            min.set(beginYear, beginMonth, 1);
+
+            Calendar max = Calendar.getInstance();
+            max.setTime(endDate);
+            int endYear = max.get(Calendar.YEAR);
+            int endMonth = max.get(Calendar.MONTH);
+            max.set(endYear, endMonth, 2);
+
+            List<Date> months = new ArrayList<>();
+            while (min.before(max)) {
+                months.add(min.getTime());
+                min.add(Calendar.MONTH, 1);
+            }
+
+            return months;
+        }
+
+        throw new ServiceException("beginDate and endDate cannot be null");
+    }
+
+    /**
+     * 获取两个日期之间的月份字符串
+     * @author Mabowen
+     * @date 19:04 2020-08-06
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
+    public static List<String> listMonths(Date beginDate, Date endDate) {
+        List<Date> dates = listMonthsBetweenBeginDateAndEndDate(beginDate, endDate);
+        List<String> months = new ArrayList<>();
+        if (!dates.isEmpty()) {
+            Calendar cal = Calendar.getInstance();
+            for (Date date : dates) {
+                cal.setTime(date);
+                int month = cal.get(Calendar.MONTH);
+                months.add(String.valueOf(month));
+            }
+        }
+        return months;
     }
 
     /**

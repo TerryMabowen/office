@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class WeiXinPayService {
+public class WxBillService {
     @Autowired
     private WxConfigFactory wxConfigFactory;
 
-    public List<WxBill> downloadBill(WxPayDownloadBillRequest request, String appIdMchId) throws WxPayException {
+    public List<WxBill> downloadBill(WxPayDownloadBillRequest request, String appIdMchId) {
         try {
             WxPayService wxPayService = wxConfigFactory.getWxPayService(appIdMchId);
 

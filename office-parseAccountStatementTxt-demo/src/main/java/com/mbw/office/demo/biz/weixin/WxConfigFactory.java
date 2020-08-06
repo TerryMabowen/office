@@ -26,7 +26,6 @@ import java.util.Map;
 @Slf4j
 @Service
 public class WxConfigFactory {
-
     private static Map<String, WxPayService> wxPayServiceMap = new HashMap<>();
 
     @PostConstruct

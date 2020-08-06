@@ -1,0 +1,327 @@
+[
+  {
+    "id": 1,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 6528.00
+  },
+  {
+    "id": 2,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1600.00
+  },
+  {
+    "id": 3,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 4,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 5,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 6,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 7,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 8,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 5000.00
+  },
+  {
+    "id": 9,
+    "settlementDate": "2020-06-06 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 10,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2400.00
+  },
+  {
+    "id": 11,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 974.00
+  },
+  {
+    "id": 12,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2400.00
+  },
+  {
+    "id": 13,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 6000.00
+  },
+  {
+    "id": 14,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 15,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 16,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 17,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 18,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 19,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 20,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 3000.00
+  },
+  {
+    "id": 21,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 22,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 23,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 24,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 25,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 7000.00
+  },
+  {
+    "id": 26,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 27,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 28,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 5000.00
+  },
+  {
+    "id": 29,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 9000.00
+  },
+  {
+    "id": 30,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 31,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 32,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 33,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 34,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 35,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 7000.00
+  },
+  {
+    "id": 36,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2440.00
+  },
+  {
+    "id": 37,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 38,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1600.00
+  },
+  {
+    "id": 39,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2400.00
+  },
+  {
+    "id": 40,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 41,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 42,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 3000.00
+  },
+  {
+    "id": 43,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 7000.00
+  },
+  {
+    "id": 44,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 2000.00
+  },
+  {
+    "id": 45,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 46,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 47,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 48,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 49,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 50,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 51,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 52,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 53,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 54,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 55,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 56,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 57,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 58,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 59,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 3000.00
+  },
+  {
+    "id": 60,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 10000.00
+  },
+  {
+    "id": 61,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 5080.00
+  },
+  {
+    "id": 62,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 29.00
+  },
+  {
+    "id": 63,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 64,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  },
+  {
+    "id": 65,
+    "settlementDate": "2020-06-10 00:00:00",
+    "tradeMoney": 1000.00
+  }
+]

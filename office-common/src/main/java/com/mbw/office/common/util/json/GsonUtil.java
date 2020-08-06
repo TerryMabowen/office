@@ -3,7 +3,6 @@ package com.mbw.office.common.util.json;
 import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +17,18 @@ import java.util.Set;
  */
 @Slf4j
 public class GsonUtil {
-    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    private static Gson gson;
+
+    static {
+        gson = new GsonBuilder()
+                //设置日期格式化
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                //使@Expose注解生效，序列化和反序列化时忽略某字段
+                .excludeFieldsWithoutExposeAnnotation()
+                //下划线和驼峰转换
+//                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+    }
 
     public static Gson getGson() {
         return gson;
@@ -36,7 +46,7 @@ public class GsonUtil {
     public static <T> T jsonToBean(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, clz);
-        } catch (JsonSyntaxException e) {
+        } catch (Exception e) {
             log.error("json string to Object error: {}", e.getMessage(), e);
             return clz.cast(new Object());
         }
@@ -45,8 +55,8 @@ public class GsonUtil {
     public static <T> List<T> jsonToList(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<List<T>>() {}.getType());
-        } catch (JsonSyntaxException e) {
-            log.error("json string to List error: {}", e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("json string to List<T> error: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
     }
@@ -54,17 +64,26 @@ public class GsonUtil {
     public static <T> Set<T> jsonToSet(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<Set<T>>() {}.getType());
-        } catch (JsonSyntaxException e) {
-            log.error("json string to Set error: {}", e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("json string to Set<T> error: {}", e.getMessage(), e);
             return Collections.emptySet();
+        }
+    }
+
+    public static Map<String, Object> jsonToMap(String jsonStr) {
+        try {
+            return gson.fromJson(jsonStr, new TypeToken<Map<String, Object>>() {}.getType());
+        } catch (Exception e) {
+            log.error("json string to Map<String, Object> error: {}", e.getMessage(), e);
+            return Collections.emptyMap();
         }
     }
 
     public static <T> Map<String, T> jsonToMap(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<Map<String, T>>() {}.getType());
-        } catch (JsonSyntaxException e) {
-            log.error("json string to Map error: {}", e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("json string to Map<String, T> error: {}", e.getMessage(), e);
             return Collections.emptyMap();
         }
     }
@@ -72,8 +91,17 @@ public class GsonUtil {
     public static  <T> List<Map<String, T>> jsonToListMap(String jsonStr, Class<T> clz) {
         try {
             return gson.fromJson(jsonStr, new TypeToken<List<Map<String, T>>>() {}.getType());
-        } catch (JsonSyntaxException e) {
-            log.error("json string to List<Map> error: {}", e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("json string to List<Map<String, T>> error: {}", e.getMessage(), e);
+            return Collections.emptyList();
+        }
+    }
+
+    public static List<Map<String, Object>> jsonToListMap(String jsonStr) {
+        try {
+            return gson.fromJson(jsonStr, new TypeToken<List<Map<String, Object>>>() {}.getType());
+        } catch (Exception e) {
+            log.error("json string to List<Map<String, Object>> error: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
     }

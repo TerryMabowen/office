@@ -11,6 +11,10 @@ import java.util.Date;
  */
 @Data
 public class WxBillDetail {
+    private Long departmentId;
+    private String departmentName;
+    private Date settlementDate;
+
     /**
      * 交易时间.
      */

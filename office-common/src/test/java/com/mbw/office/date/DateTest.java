@@ -1,9 +1,11 @@
 package com.mbw.office.date;
 
+import cn.hutool.core.collection.CollUtil;
 import com.mbw.office.common.util.date.DateUtil;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * TODO
@@ -49,5 +51,15 @@ public class DateTest {
         String dayBegin = DateUtil.getDayBegin(DateUtil.parseShort(date));
         String dayEnd = DateUtil.getDayEnd(DateUtil.parseShort(date));
         System.out.println(dayBegin + " ~ " + dayEnd);
+    }
+
+    @Test
+    public void f6() {
+        String begin = "2019-10-12";
+        String end = "2020-12-15";
+        List<Date> dates = DateUtil.listMonthsBetweenBeginDateAndEndDate(DateUtil.parseShort(begin), DateUtil.parseShort(end));
+        if (CollUtil.isNotEmpty(dates)) {
+            dates.forEach(d -> System.out.println(DateUtil.formatShort(d)));
+        }
     }
 }
