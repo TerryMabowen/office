@@ -1,6 +1,6 @@
 package com.mbw.office.demo.handler;
 
-import com.mbw.office.common.util.json.JacksonFactory;
+import com.mbw.office.common.util.json.JacksonUtil;
 import com.mbw.office.demo.base.BaseApiService;
 import com.mbw.office.demo.service.BaseRedisService;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +39,7 @@ public class AccessTokenInterceptor extends BaseApiService implements HandlerInt
         String appId = (String) baseRedisService.getString(accessToken);
         if (StringUtils.isEmpty(appId)) {
             // accessToken 已经失效!
-            resultError(" this is  accessToken Invalid ", httpServletResponse);
+            resultError(" this is accessToken Invalid ", httpServletResponse);
             return false;
         }
         // 正常执行业务逻辑...
@@ -62,6 +62,6 @@ public class AccessTokenInterceptor extends BaseApiService implements HandlerInt
     // 返回错误提示
     public void resultError(String errorMsg, HttpServletResponse httpServletResponse) throws IOException {
         PrintWriter printWriter = httpServletResponse.getWriter();
-        printWriter.write(JacksonFactory.getInstance().beanToJson(setResultError(errorMsg)));
+        printWriter.write(JacksonUtil.beanToJson(setResultError(errorMsg)));
     }
 }

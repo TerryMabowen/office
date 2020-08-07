@@ -48,17 +48,38 @@ public class ImportExcelUtil {
      */
     public static String getCellValue(Cell cell) {
         String cellValue = "";
-        int cellType = cell.getCellType().getCode();
-        if (cellType == CellType.STRING.getCode()) {
-            cellValue = cell.getStringCellValue();
-        } else if (cellType == CellType.NUMERIC.getCode()) {
-            cellValue = cell.getStringCellValue();
-        } else if (cellType == CellType.FORMULA.getCode()) {
-            cellValue = cell.getStringCellValue();
-        }  else if (cellType == CellType.BOOLEAN.getCode()) {
-            cellValue = cell.getStringCellValue();
-        } else if (cellType == CellType.BLANK.getCode()) {
-            cellValue = cell.getStringCellValue();
+        //判断数据的类型
+        switch (cell.getCachedFormulaResultType()) {
+            case STRING:
+                //字符串
+                cellValue = String.valueOf(cell.getStringCellValue());
+                break;
+            case NUMERIC:
+                //数字
+                cellValue = String.valueOf(cell.getNumericCellValue());
+                break;
+            case BOOLEAN:
+                //Boolean
+                cellValue = String.valueOf(cell.getBooleanCellValue());
+                break;
+            case FORMULA:
+                //公式
+                cellValue = String.valueOf(cell.getCellFormula());
+                break;
+            case BLANK:
+                //空值
+                cellValue = "";
+                break;
+            case ERROR:
+                //故障
+                cellValue = "非法字符";
+                break;
+            case _NONE:
+                cellValue = "未知类型";
+                break;
+            default:
+                cellValue = "未知类型";
+                break;
         }
 
         return cellValue;

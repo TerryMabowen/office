@@ -25,8 +25,6 @@ public class DateUtil {
     public static final String SHORT_TIME_PATTERN = "HH:mm:ss";
     public static final String yyyyMMdd = "yyyyMMdd";
     public static final String HHmmss = "HHmmss";
-    public static final String BEGIN_DAY_SUFFIX = " 00:00:00";
-    public static final String END_DAY_SUFFIX = " 23:59:59";
 
     public static Date now() {
         return new Date();
@@ -197,6 +195,21 @@ public class DateUtil {
         return cal.getTime();
     }
 
+    public static Date getDayBeginTime(Date date) {
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            cal.set(year, month, day, 0, 0, 0);
+
+            return cal.getTime();
+        }
+
+        throw new ServiceException("date cannot be null");
+    }
+
     /**
      * 获取一天的开始时间
      * @author Mabowen
@@ -205,8 +218,19 @@ public class DateUtil {
      * @return
      */
     public static String getDayBegin(Date date) {
+        return formatDefault(getDayBeginTime(date));
+    }
+
+    public static Date getDayEndTime(Date date) {
         if (date != null) {
-            return format(date, SHORT_DATE_PATTERN) + BEGIN_DAY_SUFFIX;
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            cal.set(year, month, day, 23, 59, 59);
+
+            return cal.getTime();
         }
 
         throw new ServiceException("date cannot be null");
@@ -220,11 +244,7 @@ public class DateUtil {
      * @return
      */
     public static String getDayEnd(Date date) {
-        if (date != null) {
-            return format(date, SHORT_DATE_PATTERN) + END_DAY_SUFFIX;
-        }
-
-        throw new ServiceException("date cannot be null");
+        return formatDefault(getDayEndTime(date));
     }
 
     /**
@@ -232,7 +252,7 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String getMonthBegin(Date date) {
+    public static Date getMonthBeginTime(Date date) {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -246,10 +266,14 @@ public class DateUtil {
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
 
-            return formatShort(cal.getTime());
+            return cal.getTime();
         }
 
         throw new ServiceException("date cannot be null");
+    }
+
+    public static String getMonthBegin(Date date) {
+        return formatShort(getMonthBeginTime(date));
     }
 
     /**
@@ -257,7 +281,7 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String getMonthEnd(Date date) {
+    public static Date getMonthEndTime(Date date) {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -280,10 +304,14 @@ public class DateUtil {
             cal.set(Calendar.MINUTE, 59);
             cal.set(Calendar.SECOND, 59);
 
-            return formatShort(cal.getTime());
+            return cal.getTime();
         }
 
         throw new ServiceException("date cannot be null");
+    }
+
+    public static String getMonthEnd(Date date) {
+        return formatShort(getMonthEndTime(date));
     }
 
     /**
@@ -291,7 +319,7 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String getYearBegin(Date date) {
+    public static Date getYearBeginTime(Date date) {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -299,10 +327,14 @@ public class DateUtil {
             int year = cal.get(Calendar.YEAR);
             cal.set(year, Calendar.JANUARY, 1, 0, 0, 0);
 
-            return formatShort(cal.getTime());
+            return cal.getTime();
         }
 
         throw new ServiceException("date cannot be null");
+    }
+
+    public static String getYearBegin(Date date) {
+        return formatShort(getYearBeginTime(date));
     }
 
     /**
@@ -310,7 +342,7 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String getYearEnd(Date date) {
+    public static Date getYearEndTime(Date date) {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -318,10 +350,14 @@ public class DateUtil {
             int year = cal.get(Calendar.YEAR);
             cal.set(year, Calendar.DECEMBER, 31, 23, 59, 59);
 
-            return formatShort(cal.getTime());
+            return cal.getTime();
         }
 
         throw new ServiceException("date cannot be null");
+    }
+
+    public static String getYearEnd(Date date) {
+        return formatShort(getYearEndTime(date));
     }
 
     /**

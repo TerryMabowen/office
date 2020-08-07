@@ -3,6 +3,7 @@ package com.mbw.office.common.util.json;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,5 +79,18 @@ public class JacksonUtil {
             log.error("json string to List<Map> error: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
+    }
+
+    public static <T> T jsonToComplicatedBean(String jsonStr, JavaType javaType) {
+        try {
+            return objectMapper.readValue(jsonStr, javaType);
+        } catch (Exception e) {
+            log.error("json string to List<Map> error: {}", e.getMessage(), e);
+            return javaType.getTypeHandler();
+        }
+    }
+
+    public static JavaType getConstructParametricJavaType(Class<?> parametrized, Class<?>... parameterClasses) {
+        return objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
     }
 }

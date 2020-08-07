@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mbw.office.common.util.json.JacksonFactory;
+import com.mbw.office.common.util.json.JacksonUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -69,7 +69,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public HttpMessageConverter<Object> responseJacksonConverter() {
         MappingJackson2HttpMessageConverter convert = new MappingJackson2HttpMessageConverter();
 
-        ObjectMapper mapper = JacksonFactory.getInstance().getObjectMapper();
+        ObjectMapper mapper = JacksonUtil.getObjectMapper();
         //设置序列化规则，不能允许为空，当value为null时，key不进行序列化
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);

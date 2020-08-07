@@ -3,7 +3,7 @@ package com.mbw.office.demo.jackson;
 import com.fasterxml.jackson.databind.JavaType;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.util.http.OkHttpClientFactory;
-import com.mbw.office.common.util.json.JacksonFactory;
+import com.mbw.office.common.util.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -28,13 +28,12 @@ public class CalendarApiService {
                     .doGet(url);
             System.out.println(result);
 
-            JacksonFactory jacksonFactory = JacksonFactory.getInstance();
-            JavaType javaType = jacksonFactory.getConstructParametricJavaType(BaseApiData.class, List.class);
-            BaseApiData apiData = jacksonFactory.jsonToComplicatedBean(result, javaType);
+            JavaType javaType = JacksonUtil.getConstructParametricJavaType(BaseApiData.class, List.class);
+            BaseApiData apiData = JacksonUtil.jsonToComplicatedBean(result, javaType);
             System.out.println(apiData.toString());
 
             if ("0".equals(apiData.getStatus()) && apiData.getData() != null && !apiData.getData().isEmpty()) {
-                List<CalendarApiData> calendarApiData = jacksonFactory.jsonToList(jacksonFactory.beanToJson(apiData.getData()), CalendarApiData.class);
+                List<CalendarApiData> calendarApiData = JacksonUtil.jsonToList(JacksonUtil.beanToJson(apiData.getData()), CalendarApiData.class);
                 System.out.println(Arrays.toString(calendarApiData.toArray()));
             }
         } catch (Exception e) {

@@ -110,7 +110,7 @@ public class ImportExcelUtil {
         Workbook workbook = null;
         //获得文件名
         String fileName = file.getOriginalFilename();
-        if (StrUtil.isNotBlank(fileName)) {
+        if (fileName != null && StrUtil.isNotBlank(fileName)) {
             try {
                 //获取excel文件的io流
                 InputStream is = file.getInputStream();
@@ -141,32 +141,42 @@ public class ImportExcelUtil {
             return cellValue;
         }
         //把数字当成String来读，避免出现1读成1.0的情况
-        if (cell.getCellType().getCode() == CellType.NUMERIC.getCode()) {
+        if (cell.getCachedFormulaResultType() == CellType.NUMERIC) {
             cell.setCellType(CellType.STRING);
         }
 
         //判断数据的类型
-        int code = cell.getCellType().getCode();
-        if (CellType.NUMERIC.getCode() == code) {
-            //数字
-            cellValue = String.valueOf(cell.getNumericCellValue());
-        } else if (CellType.STRING.getCode() == code) {
-            //字符串
-            cellValue = String.valueOf(cell.getStringCellValue());
-        } else if (CellType.BOOLEAN.getCode() == code) {
-            //Boolean
-            cellValue = String.valueOf(cell.getBooleanCellValue());
-        } else if (CellType.FORMULA.getCode() == code) {
-            //公式
-            cellValue = String.valueOf(cell.getCellFormula());
-        } else if (CellType.BLANK.getCode() == code) {
-            //空值
-            cellValue = "";
-        } else if (CellType.ERROR.getCode() == code) {
-            //故障
-            cellValue = "非法字符";
-        } else {
-            cellValue = "未知类型";
+        switch (cell.getCachedFormulaResultType()) {
+            case STRING:
+                //字符串
+                cellValue = String.valueOf(cell.getStringCellValue());
+                break;
+            case NUMERIC:
+                //数字
+                cellValue = String.valueOf(cell.getNumericCellValue());
+                break;
+            case BOOLEAN:
+                //Boolean
+                cellValue = String.valueOf(cell.getBooleanCellValue());
+                break;
+            case FORMULA:
+                //公式
+                cellValue = String.valueOf(cell.getCellFormula());
+                break;
+            case BLANK:
+                //空值
+                cellValue = "";
+                break;
+            case ERROR:
+                //故障
+                cellValue = "非法字符";
+                break;
+            case _NONE:
+                cellValue = "未知类型";
+                break;
+            default:
+                cellValue = "未知类型";
+                break;
         }
 
         return cellValue;

@@ -55,6 +55,7 @@ public class TreeUtil {
      * @param beans
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> T findChildren(T bean, List<T> beans, String idName, String parentIdName, String childrenName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         //获取bean的id, bean.getId()
         String id = bean.getClass().getMethod(GET + idName).invoke(bean).toString();

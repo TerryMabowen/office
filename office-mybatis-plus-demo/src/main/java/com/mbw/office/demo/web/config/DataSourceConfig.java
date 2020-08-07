@@ -45,6 +45,7 @@ public class DataSourceConfig {
      * druid 监控配置
      */
     @Bean
+    @SuppressWarnings("unchecked")
     public ServletRegistrationBean druidServlet() {
         ServletRegistrationBean bean = new ServletRegistrationBean();
         Map<String, String> initParams = new HashMap<>();
