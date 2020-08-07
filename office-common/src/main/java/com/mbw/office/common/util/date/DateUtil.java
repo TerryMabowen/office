@@ -445,7 +445,7 @@ public class DateUtil {
      * @param beginDate
      * @return
      */
-    public static List<Date> listMonthsBetweenBeginDateAndEndDate(Date beginDate, Date endDate) {
+    public static List<Date> getMonthDateBetween(Date beginDate, Date endDate) {
         if (beginDate != null && endDate != null) {
             Calendar min = Calendar.getInstance();
             min.setTime(beginDate);
@@ -479,15 +479,16 @@ public class DateUtil {
      * @param endDate
      * @return
      */
-    public static List<String> listMonths(Date beginDate, Date endDate) {
-        List<Date> dates = listMonthsBetweenBeginDateAndEndDate(beginDate, endDate);
+    public static List<String> getMonthStrBetween(Date beginDate, Date endDate, String pattern) {
+        List<Date> dates = getMonthDateBetween(beginDate, endDate);
         List<String> months = new ArrayList<>();
+        if (StrUtil.isBlank(pattern)) {
+            pattern = "yyyy-MM";
+        }
         if (!dates.isEmpty()) {
-            Calendar cal = Calendar.getInstance();
             for (Date date : dates) {
-                cal.setTime(date);
-                int month = cal.get(Calendar.MONTH);
-                months.add(String.valueOf(month));
+                String month = format(date, pattern);
+                months.add(month);
             }
         }
         return months;

@@ -57,9 +57,21 @@ public class DateTest {
     public void f6() {
         String begin = "2019-10-12";
         String end = "2020-12-15";
-        List<Date> dates = DateUtil.listMonthsBetweenBeginDateAndEndDate(DateUtil.parseShort(begin), DateUtil.parseShort(end));
+        List<Date> dates = DateUtil.getMonthDateBetween(DateUtil.parseShort(begin), DateUtil.parseShort(end));
         if (CollUtil.isNotEmpty(dates)) {
             dates.forEach(d -> System.out.println(DateUtil.formatShort(d)));
+        }
+    }
+
+    @Test
+    public void f7() {
+        String begin = "2019-10-12";
+        String end = "2020-12-15";
+
+//        List<String> months = DateUtil.getMonthStrBetween(DateUtil.parseShort(begin), DateUtil.parseShort(end), "MM");
+        List<String> months = DateUtil.getMonthStrBetween(DateUtil.parseShort(begin), DateUtil.parseShort(end), null);
+        if (CollUtil.isNotEmpty(months)) {
+            months.forEach(System.out::println);
         }
     }
 }
