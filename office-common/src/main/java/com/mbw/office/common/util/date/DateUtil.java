@@ -1,5 +1,6 @@
 package com.mbw.office.common.util.date;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.mbw.office.common.lang.exception.ServiceException;
 
@@ -38,8 +39,38 @@ public class DateUtil {
         return format(now(), "yyyy");
     }
 
+    /**
+     * 获取指定日期的年份
+     * @author Mabowen
+     * @date 13:57 2020-08-12
+     * @param date
+     * @return
+     */
+    public static String getYearOfDate(Date date) {
+        if (date != null) {
+            return format(date, "yyyy");
+        }
+
+        throw new ServiceException("date cannot be null");
+    }
+
     public static String getCurrentMonth() {
         return format(now(), "MM");
+    }
+
+    /**
+     * 获取指定日期的月份
+     * @author Mabowen
+     * @date 13:57 2020-08-12
+     * @param date
+     * @return
+     */
+    public static String getMonthOfDate(Date date) {
+        if (date != null) {
+            return format(date, "MM");
+        }
+
+        throw new ServiceException("date cannot be null");
     }
 
     /**
@@ -57,7 +88,7 @@ public class DateUtil {
             return getDayOfWeek(parse(date, pattern));
         }
 
-        throw new ServiceException("date str cannot be empty");
+        throw new ServiceException("date str and pattern cannot be empty");
     }
 
     /**
@@ -386,7 +417,7 @@ public class DateUtil {
     }
 
     /**
-     * 计算日期相差多少天
+     * 计算日期相差多少
      * @author Mabowen
      * @date 10:02 2020-04-10
      * @param startTime
@@ -416,7 +447,7 @@ public class DateUtil {
      * @param endTime
      * @return
      */
-    public static List<String> rangeDate(Date beginTime, Date endTime) {
+    public static List<Date> listDateBetween(Date beginTime, Date endTime) {
         if (beginTime != null && endTime != null) {
             if (!endTime.after(beginTime)) {
                 throw new ServiceException("now before startDate");
@@ -424,11 +455,11 @@ public class DateUtil {
 
             //两个时间段之间相差多少天
             int rangeDay = (int) ((endTime.getTime() - beginTime.getTime()) / (24 * 60 * 60 * 1000));
-            List<String> rangeDate = new ArrayList<>();
+            List<Date> rangeDate = new ArrayList<>();
             Calendar cal = Calendar.getInstance();
             cal.setTime(beginTime);
             for (int i = 0; i <= rangeDay; i++) {
-                rangeDate.add(format(cal.getTime(), SHORT_DATE_PATTERN));
+                rangeDate.add(cal.getTime());
                 cal.add(Calendar.DATE, 1);
             }
 
@@ -436,6 +467,22 @@ public class DateUtil {
         }
 
         throw new ServiceException("beginTime or endTime cannot be null");
+    }
+
+    public static List<String> listTwoDateStrBetween(Date beginTime, Date endTime, String pattern) {
+        if (StrUtil.isBlank(pattern)) {
+            pattern = SHORT_DATE_PATTERN;
+        }
+
+        List<Date> dates = listDateBetween(beginTime, endTime);
+        List<String> ranges = new ArrayList<>();
+        if (CollUtil.isNotEmpty(dates)) {
+            for (Date date : dates) {
+                ranges.add(format(date, pattern));
+            }
+        }
+
+        return ranges;
     }
 
     /**

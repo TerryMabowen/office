@@ -17,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Mabowen
@@ -61,7 +63,14 @@ public class DepartmentReceivableService {
                 }
             }
         }
-        return vos;
+
+        //排序
+        return vos.stream()
+                .sorted(
+                    Comparator.comparing(DepartmentAmountReceivableVO::getDepartmentId)
+                            .thenComparing(DepartmentAmountReceivableVO::getStartDate)
+                            .reversed()
+                ).collect(Collectors.toList());
     }
 
     private DepartmentAmountReceivableVO getDepartmentReceivables(String month, Department department) {
