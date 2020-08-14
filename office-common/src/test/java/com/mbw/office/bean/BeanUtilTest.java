@@ -1,5 +1,6 @@
 package com.mbw.office.bean;
 
+import com.mbw.office.common.lang.helper.ApplicationContextHelper;
 import com.mbw.office.common.util.reflection.ReflectUtil;
 import org.junit.Test;
 
@@ -19,6 +20,19 @@ public class BeanUtilTest {
         Map<String, Object> map = getMap();
         JlBillDetail jlBillDetail = ReflectUtil.mapToBeanNotIgnoreNullValue(map, JlBillDetail.class);
         System.out.println(jlBillDetail);
+    }
+
+    /**
+     * TODO
+     * @author Mabowen
+     * @date 2020-08-14 16:55
+     * @param 
+     * @return  {@link Object}
+     */
+    @Test
+    public void f2() {
+        Object userService = ApplicationContextHelper.getApplicationContext().getAutowireCapableBeanFactory()
+                .getBean("UserService");
     }
 
     private Map<String, Object> getMap() {
