@@ -1,6 +1,7 @@
 package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
+import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
 import com.mbw.office.common.lang.response.ResponseResults;
 import com.mbw.office.common.util.collection.CollectionUtil;
 import com.mbw.office.demo.biz.department.DepartmentReceivableService;
@@ -14,6 +15,7 @@ import com.mbw.office.demo.biz.statistics.dto.BudgetDepartmentWxBillDTO;
 import com.mbw.office.demo.biz.statistics.vo.DepartmentAmountReceivableVO;
 import com.mbw.office.demo.biz.weixin.WxConfigFactory;
 import com.mbw.office.demo.biz.weixin.model.WxBill;
+import com.mbw.office.demo.biz.weixin.service.OfficeWxPayService;
 import com.mbw.office.demo.biz.weixin.service.WxBillService;
 import com.mbw.office.demo.web.ctl.fb.BillFB;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ import java.util.List;
 @RequestMapping("/index")
 public class IndexDataCtl {
     private static final String ROOT_PATH = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
+
+    @Autowired
+    private OfficeWxPayService officeWxPayService;
 
     @Autowired
     private WxBillService wxBillService;
@@ -184,6 +189,19 @@ public class IndexDataCtl {
             List<com.mbw.office.demo.biz.department.vo.DepartmentAmountReceivableVO> vos = departmentReceivableService.listDepartmentReceivables(month);
             return ResponseResults.newSuccess()
                     .setData(vos);
+        } catch (Exception e) {
+            return ResponseResults.newFailed()
+                    .setMessage(e.getMessage());
+        }
+    }
+
+    @PostMapping("/query/wx/order")
+    public ResponseResults f3(@RequestParam("transactionId") String transactionId,
+                              @RequestParam("outTradeNo") String outTradeNo) {
+        try {
+            List<WxPayOrderQueryResult> results = officeWxPayService.getWxOrderByNo(transactionId, outTradeNo);
+            return ResponseResults.newSuccess()
+                    .setData(results);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());
