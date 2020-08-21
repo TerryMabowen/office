@@ -409,11 +409,43 @@ public class DateUtil {
             return isSameDay(cal1, cal2);
         }
 
-        throw new ServiceException("date1 or date2 can mot is null");
+        throw new ServiceException("date1 and date2 cannot be null");
     }
 
     public static boolean isSameDay(Calendar cal1, Calendar cal2) {
         return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
+    /**
+     * 判断date1是否是date2之前的日期
+     * @author Mabowen
+     * @date 2020-08-19 09:29
+     * @param date1
+     * @param date2
+     * @return {@link boolean} true: date1是date2之前的日期， false: date1不是date2之前的日期
+     */
+    public static boolean isBeforeDay(Date date1, Date date2) {
+        if (date1 != null && date2 != null) {
+            return date1.compareTo(date2) < 0 && !isSameDay(date1, date2);
+        }
+
+        throw new ServiceException("date1 and date2 cannot be null");
+    }
+
+    /**
+     * 判断date1是否是date2之后的日期
+     * @author Mabowen
+     * @date 2020-08-19 09:29
+     * @param date1
+     * @param date2
+     * @return {@link boolean} true: date1是date2之后的日期， false: date1不是date2之后的日期
+     */
+    public static boolean isAfterDay(Date date1, Date date2) {
+        if (date1 != null && date2 != null) {
+            return date1.compareTo(date2) > 0 && !isSameDay(date1, date2);
+        }
+
+        throw new ServiceException("date1 and date2 cannot be null");
     }
 
     /**
@@ -568,6 +600,69 @@ public class DateUtil {
             return 0;
         } else {
             return date1.compareTo(date2);
+        }
+    }
+
+    /**
+     * 判断是否是同一年月
+     * @author Mabowen
+     * @date 2020-08-19 18:37
+     * @param date1
+     * @param date2
+     * @return {@link boolean} true: 同一年月， false：不同年月
+     */
+    public static boolean isSameYearMonth(Date date1, Date date2) {
+        if (date1 != null && date2 != null) {
+            Calendar cal1 = Calendar.getInstance();
+            cal1.setTime(date1);
+
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTime(date2);
+
+            return isSameYearMonth(cal1, cal2);
+        }
+
+        throw new ServiceException("date1 and date2 cannot be null");
+    }
+
+    private static boolean isSameYearMonth(Calendar cal1, Calendar cal2) {
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+    }
+
+    /**
+     * 比较月份
+     * @author Mabowen
+     * @date 2020-08-19 18:35
+     * @param date1
+     * @param date2
+     * @return {@link int} -1: date1是date2之前的月，0：同一月，1：date1是date2之后的月
+     */
+    public static int compareMonth(Date date1, Date date2) {
+        if (date1 != null && date2 != null) {
+            Calendar cal1 = Calendar.getInstance();
+            cal1.setTime(date1);
+
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTime(date2);
+
+            return compareMonth(cal1, cal2);
+        }
+
+        throw new ServiceException("date1 and date2 cannot be null");
+    }
+
+    private static int compareMonth(Calendar cal1, Calendar cal2) {
+        int year1 = cal1.get(Calendar.YEAR);
+        int month1 = cal1.get(Calendar.MONTH);
+
+        int month2 = cal2.get(Calendar.MONTH);
+        int year2 = cal2.get(Calendar.YEAR);
+
+        if (year1 == year2) {
+            return Integer.compare(month1, month2);
+        } else {
+            return year1 < year2 ? -1 : 1;
         }
     }
 }

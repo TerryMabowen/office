@@ -23,6 +23,7 @@ import java.util.Map;
  * @date 2020-07-14 14:46
  */
 @Slf4j
+@Deprecated
 public class ReflectUtil {
     private static final String GET = "get";
     private static final String SET = "set";

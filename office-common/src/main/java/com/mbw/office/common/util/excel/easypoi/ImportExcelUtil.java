@@ -10,12 +10,11 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * 导入excel工具
@@ -26,31 +25,36 @@ import java.util.List;
 @Slf4j
 public class ImportExcelUtil {
     /**
-     * 导入excel文件
-     * @author Mabowen
-     * @date 19:27 2020-03-30
-     * @param filePath
-     * @param titleRows
-     * @param headerRows
-     * @param pojoClass
+     * 功能描述：根据接收的Excel文件来导入Excel,并封装成实体类
+     *
+     * @param file       上传的文件
+     * @param titleRows  表标题的行数
+     * @param headerRows 表头行数
+     * @param pojoClass  Excel实体类
      * @return
+     * @author Mabowen
+     * @date 17:37 2020-04-18
      */
-    public  <T> List<T> importExcel(String filePath, Integer titleRows, Integer headerRows, Class<T> pojoClass){
-        if (StrUtil.isBlank(filePath)){
-            return Collections.emptyList();
+    public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows, Class<T> pojoClass) {
+        if (file == null) {
+            return null;
         }
-
         ImportParams params = new ImportParams();
-        params.setTitleRows(titleRows);
-        params.setHeadRows(headerRows);
-
-        List<T> list = null;
-        try {
-            list = ExcelImportUtil.importExcel(new File(filePath), pojoClass, params);
-        } catch (Exception e) {
-            throw new ServiceException(e.getMessage(), e);
+        if (titleRows != null) {
+            params.setTitleRows(titleRows);
+        }
+        if (headerRows != null) {
+            params.setHeadRows(headerRows);
         }
 
+        List<T> list = new ArrayList<>();
+        try {
+            list = ExcelImportUtil.importExcel(file.getInputStream(), pojoClass, params);
+        } catch (NoSuchElementException e) {
+            throw new ServiceException("excel文件数据为空, " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new ServiceException("导入excel数据失败，" + e.getMessage(), e);
+        }
         return list;
     }
 
