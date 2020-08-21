@@ -30,7 +30,7 @@ public class ReflectionUtil {
             }
         }
 
-        Field[] fields = new Field[fieldList.size()]
+        Field[] fields = new Field[fieldList.size()];
         return fieldList.toArray(fields);
     }
 }
