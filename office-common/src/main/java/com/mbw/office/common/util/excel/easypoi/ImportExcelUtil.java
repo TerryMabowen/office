@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -58,6 +59,19 @@ public class ImportExcelUtil {
         return list;
     }
 
+    public static <T> List<T> importExcelData(MultipartFile file) {
+        if (file == null) {
+            return null;
+        }
+        Workbook workBook = getWorkBook(file);
+        if (workBook == null) {
+            List<String[]> strings = readExcelGetList(workBook);
+            //TODO
+        }
+
+        return Collections.emptyList();
+    }
+
     /**
      * 解析excel
      *
@@ -88,7 +102,7 @@ public class ImportExcelUtil {
                     int firstCellNum = row.getFirstCellNum();
                     //获得当前行的列数
                     int lastCellNum = row.getPhysicalNumberOfCells();
-                    String[] cells = new String[row.getPhysicalNumberOfCells()];
+                    String[] cells = new String[lastCellNum];
                     //循环当前行
                     for (int cellNum = firstCellNum; cellNum < lastCellNum; cellNum++) {
                         Cell cell = row.getCell(cellNum);

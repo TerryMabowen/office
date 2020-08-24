@@ -1,8 +1,8 @@
 package com.mbw.office.common.util.excel.apachepoi;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.mbw.office.common.util.reflection.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -155,7 +155,7 @@ public class ImportExcelUtil {
                 }
                 field = fields[j + tmp];
                 Object cellVal = field.getType().equals(Date.class) ? new Date(Long.parseLong(cellValue)) : cellValue;
-//                ReflectionUtils.setFieldValue(instance, field.getName(), cellVal);
+                ReflectUtil.setFieldValue(instance, field.getName(), cellVal);
             }
             result.add(instance);
         }
@@ -245,7 +245,7 @@ public class ImportExcelUtil {
                 Cell dataCell = dataRow.createCell(j - k);
                 // 设置固定宽度, 每个单元格可存放16个字符
                 sheet.setColumnWidth(j - k, 8 * 2 * 256);
-//                setCellValue(workbook, dataCell, ReflectionUtils.getFieldValue(t, fieldName));
+                setCellValue(workbook, dataCell, ReflectUtil.getFieldValue(t, fieldName));
             }
         }
         return workbook;
