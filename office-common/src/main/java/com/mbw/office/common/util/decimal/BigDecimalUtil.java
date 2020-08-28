@@ -33,7 +33,7 @@ public class BigDecimalUtil {
         return money.divide(BigDecimal.valueOf(100), DEFAULT_MONEY_POINT, BigDecimal.ROUND_HALF_UP);
     }
 
-    public static BigDecimal pointsToYuan(long money) {
+    public static BigDecimal pointsToYuan(double money) {
         return BigDecimal.valueOf(money).divide(BigDecimal.valueOf(100), DEFAULT_MONEY_POINT);
     }
 
