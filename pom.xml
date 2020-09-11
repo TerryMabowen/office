@@ -20,6 +20,7 @@
         <module>office-test</module>
         <module>office-xxl-job-demo</module>
         <module>office-study</module>
+        <module>office-algorithm-exercise</module>
     </modules>
     <name>office-parent</name>
 
