@@ -119,7 +119,7 @@ public class ExportExcelUtil {
      * @author Mabowen
      * @date 19:28 2020-01-04
      */
-    private static void exportExcel(Workbook workbook, String fileName, HttpServletResponse response) {
+    public static void exportExcel(Workbook workbook, String fileName, HttpServletResponse response) {
         //设置响应头
         setResponseHeader(fileName, response);
         OutputStream os = null;

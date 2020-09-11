@@ -19,16 +19,38 @@
 <body>
 <h1>excel demo</h1>
 <div>
-    <br/> easypoi导出
-    <button id="easypoi-export" type="button" class="btn btn-primary">click</button>
+    <br/> 测试
+    <button id="test" type="button" class="btn btn-primary">click</button>
+    <hr/>
+
+    <br/> easypoi 导出简单表格
+    <div>
+        <form class="form-inline" type="get" action="/index/easypoi/export/simple/excel">
+            <button type="submit" class="btn btn-primary">click</button>
+        </form>
+    </div>
+    <hr/>
+
+    <br/> easypoi 导出复杂表格
+    <div>
+        <form class="form-inline" type="get" action="/index/easypoi/export/intricate/excel">
+            <button type="submit" class="btn btn-primary">click</button>
+        </form>
+    </div>
     <hr/>
 </div>
 </body>
 <script type="text/javascript">
     // 点击事件
     function events() {
-        $('#easypoi-export').on('click', function () {
-
+        $('#test').on('click', function () {
+            http.getData('/index/test')
+                .then(function (res) {
+                    alert(res.message);
+                })
+                .catch(function (res) {
+                    confirm(res.message);
+                });
         });
     }
 
