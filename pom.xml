@@ -21,6 +21,7 @@
         <module>office-xxl-job-demo</module>
         <module>office-study</module>
         <module>office-algorithm-exercise</module>
+        <module>office-excel-demo</module>
     </modules>
     <name>office-parent</name>
 

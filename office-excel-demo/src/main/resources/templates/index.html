@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="stylesheet" th:href="@{/static/bootstrap/css/bootstrap.min.css}"/>
+    <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/static/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/modules/httpKit.js}"></script>
+    <script th:src="@{/static/js/modules/dateKit.js}"></script>
+    <script th:src="@{/static/js/modules/currencyFormat.js}"></script>
+    <style type="text/css">
+        body {
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+<h1>excel demo</h1>
+<div>
+    <br/> easypoi导出
+    <button id="easypoi-export" type="button" class="btn btn-primary">click</button>
+    <hr/>
+</div>
+</body>
+<script type="text/javascript">
+    // 点击事件
+    function events() {
+        $('#easypoi-export').on('click', function () {
+
+        });
+    }
+
+    // 页面html加载完后执行
+    $(function () {
+        events();
+    })
+</script>
+</html>
