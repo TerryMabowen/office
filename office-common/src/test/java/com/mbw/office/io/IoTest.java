@@ -1,5 +1,7 @@
 package com.mbw.office.io;
 
+import com.mbw.office.common.util.io.FTPConfig;
+import com.mbw.office.common.util.io.FTPUtil;
 import com.mbw.office.common.util.io.FileUtil;
 import org.junit.Test;
 
@@ -22,5 +24,22 @@ public class IoTest {
         String path = "/Users/apple_22/Desktop/log4j/testIo";
         String filename = "xxx-file.txt";
         FileUtil.createFile(path, filename);
+    }
+
+    @Test
+    public void f3() {
+        FTPConfig config = new FTPConfig();
+//        config.setHost("http://172.16.100.7");
+        config.setHost("http://s.legotown.cn");
+        config.setPort(21);
+//        config.setUsername("apple_22");
+//        config.setPassword("8277348");
+        config.setUsername("root");
+        config.setPassword("Bell.Ai");
+        config.setFtpBasePath("/data/");
+        FTPUtil ftpCli = FTPUtil.createFtpCli(config);
+        ftpCli.connect();
+        System.out.println(ftpCli.isConnected());
+        ftpCli.disconnect();
     }
 }
