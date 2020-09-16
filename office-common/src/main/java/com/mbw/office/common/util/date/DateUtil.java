@@ -24,8 +24,14 @@ public class DateUtil {
     public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String SHORT_DATE_PATTERN = "yyyy-MM-dd";
     public static final String SHORT_TIME_PATTERN = "HH:mm:ss";
+    public static final String yyyy = "yyyy";
+    public static final String yyyyMM = "yyyyMM";
     public static final String yyyyMMdd = "yyyyMMdd";
+    public static final String MM = "MM";
+    public static final String HHmm = "HHmm";
     public static final String HHmmss = "HHmmss";
+    public static final String yyyyMMddHHmm = "yyyyMMddHHmm";
+    public static final String yyyyMMddHHmmss = "yyyyMMddHHmmss";
 
     public static Date now() {
         return new Date();

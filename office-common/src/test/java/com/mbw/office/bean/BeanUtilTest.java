@@ -1,9 +1,16 @@
 package com.mbw.office.bean;
 
 import com.mbw.office.common.lang.helper.ApplicationContextHelper;
+import com.mbw.office.common.util.bean.BeanUtil;
+import com.mbw.office.common.util.conversion.ColumnConvertUtil;
+import com.mbw.office.common.util.json.JacksonUtil;
 import com.mbw.office.common.util.reflection.ReflectUtil;
+import me.chanjar.weixin.cp.api.WxCpUserService;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,16 +30,61 @@ public class BeanUtilTest {
     }
 
     /**
-     * TODO
+     * 通过ApplicationContext获取spring容器中的类
      * @author Mabowen
      * @date 2020-08-14 16:55
-     * @param 
-     * @return  {@link Object}
      */
     @Test
     public void f2() {
-        Object userService = ApplicationContextHelper.getApplicationContext().getAutowireCapableBeanFactory()
+        Object userService = ApplicationContextHelper.getApplicationContext()
+                .getAutowireCapableBeanFactory()
                 .getBean("UserService");
+
+        Object userService1 = ApplicationContextHelper.getApplicationContext()
+                .getBean("UserService");
+
+        WxCpUserService wxCpUserService = ApplicationContextHelper.getApplicationContext()
+                .getBean(WxCpUserService.class);
+    }
+
+    @Test
+    public void f3() {
+        BigInteger integer = new BigInteger("123");
+        System.out.println(integer.toString());
+
+        BigDecimal decimal = new BigDecimal("2300.50");
+        System.out.println(decimal.toString());
+
+        Date date = new Date();
+        System.out.println(date.toString());
+
+        Integer ss = new Integer("234");
+        System.out.println(ss.toString());
+
+        Boolean b = Boolean.FALSE;
+        System.out.println(b.toString());
+
+        Date date1 = ColumnConvertUtil.parseDateStrFormat("2012.25.15");
+    }
+
+    @Test
+    public void f4() {
+        Map<String, Object> map = getMap();
+        JlBillDetail source = new JlBillDetail();
+        BeanUtil.copyMapToBeanIgnoreNullValue(map, source);
+        System.out.println(JacksonUtil.beanToJson(source));
+
+        JlBillDetail target = new JlBillDetail();
+        BeanUtil.copyBeanToBeanNotIgnoreNullValue(source, target);
+        System.out.println(JacksonUtil.beanToJson(target));
+
+        Map<String, Object> toMap = new HashMap<>();
+        BeanUtil.copyBeanToMap(target, toMap);
+        toMap.forEach((key, value) -> System.out.println(key + " = " + value));
+
+        JlBillDetail billDetail = new JlBillDetail();
+        BeanUtil.copyMapToBeanNotIgnoreNullValue(toMap, billDetail);
+        System.out.println(JacksonUtil.beanToJson(billDetail));
     }
 
     private Map<String, Object> getMap() {

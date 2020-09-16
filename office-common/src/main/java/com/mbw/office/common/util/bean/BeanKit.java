@@ -1,6 +1,7 @@
 package com.mbw.office.common.util.bean;
 
 import cn.hutool.core.bean.BeanUtil;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class BeanKit {
 
     public static <T, E> List<T> toBeans(List<E> list, Class<T> clz) {
-        if (list != null && !list.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(list)) {
             return list.stream().map(e -> BeanUtil.toBean(e, clz)).collect(Collectors.toList());
         }
 

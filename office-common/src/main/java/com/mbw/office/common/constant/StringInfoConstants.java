@@ -23,4 +23,7 @@ public class StringInfoConstants {
      * 所以字符串转义一次，正则转义一次，那么一个斜扛要写4个
      */
     public static final String BACKSLASH = "\\\\";
+
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 }
