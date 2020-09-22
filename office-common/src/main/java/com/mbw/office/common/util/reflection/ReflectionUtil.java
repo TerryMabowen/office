@@ -118,7 +118,7 @@ public class ReflectionUtil {
                 Class<?> type = field.getType();
                 if (value != null) {
                     if (value instanceof Collection) {
-                        //TODO 属性时集合时
+                        //TODO 属性是集合时
                         field.set(obj, null);
                     } else {
                         Object convert = ColumnConvertUtil.convert(type, value);

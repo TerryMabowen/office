@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @date 2020-08-03 14:21
  */
 public class CustomBigDecimalEditor extends PropertyEditorSupport {
-    private static Pattern AMOUNT_PATTERN = Pattern.compile("^([1-9]\\d{0,9}|0)([.]?|(\\.\\d{1,2})?)$");
+    private static Pattern AMOUNT_PATTERN = Pattern.compile("^([-+])?([1-9]\\d{0,15}|0)([.]?|(\\.\\d{1,8})?)$");
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
