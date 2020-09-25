@@ -2,7 +2,7 @@ package com.mbw.office.demo.web.ctl.fb;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author Mabowen
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class BillFB {
-    @NotBlank(message = "对账单日期不能为空")
+    @NotEmpty(message = "对账单日期不能为空")
     private String billDate;
 
     private String billType;

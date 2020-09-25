@@ -1,14 +1,17 @@
-package com.mbw.office.demo.web.config;
+package com.mbw.office.demo.biz.service.config.vo;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
+ * 微信支付属性
+ *
  * @author Mabowen
- * @date 2020-07-17 14:58
+ * @date 2020-09-24 16:29
  */
 @Data
-//@ConfigurationProperties(prefix = "wx.pay")
-public class WxPayProperties {
+@Builder
+public class WxPayProperty {
     /**
      * 设置微信公众号或者小程序等的appid
      */
@@ -38,9 +41,4 @@ public class WxPayProperties {
      * 服务商模式下的子商户号，普通模式请不要配置，最好是请在配置文件中将对应项删除
      */
     private String subMchId;
-
-    /**
-     * apiclient_cert.p12文件的绝对路径，或者如果放在项目中，请以classpath:开头指定
-     */
-    private String keyPath;
 }

@@ -3,22 +3,18 @@ package com.mbw.office.demo.web.config;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
-import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Mabowen
  * @date 2020-07-17 14:57
  */
-@Configuration
-@ConditionalOnClass(WxPayService.class)
-@EnableConfigurationProperties(WxPayProperties.class)
-@AllArgsConstructor
+//@Configuration
+//@ConditionalOnClass(WxPayService.class)
+//@EnableConfigurationProperties(WxPayProperties.class)
+//@AllArgsConstructor
 public class WeXinPayConfig {
     private WxPayProperties properties;
 

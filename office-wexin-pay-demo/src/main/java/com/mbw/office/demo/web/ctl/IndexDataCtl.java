@@ -2,13 +2,20 @@ package com.mbw.office.demo.web.ctl;
 
 import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayBillResult;
+import com.google.common.collect.Lists;
+import com.mbw.office.common.constant.StringInfoConstants;
 import com.mbw.office.common.lang.response.ResponseResults;
+import com.mbw.office.common.web.base.BaseDataCtl;
 import com.mbw.office.demo.biz.service.WeiXinPayService;
+import com.mbw.office.demo.biz.service.config.WxPayConfig;
+import com.mbw.office.demo.biz.service.config.vo.WxPayProperty;
 import com.mbw.office.demo.web.ctl.fb.BillFB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Mabowen
@@ -16,9 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/index")
-public class IndexDataCtl {
+public class IndexDataCtl extends BaseDataCtl {
     @Autowired
     private WeiXinPayService weiXinPayService;
+
+    @Autowired
+    private WxPayConfig wxPayConfig;
 
     /**
      * <pre>
@@ -46,13 +56,39 @@ public class IndexDataCtl {
             request.setBillDate(fb.getBillDate());
             request.setBillType(fb.getBillType());
 
-            WxPayBillResult wxPayBillResult = weiXinPayService.downloadBill(request);
+            String appId = "wxba30f2ef0e485274";
+            String mchId = "1540637701";
+            String key = appId + StringInfoConstants.UNDERLINE + mchId;
+
+            WxPayBillResult wxPayBillResult = weiXinPayService.downloadBill(key, request);
 
             return ResponseResults.newSuccess()
                     .setData(wxPayBillResult);
         } catch (Exception e) {
             return ResponseResults.newFailed()
                     .setMessage(e.getMessage());
+        }
+    }
+
+    @GetMapping("/wxBills")
+    public ResponseResults downloadBills(BillFB fb) {
+        try {
+            WxPayDownloadBillRequest request = new WxPayDownloadBillRequest();
+            request.setBillDate(fb.getBillDate());
+            request.setBillType(fb.getBillType());
+
+            List<WxPayBillResult> results = Lists.newArrayList();
+            List<WxPayProperty> wxPayProperties = wxPayConfig.listWxPayMch();
+            for (WxPayProperty wxPayProperty : wxPayProperties) {
+                String key = wxPayProperty.getAppId().trim() + StringInfoConstants.UNDERLINE + wxPayProperty.getMchId().trim();
+
+                WxPayBillResult wxPayBillResult = weiXinPayService.downloadBill(key, request);
+                results.add(wxPayBillResult);
+            }
+
+            return ResponseResults.newSuccess(results);
+        } catch (Exception e) {
+            return ResponseResults.newFailed(e.getMessage());
         }
     }
 }
