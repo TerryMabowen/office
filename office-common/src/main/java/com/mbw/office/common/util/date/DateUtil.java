@@ -236,10 +236,9 @@ public class DateUtil {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            cal.set(year, month, day, 0, 0, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
 
             return cal.getTime();
         }
@@ -262,10 +261,9 @@ public class DateUtil {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            cal.set(year, month, day, 23, 59, 59);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
 
             return cal.getTime();
         }
@@ -293,17 +291,9 @@ public class DateUtil {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            cal.set(Calendar.YEAR, year);
-            cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, 1);
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
 
-            return cal.getTime();
+            return getDayBeginTime(cal.getTime());
         }
 
         throw new ServiceException("date cannot be null");
@@ -322,11 +312,7 @@ public class DateUtil {
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            cal.set(Calendar.YEAR, year);
-            cal.set(Calendar.MONTH, month);
+            int month = cal.get(Calendar.MONTH) + 1;
 
             //2月份平年和瑞年
             int lastDay = 0;
@@ -337,18 +323,17 @@ public class DateUtil {
             }
             cal.set(Calendar.DAY_OF_MONTH, lastDay);
 
-            cal.set(Calendar.HOUR_OF_DAY, 23);
-            cal.set(Calendar.MINUTE, 59);
-            cal.set(Calendar.SECOND, 59);
-
-            return cal.getTime();
+            return getDayEndTime(cal.getTime());
         }
 
         throw new ServiceException("date cannot be null");
     }
 
-    public static String getMonthEnd(Date date) {
-        return formatShort(getMonthEndTime(date));
+    public static String getMonthEnd(Date date, String pattern) {
+        if (StrUtil.isNotBlank(pattern)) {
+            pattern = DateUtil.SHORT_DATE_PATTERN;
+        }
+        return format(getMonthEndTime(date), pattern);
     }
 
     /**
@@ -534,15 +519,11 @@ public class DateUtil {
         if (beginDate != null && endDate != null) {
             Calendar min = Calendar.getInstance();
             min.setTime(beginDate);
-            int beginYear = min.get(Calendar.YEAR);
-            int beginMonth = min.get(Calendar.MONTH);
-            min.set(beginYear, beginMonth, 1);
+            min.set(Calendar.DAY_OF_MONTH, 1);
 
             Calendar max = Calendar.getInstance();
             max.setTime(endDate);
-            int endYear = max.get(Calendar.YEAR);
-            int endMonth = max.get(Calendar.MONTH);
-            max.set(endYear, endMonth, 2);
+            max.set(Calendar.DAY_OF_MONTH, 2);
 
             List<Date> months = new ArrayList<>();
             while (min.before(max)) {

@@ -76,7 +76,7 @@ public class DepartmentReceivableService {
     private DepartmentAmountReceivableVO getDepartmentReceivables(String month, Department department) {
         DepartmentAmountReceivableVO vo = new DepartmentAmountReceivableVO();
         Date monthBegin = DateUtil.parseShort(DateUtil.getMonthBegin(DateUtil.parse(month, "yyyy-MM")));
-        Date monthEnd = DateUtil.parseShort(DateUtil.getMonthEnd(DateUtil.parse(month, "yyyy-MM")));
+        Date monthEnd = DateUtil.parseShort(DateUtil.getMonthEnd(DateUtil.parse(month, "yyyy-MM"), "yyyy-MM"));
         vo.setDepartmentId(department.getId());
         vo.setDepartmentName(department.getName());
         vo.setStartDate(monthBegin);

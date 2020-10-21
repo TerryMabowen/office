@@ -33,7 +33,7 @@ public class DateTest {
     public void f3() {
         String date = "2004-02-15";
         String monthBegin = DateUtil.getMonthBegin(DateUtil.parseShort(date));
-        String monthEnd = DateUtil.getMonthEnd(DateUtil.parseShort(date));
+        String monthEnd = DateUtil.getMonthEnd(DateUtil.parseShort(date), "yyyy-MM");
         System.out.println(monthBegin + " ~ " + monthEnd);
     }
 
@@ -73,5 +73,19 @@ public class DateTest {
         if (CollUtil.isNotEmpty(months)) {
             months.forEach(System.out::println);
         }
+    }
+
+    @Test
+    public void f8() {
+        String dateStr = "2000-02-15";
+        Date date = DateUtil.parseShort(dateStr);
+
+        String dayBegin = DateUtil.getDayBegin(date);
+        String dayEnd = DateUtil.getDayEnd(date);
+        System.out.println(dayBegin + " ~ " + dayEnd);
+
+        String monthBegin = DateUtil.getMonthBegin(date);
+        String monthEnd = DateUtil.getMonthEnd(date, "yyyy-MM");
+        System.out.println(monthBegin + " ~ " + monthEnd);
     }
 }

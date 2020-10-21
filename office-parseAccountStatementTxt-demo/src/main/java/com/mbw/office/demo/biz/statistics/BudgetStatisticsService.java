@@ -47,7 +47,7 @@ public class BudgetStatisticsService {
     public List<DepartmentAmountReceivableVO> listDepartmentCurrentAmountReceivables() {
         List<DepartmentAmountReceivableVO> vos = new ArrayList<>();
         Date monthBegin = DateUtil.parseShort(DateUtil.getMonthBegin(new Date()));
-        Date monthEnd = DateUtil.parseShort(DateUtil.getMonthEnd(new Date()));
+        Date monthEnd = DateUtil.parseShort(DateUtil.getMonthEnd(new Date(), "yyyy-MM"));
 
         List<DepartmentAmountReceivableDTO> dtos = listDepartmentAmountReceivables(monthBegin, monthEnd);
 
@@ -86,7 +86,7 @@ public class BudgetStatisticsService {
         for (String month : months) {
             List<DepartmentAmountReceivableVO> mvos = new ArrayList<>();
             Date monthBegin = DateUtil.parseShort(DateUtil.getMonthBegin(DateUtil.parseShort(month)));
-            Date monthEnd = DateUtil.parseShort(DateUtil.getMonthEnd(DateUtil.parseShort(month)));
+            Date monthEnd = DateUtil.parseShort(DateUtil.getMonthEnd(DateUtil.parseShort(month), "yyyy-MM"));
 
             List<DepartmentAmountReceivableDTO> dtos = listDepartmentAmountReceivables(monthBegin, monthEnd);
 
