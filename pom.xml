@@ -22,6 +22,7 @@
         <module>office-study</module>
         <module>office-algorithm-exercise</module>
         <module>office-excel-demo</module>
+        <module>dingtalk-provider-test</module>
     </modules>
     <name>office-parent</name>
 
@@ -573,6 +574,14 @@
     </scm>
 
     <repositories>
+        <repository>
+            <id>maven-bell-snapshot</id>
+            <url>http://maven.legotown.cn:8081/repository/bell-snapshot/</url>
+        </repository>
+        <repository>
+            <id>maven-bell-release</id>
+            <url>http://maven.legotown.cn:8081/repository/bell-release/</url>
+        </repository>
         <repository>
             <id>aliyunmaven</id>
             <name>aliyun maven</name>

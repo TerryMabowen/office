@@ -31,7 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/index")
 public class IndexDataCtl {
-    private static final String ROOT_PATH = "/Users/apple_22/Desktop/F100/钉钉中台-财务系统/每日对账单/";
+    private static final String ROOT_PATH = "/Users/apple_22/Desktop/F100/ding-bill/jl/2020/10/";
 
     @Autowired
     private OfficeWxPayService officeWxPayService;
