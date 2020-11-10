@@ -88,4 +88,12 @@ public class DateTest {
         String monthEnd = DateUtil.getMonthEnd(date, "yyyy-MM");
         System.out.println(monthBegin + " ~ " + monthEnd);
     }
+
+    @Test
+    public void f9() {
+        String dateStr = "2020-10-15 12:05:46";
+        Date date = DateUtil.parseDefault(dateStr);
+
+        System.out.println(date.getTime());
+    }
 }

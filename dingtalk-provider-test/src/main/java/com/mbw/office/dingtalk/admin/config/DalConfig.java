@@ -1,9 +1,11 @@
 package com.mbw.office.dingtalk.admin.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.google.common.collect.Maps;
 import com.smthit.framework.dal.bettlsql.SqlKitHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @author zlx
  *
  */
+@Slf4j
 @Configuration
 public class DalConfig {
 	/**
@@ -32,17 +35,73 @@ public class DalConfig {
 	@Primary
 	@ConfigurationProperties("spring.datasource.druid")
 	public DataSource dataSource() {
-		return DruidDataSourceBuilder.create().build();
+		DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+//		List<Filter> filters = new ArrayList<Filter>();
+//		filters.add(new FilterAdapter(){
+//			@Override
+//			public DruidPooledConnection dataSource_getConnection(FilterChain chain, DruidDataSource dataSource, long maxWaitMillis) throws SQLException {
+//				int activeCount = dataSource.getActiveCount();
+//				if (activeCount > (dataSource.getMaxActive() * 0.8)) {
+//
+//					log.warn("dingDataSource Warning, the current active count of Druid Connection Pool is " + activeCount + "!");
+//				}
+//
+//				return chain.dataSource_connect(dataSource, maxWaitMillis);
+//			}
+//		});
+//		dataSource.setProxyFilters(filters);
+
+		return dataSource;
 	}
 	
 	/**
 	 * OA订单明细数据表，只读数据源
 	 * @return
 	 */
+	@Bean("groupDataSource")
+	@ConfigurationProperties("group.spring.datasource.druid")
+	public DataSource dataVbankSource(){
+		DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+//		List<Filter> filters = new ArrayList<Filter>();
+//		filters.add(new FilterAdapter(){
+//			@Override
+//			public DruidPooledConnection dataSource_getConnection(FilterChain chain, DruidDataSource dataSource, long maxWaitMillis) throws SQLException {
+//				int activeCount = dataSource.getActiveCount();
+//				if (activeCount > (dataSource.getMaxActive() * 0.8)) {
+//					log.warn("groupDataSource Warning, the current active count of Druid Connection Pool is " + activeCount + "!");
+//				}
+//
+//				return chain.dataSource_connect(dataSource, maxWaitMillis);
+//			}
+//		});
+//		dataSource.setProxyFilters(filters);
+
+		return dataSource;
+	}
+
+	/**
+	 * OA订单明细数据表，只读数据源
+	 * @return
+	 */
 	@Bean("vbankDataSource")
 	@ConfigurationProperties("vbank.spring.datasource.druid")
-	public DataSource dataOaSource(){
-		return DruidDataSourceBuilder.create().build();
+	public DataSource dataGroupSource(){
+		DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+//		List<Filter> filters = new ArrayList<Filter>();
+//		filters.add(new FilterAdapter(){
+//			@Override
+//			public DruidPooledConnection dataSource_getConnection(FilterChain chain, DruidDataSource dataSource, long maxWaitMillis) throws SQLException {
+//				int activeCount = dataSource.getActiveCount();
+//				if (activeCount > (dataSource.getMaxActive() * 0.8)) {
+//					log.warn("vbankDataSource Warning, the current active count of Druid Connection Pool is " + activeCount + "!");
+//				}
+//
+//				return chain.dataSource_connect(dataSource, maxWaitMillis);
+//			}
+//		});
+//		dataSource.setProxyFilters(filters);
+
+		return dataSource;
 	}
 
 	@Bean
@@ -57,7 +116,8 @@ public class DalConfig {
 		holder.setSupportMultiDS(true);
 		holder.setMasterDS("dataSource");
 		holder.addDS("vbankDataSource");
-		
+		holder.addDS("groupDataSource");
+
 		return holder;
 	}
 
