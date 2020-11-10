@@ -56,8 +56,8 @@ public class IndexDataCtl extends BaseDataCtl {
             request.setBillDate(fb.getBillDate());
             request.setBillType(fb.getBillType());
 
-            String appId = "wxba30f2ef0e485274";
-            String mchId = "1540637701";
+            String appId = "s";
+            String mchId = "s";
             String key = appId + StringInfoConstants.UNDERLINE + mchId;
 
             WxPayBillResult wxPayBillResult = weiXinPayService.downloadBill(key, request);

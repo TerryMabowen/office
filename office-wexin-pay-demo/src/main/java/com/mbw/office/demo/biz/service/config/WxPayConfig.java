@@ -27,18 +27,18 @@ public class WxPayConfig {
 
         //普通商户
 //        WxPayProperty p1 = WxPayProperty.builder()
-//                .appId("wxb128560ae3eedf07mbw")
-//                .mchId("1529287821mbw")
-//                .mchKey("A4659A63476446D29526D8FC78CQBELLmbw")
+//                .appId("d")
+//                .mchId("d")
+//                .mchKey("d")
 //                .isServiceMch(false)
 //                .build();
 //        list.add(p1);
 
         //服务商商户
         WxPayProperty p2 = WxPayProperty.builder()
-                .appId("wx7559b35e16e570bambw")
-                .mchId("1600443993mbw")
-                .mchKey("wx7559b35e16e570baHEKONG20200724mbw")
+                .appId("d")
+                .mchId("d")
+                .mchKey("d")
                 .isServiceMch(false)
                 .build();
         list.add(p2);
