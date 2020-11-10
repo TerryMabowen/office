@@ -1,5 +1,6 @@
 package com.mbw.office.dingtalk.biz.ding;
 
+import com.google.common.collect.Maps;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.dingtalk.biz.ding.vo.DtDepartmentVO;
 import com.mbw.office.dingtalk.biz.group.GroupbuyIncomeService;
@@ -74,6 +75,29 @@ public class DtDepartmentService {
         } catch (Exception e) {
             log.error("更新钉钉部门OA编码失败：" + e.getMessage(), e);
             throw new ServiceException("更新钉钉部门OA编码失败：" + e.getMessage(), e);
+        }
+    }
+
+    public void test() {
+        List<DtDepartmentVO> dtDepartments = listDtDepartments();
+        if (CollectionUtils.isNotEmpty(dtDepartments)) {
+            Map<Long, DtDepartmentVO> map = Maps.newHashMap();
+            for (DtDepartmentVO dtDepartment : dtDepartments) {
+                if (!map.containsKey(dtDepartment.getId())) {
+                    map.put(dtDepartment.getId(), dtDepartment);
+                }
+            }
+
+            DtDepartmentVO dtDepartmentVO = map.get(67563541L);
+            if (dtDepartmentVO != null) {
+                dtDepartmentVO.setName("测试地址指向的名称");
+                dtDepartmentVO.setOaDepartmentCode("TEST_CODE");
+            }
+
+            for (Map.Entry<Long, DtDepartmentVO> entry : map.entrySet()) {
+                DtDepartmentVO value = entry.getValue();
+                System.out.println(value);
+            }
         }
     }
 }

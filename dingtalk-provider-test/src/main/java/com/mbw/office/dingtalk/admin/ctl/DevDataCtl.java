@@ -118,4 +118,15 @@ public class DevDataCtl extends BaseDataCtl {
             return ResponseResults.newFailed(e.getMessage());
         }
     }
+
+    @GetMapping("/test")
+    public ResponseResults f7() {
+        try {
+            dtDepartmentService.test();
+            return ResponseResults.newSuccess();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseResults.newFailed(e.getMessage());
+        }
+    }
 }
