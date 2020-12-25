@@ -96,4 +96,12 @@ public class DateTest {
 
         System.out.println(date.getTime());
     }
+
+    @Test
+    public void f10() {
+        String dateStr = "2019-2-28 12:05:46";
+        Date date = DateUtil.parseDefault(dateStr);
+
+        System.out.println(DateUtil.formatShort(date) + "：" + DateUtil.isMonthEndDay(date));
+    }
 }

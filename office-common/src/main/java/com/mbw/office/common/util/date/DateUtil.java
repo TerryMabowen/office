@@ -571,6 +571,30 @@ public class DateUtil {
     }
 
     /**
+     * 判断是否是月最后一天
+     * @param date
+     * @return {@link boolean} true: 传入日期是月最后一天； false：不是月最后一天
+     * @author Mabowen
+     * @date 2020-12-25 14:10
+     */
+    public static boolean isMonthEndDay(Date date) {
+        if (date != null) {
+            Calendar oldCal = Calendar.getInstance();
+            oldCal.setTime(date);
+            int oldMonth = oldCal.get(Calendar.MONTH);
+
+            Calendar newCal = Calendar.getInstance();
+            newCal.setTime(date);
+            newCal.add(Calendar.DAY_OF_MONTH, 1);
+            int newMonth = newCal.get(Calendar.MONTH);
+
+            return oldMonth != newMonth;
+        }
+
+        throw new ServiceException("date cannot be null");
+    }
+
+    /**
      * 判断两个时间的前后
      * @author Mabowen
      * @date 16:02 2020-07-03
