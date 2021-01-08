@@ -45,8 +45,7 @@ public class CustomErrorCtl implements ErrorController {
         Map<String, Object> body = this.errorAttributes.getErrorAttributes(webRequest, true);
 
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        model.addAttribute("body", body);
-
+        Object errorException = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
@@ -54,7 +53,7 @@ public class CustomErrorCtl implements ErrorController {
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return ERROR_403_VIEW;
             } else {
-                model.addAttribute("exception", "页面请求失败，状态码:" + statusCode);
+                model.addAttribute("exception", "页面请求失败，状态码：" + statusCode + ", 异常信息：" + errorException);
             }
         } else {
             model.addAttribute("exception", ExceptionAdvice.DEFAULT_ERROR_MSG);
@@ -74,7 +73,6 @@ public class CustomErrorCtl implements ErrorController {
         Map<String, Object> body = this.errorAttributes.getErrorAttributes(webRequest, true);
 
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
             if (statusCode == HttpStatus.NOT_FOUND.value()) {

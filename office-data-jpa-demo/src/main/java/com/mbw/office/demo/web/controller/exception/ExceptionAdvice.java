@@ -1,9 +1,10 @@
 package com.mbw.office.demo.web.controller.exception;
 
+import com.google.gson.GsonBuilder;
 import com.mbw.office.common.lang.exception.ServiceException;
 import com.mbw.office.common.lang.response.ResponseResults;
-import com.mbw.office.common.util.json.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,7 +37,7 @@ public class ExceptionAdvice {
             handleAjaxException(response, exception);
             return null;
         } else {
-            return handleException(exception, ERROR_403_VIEW);
+            return handleException(response, exception, ERROR_403_VIEW);
         }
     }
 
@@ -49,7 +50,7 @@ public class ExceptionAdvice {
             handleAjaxException(response, exception);
             return null;
         } else {
-            return handleException(exception, ERROR_500_VIEW);
+            return handleException(response, exception, ERROR_500_VIEW);
         }
     }
 
@@ -62,7 +63,7 @@ public class ExceptionAdvice {
             handleAjaxException(response, exception);
             return null;
         } else {
-            return handleException(exception, ERROR_500_VIEW);
+            return handleException(response, exception, ERROR_500_VIEW);
         }
     }
 
@@ -74,8 +75,14 @@ public class ExceptionAdvice {
     private void handleAjaxException(HttpServletResponse response, Exception exception) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
+
         PrintWriter printWriter = response.getWriter();
-        printWriter.write(JacksonUtil.beanToJson(ResponseResults.newFailed(exception.getMessage())));
+        printWriter.write(new GsonBuilder().create()
+                .toJson(ResponseResults.newFailed()
+                        .setMessage(exception.toString())
+                        .setData(exception)
+                )
+        );
         printWriter.flush();
         printWriter.close();
     }
@@ -85,10 +92,13 @@ public class ExceptionAdvice {
      *
      * @author haoyun.zheng
      */
-    private ModelAndView handleException(Exception exception, String exceptionView) {
+    private ModelAndView handleException(HttpServletResponse response, Exception exception, String exceptionView) {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject(String.format("Exception: %s", exception.getMessage()), exception);
-        modelAndView.addObject("exception", exception.getMessage());
+        modelAndView.addObject("exception", exception);
+        modelAndView.setStatus(HttpStatus.OK);
         modelAndView.setViewName(exceptionView);
 
         return modelAndView;
