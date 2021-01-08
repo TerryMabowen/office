@@ -72,7 +72,7 @@ public class ExceptionAdvice {
     /**
      * 处理Ajax请求异常
      *
-     * @author haoyun.zheng
+     * @author mabowen
      */
     private void handleAjaxException(HttpServletResponse response, Exception exception) throws IOException {
         response.setCharacterEncoding("UTF-8");
@@ -92,7 +92,7 @@ public class ExceptionAdvice {
     /**
      * 处理请求异常
      *
-     * @author haoyun.zheng
+     * @author mabowen
      */
     private ModelAndView handleException(HttpServletResponse response, Exception exception, String exceptionView) {
         response.setCharacterEncoding("UTF-8");
@@ -110,7 +110,7 @@ public class ExceptionAdvice {
      * 判断某个请求是否是ajax请求
      *
      * @return 返回true, 是ajax请求，false则不是
-     * @author haoyun.zheng
+     * @author mabowen
      */
     private boolean isAjaxRequest(HttpServletRequest request) {
         return request.getHeader("X-Requested-With") != null &&

@@ -37,7 +37,7 @@ public class CustomErrorCtl implements ErrorController {
     /**
      * 页面错误处理
      *
-     * @author haoyun.zheng
+     * @author mabowen
      */
     @RequestMapping(value = "/error", produces = MediaType.TEXT_HTML_VALUE)
     public String errorHtml(HttpServletRequest request, Model model) {
@@ -65,7 +65,7 @@ public class CustomErrorCtl implements ErrorController {
     /**
      * 接口错误处理
      *
-     * @author haoyun.zheng
+     * @author mabowen
      */
     @RequestMapping(value = "/error", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseResults errorJson(HttpServletRequest request, Model model) {
@@ -93,7 +93,7 @@ public class CustomErrorCtl implements ErrorController {
     /**
      * 返回错误的路径
      *
-     * @author haoyun.zheng
+     * @author mabowen
      */
     @Override
     public String getErrorPath() {
