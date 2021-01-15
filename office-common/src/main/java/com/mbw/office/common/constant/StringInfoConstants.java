@@ -14,9 +14,12 @@ public class StringInfoConstants {
     //标点符号
     public static final String ENGLISH_COMMA = ",";
     public static final String CHINESE_COMMA = "，";
+    public static final String SEMICOLON = ";";
     public static final String UNDERLINE = "_";
+    public static final String DASH = "-";
     public static final String VERTICAL_BAR = "|";
-    public static final String SLASH = "/";
+    public static final String LEFT_SLASH = "/";
+    public static final String RIGHT_SLASH = "\\";
     /**
      * 在regex中"\\"表示一个"\"，在java中一个"\"也要用"\\"表示。
      * 这样，前一个"\\"代表regex中的"\"，后一个"\\"代表java中的"\"，
