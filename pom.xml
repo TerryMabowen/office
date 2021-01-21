@@ -23,6 +23,7 @@
         <module>office-algorithm-exercise</module>
         <module>office-excel-demo</module>
         <module>dingtalk-provider-test</module>
+        <module>office-cloud-demo</module>
     </modules>
     <name>office-parent</name>
 
