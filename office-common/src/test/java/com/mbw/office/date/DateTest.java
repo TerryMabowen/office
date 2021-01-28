@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * TODO
@@ -103,5 +104,24 @@ public class DateTest {
         Date date = DateUtil.parseDefault(dateStr);
 
         System.out.println(DateUtil.formatShort(date) + "：" + DateUtil.isMonthEndDay(date));
+    }
+
+    @Test
+    public void f11() {
+        Pattern yearPattern = Pattern.compile("^2[0-9]{3}$");
+        Pattern monthPattern = Pattern.compile("^[1-9]|0[1-9]|1[0-2]$");
+        Pattern dayPattern = Pattern.compile("^[1-9]|0[1-9]|[1|2][0-9]|3[0|1]$");
+
+        String year = "2000";
+        boolean yearMatch = yearPattern.matcher(year).matches();
+        System.out.println("year: " + yearMatch);
+
+        String month = "9";
+        boolean monthMatch = monthPattern.matcher(month).matches();
+        System.out.println("month: " + monthMatch);
+
+        String day = "1";
+        boolean dayMatch = dayPattern.matcher(day).matches();
+        System.out.println("day: " + dayMatch);
     }
 }
