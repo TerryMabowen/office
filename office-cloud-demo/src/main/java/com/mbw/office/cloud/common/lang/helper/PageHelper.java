@@ -14,12 +14,14 @@ public class PageHelper {
     private Integer pageSize = 1000;
     private Integer totalCount = 0;
     private Integer totalPage = 0;
+    private Integer limitLeft = 0;
 
     private PageHelper(int pageNo, int pageSize, int totalCount) {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
         this.totalCount = totalCount;
-        totalPage = (totalCount + pageSize - 1) / pageSize;
+        this.totalPage = (totalCount + pageSize - 1) / pageSize;
+        this.limitLeft = ((this.pageNo - 1) * this.pageSize);
     }
 
     public static PageHelper getPageHelper(int pageNo, int pageSize, int totalCount) {
@@ -43,35 +45,28 @@ public class PageHelper {
         }
     }
 
-    public Integer getPageNo() {
-        return this.pageNo;
+    public void growing() {
+        this.pageNo = this.pageNo + 1;
+        this.limitLeft = ((this.pageNo - 1) * this.pageSize);
     }
 
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
+    public Integer getPageNo() {
+        return this.pageNo;
     }
 
     public Integer getPageSize() {
         return this.pageSize;
     }
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
     public Integer getTotalCount() {
         return this.totalCount;
-    }
-
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
     }
 
     public Integer getTotalPage() {
         return this.totalPage;
     }
 
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
+    public Integer getLimitLeft() {
+        return limitLeft;
     }
 }
