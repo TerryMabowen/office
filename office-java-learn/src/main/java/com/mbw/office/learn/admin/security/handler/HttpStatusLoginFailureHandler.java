@@ -5,7 +5,7 @@ package com.mbw.office.learn.admin.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.mbw.office.common.lang.response.ResponseResults;
+import com.mbw.office.learn.biz.lang.response.ResponseResults;
 import org.apache.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mbw.office.learn.admin.context;
+package com.mbw.office.learn.biz.context;
 
 import lombok.Data;
 

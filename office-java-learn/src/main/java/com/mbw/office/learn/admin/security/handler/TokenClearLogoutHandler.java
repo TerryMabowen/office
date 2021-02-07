@@ -3,7 +3,7 @@
  */
 package com.mbw.office.learn.admin.security.handler;
 
-import ai.bell.devops.admin.security.jwt.JwtUserServiceImpl;
+import com.mbw.office.learn.admin.security.jwt.JwtUserServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.LogoutHandler;

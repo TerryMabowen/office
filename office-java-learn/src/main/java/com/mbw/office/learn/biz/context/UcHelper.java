@@ -1,4 +1,4 @@
-package com.mbw.office.learn.admin.context;
+package com.mbw.office.learn.biz.context;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,7 +1,7 @@
 package com.mbw.office.learn.admin.security.handler;
 
-import com.mbw.office.common.lang.response.ResponseResults;
-import com.mbw.office.common.util.json.JacksonUtil;
+import com.mbw.office.learn.biz.lang.response.ResponseResults;
+import com.mbw.office.learn.biz.utils.json.JacksonUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
