@@ -1,6 +1,5 @@
 package com.mbw.office.validate.pojo;
 
-import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import javax.validation.constraints.NotNull;
  * @author Mabowen
  * @date 2020-07-08 17:42
  */
-@Data
+//@Data
 @Accessors(chain = true)
 public class TestPojo {
     private Long id;
@@ -23,4 +22,13 @@ public class TestPojo {
      */
     @NotNull(message = "银行不能为空")
     private String bank;
+
+    @Override
+    public String toString() {
+        return "TestPojo{" +
+                "id=" + id +
+                ", bankCode='" + bankCode + '\'' +
+                ", bank='" + bank + '\'' +
+                '}';
+    }
 }

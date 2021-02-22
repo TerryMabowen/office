@@ -3,6 +3,7 @@ package com.mbw.office.cloud.web.app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author Mabowen
@@ -10,6 +11,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  */
 @SpringBootApplication(scanBasePackages = {"com.mbw.office.cloud"})
 @EnableConfigurationProperties
+@EnableDiscoveryClient
 public class OfficeCloudDemoApplication {
 
     public static void main(String[] args) {
