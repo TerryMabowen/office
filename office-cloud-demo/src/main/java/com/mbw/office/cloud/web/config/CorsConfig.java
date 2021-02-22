@@ -1,7 +1,5 @@
 package com.mbw.office.cloud.web.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
@@ -13,10 +11,10 @@ import org.springframework.web.util.pattern.PathPatternParser;
  * @author Mabowen
  * @date 2021-02-22 16:21
  */
-@Configuration
+//@Configuration
 public class CorsConfig {
 
-    @Bean
+//    @Bean
     public CorsWebFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedMethod("*");
