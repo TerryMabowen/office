@@ -3,7 +3,11 @@ package com.mbw.office.cloud.web.config;
 import com.mbw.office.cloud.web.security.AuthenticationFailureHandler;
 import com.mbw.office.cloud.web.security.AuthenticationSuccessHandler;
 import com.mbw.office.cloud.web.security.CustomHttpBasicServerAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,13 +19,13 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
  * @author Mabowen
  * @date 2021-02-22 17:08
  */
-//@Configuration
-//@EnableWebFluxSecurity
+@Configuration
+@EnableWebFluxSecurity
 public class SecurityConfig {
-//    @Autowired
+    @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
-//    @Autowired
+    @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
 
     //    @Autowired
@@ -35,7 +39,7 @@ public class SecurityConfig {
             "/api/socket/**"
     };
 
-//    @Bean
+    @Bean
     SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) throws Exception {
         http
                 .authorizeExchange()

@@ -1,13 +1,16 @@
 package com.mbw.office.cloud.web.security;
 
-import com.mbw.office.cloud.biz.security.AuthUserService;
+import com.mbw.office.cloud.biz.security.AuthUserServiceImpl;
+import com.mbw.office.cloud.biz.security.IUserService;
 import com.mbw.office.cloud.biz.security.vo.AuthUserDetailVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
@@ -16,14 +19,16 @@ import reactor.core.publisher.Mono;
  * @author Mabowen
  * @date 2021-02-22 17:24
  */
-//@Component
+@Slf4j
+@Component
 public class SecurityUserDetailsServiceImpl implements ReactiveUserDetailsService {
     @Autowired
-    private AuthUserService authUserService;
+    private IUserService authUserService;
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
         //todo 预留调用数据库根据用户名获取用户
+        log.info(username + "访问数据库获取用户信息");
         AuthUserDetailVO authUserDetail = authUserService.getUserByName(username);
         if (authUserDetail != null) {
             UserDetails user = User.withUsername(authUserDetail.getUsername())
