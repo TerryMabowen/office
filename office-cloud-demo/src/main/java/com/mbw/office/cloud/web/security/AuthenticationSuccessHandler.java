@@ -1,7 +1,6 @@
 package com.mbw.office.cloud.web.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mbw.office.cloud.biz.security.dto.AuthUserDTO;
 import com.mbw.office.cloud.biz.security.vo.AuthUserDetailVO;
 import com.mbw.office.cloud.common.kit.json.JacksonKit;
 import com.mbw.office.cloud.common.lang.response.ResponseResults;
@@ -9,6 +8,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ public class AuthenticationSuccessHandler extends WebFilterChainServerAuthentica
         byte[] dataBytes = {};
         ObjectMapper mapper = JacksonKit.getObjectMapper();
         try {
-            AuthUserDTO user = (AuthUserDTO) authentication.getPrincipal();
+            User user = (User) authentication.getPrincipal();
             AuthUserDetailVO userDetails = buildUser(user);
             byte[] authorization = (userDetails.getUsername() + ":" + userDetails.getPassword()).getBytes();
             String token = Base64.getEncoder().encodeToString(authorization);
@@ -54,10 +54,10 @@ public class AuthenticationSuccessHandler extends WebFilterChainServerAuthentica
     }
 
 
-    private AuthUserDetailVO buildUser(AuthUserDTO user) {
+    private AuthUserDetailVO buildUser(User user) {
         AuthUserDetailVO userDetails = new AuthUserDetailVO();
         userDetails.setUsername(user.getUsername());
-        userDetails.setPassword(user.getPassword().substring(user.getPassword().lastIndexOf("}") + 1, user.getPassword().length()));
+        userDetails.setPassword(user.getPassword());
         return userDetails;
     }
 }

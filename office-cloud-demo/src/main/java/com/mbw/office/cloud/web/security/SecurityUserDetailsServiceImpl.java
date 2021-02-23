@@ -1,6 +1,5 @@
 package com.mbw.office.cloud.web.security;
 
-import com.mbw.office.cloud.biz.security.AuthUserServiceImpl;
 import com.mbw.office.cloud.biz.security.IUserService;
 import com.mbw.office.cloud.biz.security.vo.AuthUserDetailVO;
 import lombok.extern.slf4j.Slf4j;
@@ -31,12 +30,13 @@ public class SecurityUserDetailsServiceImpl implements ReactiveUserDetailsServic
         log.info(username + "访问数据库获取用户信息");
         AuthUserDetailVO authUserDetail = authUserService.getUserByName(username);
         if (authUserDetail != null) {
-            UserDetails user = User.withUsername(authUserDetail.getUsername())
-//                    .password(MD5Encoder.encode(authUserDetail.getPassword(), username))
+            UserDetails userDetail = User.withUsername(authUserDetail.getUsername())
+//                    .password(MD5Encoder.encode(.getPassword(), username))
                     .password(authUserDetail.getPassword())
-                    .roles("admin").authorities(AuthorityUtils.commaSeparatedStringToAuthorityList("admin"))
+                    .roles("admin")
+                    .authorities(AuthorityUtils.commaSeparatedStringToAuthorityList("admin"))
                     .build();
-            return Mono.just(user);
+            return Mono.just(userDetail);
         } else {
             return Mono.error(new UsernameNotFoundException("User Not Found"));
         }

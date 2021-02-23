@@ -47,17 +47,22 @@ public class SecurityConfig {
                 .pathMatchers(HttpMethod.OPTIONS).permitAll() //option 请求默认放行
                 .anyExchange().authenticated()
                 .and().httpBasic()
-                .and().formLogin().loginPage("/auth/login")
+                .and().formLogin()
+//                .loginPage("/auth/login")
                 .authenticationSuccessHandler(authenticationSuccessHandler) //认证成功
                 .authenticationFailureHandler(authenticationFailureHandler) //登陆验证失败
 //            .and().exceptionHandling().authenticationEntryPoint(customHttpBasicServerAuthenticationEntryPoint)  //基于http的接口请求鉴权失败
-                .and().csrf().disable()//必须支持跨域
-                .logout().logoutUrl("/auth/logout").disable();
+                .and()
+                .csrf()
+                .disable()//必须支持跨域
+                .logout()
+//                .logoutUrl("/auth/logout")
+                .disable();
 
         return http.build();
     }
 
-//    @Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance(); //默认不加密
     }

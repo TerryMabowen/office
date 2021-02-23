@@ -2,7 +2,6 @@ package com.mbw.office.cloud.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.mbw.office.cloud.common.lang.enums.EnumLogicStatus;
 import lombok.Data;
@@ -21,7 +20,6 @@ import java.util.Date;
 public class BaseEntity extends Model<BaseEntity> {
     private static final long serialVersionUID = 541122854610664130L;
 
-    @TableLogic(value = "1")
     protected Integer status = EnumLogicStatus.NORMAL.getValue();
 
     @TableField(fill = FieldFill.INSERT)

@@ -1,6 +1,7 @@
 package com.mbw.office.cloud.web.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mbw.office.cloud.common.kit.json.JacksonKit;
 import com.mbw.office.cloud.common.lang.response.ResponseResults;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +33,7 @@ public class AuthenticationFailureHandler implements ServerAuthenticationFailure
         ResponseResults wsResponse = ResponseResults.newFailed();
         byte[] dataBytes = {};
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = JacksonKit.getObjectMapper();
             dataBytes = mapper.writeValueAsBytes(wsResponse);
         } catch (Exception ex) {
             ex.printStackTrace();
