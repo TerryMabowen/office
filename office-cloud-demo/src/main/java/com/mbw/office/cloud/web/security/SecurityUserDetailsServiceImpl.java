@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
@@ -17,7 +16,7 @@ import reactor.core.publisher.Mono;
  * @author Mabowen
  * @date 2021-02-22 17:24
  */
-@Component
+//@Component
 public class SecurityUserDetailsServiceImpl implements ReactiveUserDetailsService {
     @Autowired
     private AuthUserService authUserService;

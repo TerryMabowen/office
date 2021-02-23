@@ -1,6 +1,7 @@
 package com.mbw.office.cloud.entity.user;
 
-import javax.persistence.Table;
+
+import java.io.Serializable;
 
 /**
  * TODO
@@ -8,6 +9,7 @@ import javax.persistence.Table;
  * @author Mabowen
  * @date 2021-02-22 17:45
  */
-@Table(name = "sys_users")
-public class UserPO {
+
+public class UserPO implements Serializable {
+    private static final long serialVersionUID = -7636766652987645107L;
 }
