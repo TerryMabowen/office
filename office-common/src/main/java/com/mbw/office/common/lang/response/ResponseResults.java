@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * 后端返回前端数据响应类
@@ -35,6 +36,8 @@ public class ResponseResults implements Serializable {
     @ApiModelProperty(value = "请求状态码；200：请求成功；500：服务器错误；403：无权限访问；400：参数错误")
     private Integer code;
 
+    private Integer count = 0;
+
     public ResponseResults() {
     }
 
@@ -56,6 +59,16 @@ public class ResponseResults implements Serializable {
         rd.setCode(SUCCESS);
         rd.setMessage(message);
         rd.setData(data);
+        int count = 0;
+        if (data instanceof Collection) {
+            count = ((Collection) data).size();
+        } else {
+            if (data != null) {
+                count = 1;
+            }
+        }
+
+        rd.setCount(count);
         return rd;
     }
 
@@ -116,6 +129,14 @@ public class ResponseResults implements Serializable {
         return this;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -153,7 +174,8 @@ public class ResponseResults implements Serializable {
         return "ResponseResults{" +
                 "success=" + success +
                 ", code=" + code +
-                ", message='" + message + '\'' +
+                ", message=" + message + '\'' +
+                ", count=" + count +
                 ", data=" + data +
                 '}';
     }

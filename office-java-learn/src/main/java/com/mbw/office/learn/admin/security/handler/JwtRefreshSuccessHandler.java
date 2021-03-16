@@ -17,41 +17,42 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * @descrition
  * @author dinghq
+ * @descrition
  * @date 2020/5/29
  */
 public class JwtRefreshSuccessHandler implements AuthenticationSuccessHandler {
-	/**
-	 * 刷新时间间隔一天
-	 */
-	private static final int TOKEN_REFRESH_INTERVAL = 24 * 60 * 60;
+    /**
+     * 刷新时间间隔一天
+     */
+    private static final int TOKEN_REFRESH_INTERVAL = 24 * 60 * 60;
 
-	private JwtUserServiceImpl jwtUserServiceImpl;
+    private JwtUserServiceImpl jwtUserServiceImpl;
 
-	public JwtRefreshSuccessHandler(JwtUserServiceImpl jwtUserServiceImpl) {
-		this.jwtUserServiceImpl = jwtUserServiceImpl;
-	}
+    public JwtRefreshSuccessHandler(JwtUserServiceImpl jwtUserServiceImpl) {
+        this.jwtUserServiceImpl = jwtUserServiceImpl;
+    }
 
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
-		DecodedJWT jwt = ((JwtAuthenticationToken) authentication).getToken();
-		boolean shouldRefresh = shouldTokenRefresh(jwt.getIssuedAt());
-		if (shouldRefresh) {
-			JwtToken jwtToken = jwtUserServiceImpl.saveUserLoginInfo((UserDetails) authentication.getPrincipal());
-			response.setHeader("Authorization", jwtToken.getToken());
-			response.setHeader("RefreshToken", "true");
-		}
-	}
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+        DecodedJWT jwt = ((JwtAuthenticationToken) authentication).getToken();
+        boolean shouldRefresh = shouldTokenRefresh(jwt.getIssuedAt());
+        if (shouldRefresh) {
+            JwtToken jwtToken = jwtUserServiceImpl.saveUserLoginInfo((UserDetails) authentication.getPrincipal());
+            response.setHeader("Authorization", jwtToken.getToken());
+            response.setHeader("RefreshToken", "true");
+        }
+    }
 
-	/**
-	 * 是否应该刷新Token
-	 * @param issueAt
-	 * @return
-	 */
-	protected boolean shouldTokenRefresh(Date issueAt) {
-		LocalDateTime issueTime = LocalDateTime.ofInstant(issueAt.toInstant(), ZoneId.systemDefault());
-		return LocalDateTime.now().minusSeconds(TOKEN_REFRESH_INTERVAL).isAfter(issueTime);
-	}
+    /**
+     * 是否应该刷新Token
+     *
+     * @param issueAt
+     * @return
+     */
+    protected boolean shouldTokenRefresh(Date issueAt) {
+        LocalDateTime issueTime = LocalDateTime.ofInstant(issueAt.toInstant(), ZoneId.systemDefault());
+        return LocalDateTime.now().minusSeconds(TOKEN_REFRESH_INTERVAL).isAfter(issueTime);
+    }
 }
