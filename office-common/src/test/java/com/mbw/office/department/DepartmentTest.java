@@ -166,7 +166,7 @@ public class DepartmentTest {
     }
 
     private List<DtDepartment> listDtDepartment() {
-        String fileName = "钉钉部门.xlsx";
+        String fileName = "ding部门.xlsx";
         File file = new File(fileDir, fileName);
         if (!file.exists()) {
             throw new ServiceException(fileDir + fileName + " 文件未找到");
@@ -182,7 +182,7 @@ public class DepartmentTest {
     }
 
     private List<OaDepartment> listOaDepartment() {
-        String fileName = "OA部门信息.xlsx";
+        String fileName = "oa部门.xlsx";
         File file = new File(fileDir, fileName);
         if (!file.exists()) {
             throw new ServiceException(fileDir + fileName + " 文件未找到");
