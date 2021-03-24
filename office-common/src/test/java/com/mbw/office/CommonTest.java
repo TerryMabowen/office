@@ -244,4 +244,29 @@ public class CommonTest {
         System.out.println(list);
         System.out.println(list.size());
     }
+
+    @Test
+    public void f5() {
+        String ids = "427," +
+                "432," +
+                "437," +
+                "442," +
+                "447," +
+                "452," +
+                "457," +
+                "462," +
+                "469," +
+                "475," +
+                "479," +
+                "483," +
+                "488," +
+                "496," +
+                "503," +
+                "510," +
+                "517," +
+                "522," +
+                "527";
+        String[] split = ids.split(",");
+        System.out.println(Arrays.toString(split));
+    }
 }
