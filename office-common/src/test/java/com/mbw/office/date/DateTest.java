@@ -124,4 +124,11 @@ public class DateTest {
         boolean dayMatch = dayPattern.matcher(day).matches();
         System.out.println("day: " + dayMatch);
     }
+
+    @Test
+    public void f12() {
+        Date now = new Date();
+        Date beforeDay = DateUtil.getBeforeDay(now, 120);
+        System.out.println(DateUtil.formatDefault(beforeDay));
+    }
 }
